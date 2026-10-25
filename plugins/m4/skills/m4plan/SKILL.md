@@ -26,6 +26,6 @@ One entry per feature, sized so one build session can finish and commit it. An e
 
 When the tracker already has entries, reconcile first: check off behaviors the code already does, and point out entries the new plan replaces.
 
-The tracker is the only thing m4plan changes. Order entries the way you'd build them, but the user can build any of them at any time.
+The tracker is the only thing m4plan changes; building is m4do's job, so m4plan never starts the work, not even a branch. When the user doesn't want tracker entries, keep the plan in chat and suggest m4do to build it. Order entries the way you'd build them, but the user can build any of them at any time.
 
 End by listing the entries you added or changed.

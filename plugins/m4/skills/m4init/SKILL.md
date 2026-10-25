@@ -44,4 +44,6 @@ One heading per feature: a line or two on what and why, then a checklist of beha
 
 If the user chose the lint rule, add it to the linter config and record it in the enforced-rules table.
 
+When the commits setting is one per feature, commit the files m4init wrote on their own, so they don't ride along with the next feature's commit.
+
 End by listing the files you wrote and the settings you chose.

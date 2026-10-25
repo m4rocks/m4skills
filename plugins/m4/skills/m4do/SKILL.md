@@ -5,7 +5,9 @@ description: Build one or more features end to end, test-first where the repo's 
 
 # m4do
 
-Start with one line: you are running m4do, the features you'll build, and what you expect to touch.
+Before any other output or command, write one line: you are running m4do, the features you'll build, and what you expect to touch.
+
+When the tests setting calls for tests and the repo has no test runner, ask before the first feature whether to add one, since that adds a dependency.
 
 A request that isn't in the tracker gets an entry, then you build it. If a feature seems to depend on unfinished work, say so in one line and continue.
 
@@ -17,7 +19,7 @@ Work through the features in the order given. For each:
 2. When the tests setting calls for a test, or the user asked for one, write a test that drives the new behavior through the public interface. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red. When there's no cheap seam, name the closest real check you'll use instead and move on; a test that mostly tests mocks is worse than none.
 3. Implement until it passes.
 4. Run the checks the project has for this area: tests, type checker, linter.
-5. Check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does.
+5. Check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage only the files this feature changed; other uncommitted work stays out of its commit.
 
 A good test fails when the behavior breaks and keeps passing when the internals are restructured. A test whose expected value is computed the way the code computes it proves nothing; take expected values from the requirement.
 
