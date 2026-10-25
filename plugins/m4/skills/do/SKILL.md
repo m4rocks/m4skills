@@ -19,7 +19,7 @@ Work through the features in the order given. For each:
 2. When the tests setting calls for a test, or the user asked for one, write a test that drives the new behavior through the public interface. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red. When there's no cheap seam, name the closest real check you'll use instead and move on; a test that mostly tests mocks is worse than none.
 3. Implement until it passes.
 4. Run the checks the project has for this area: tests, type checker, linter.
-5. Check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage only the files this feature changed; other uncommitted work stays out of its commit.
+5. Check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage files by name, only those this feature changed, so other uncommitted work stays out of its commit.
 
 A good test fails when the behavior breaks and keeps passing when the internals are restructured. A test whose expected value is computed the way the code computes it proves nothing; take expected values from the requirement.
 
@@ -42,9 +42,13 @@ Several features run one after another in this session, each committed before th
 
 If the session's context gets long, finish and commit the current feature, then suggest continuing the remaining entries in a fresh session; the commits and tracker carry everything over.
 
+## Committing and pushing
+
+When the commits setting says to ask, show the commit message and the files, and ask through the structured question tool with three options: commit, commit this and the rest of the batch without asking, or leave it uncommitted. Commit without asking only when the setting or the user's answer allows it. Pushing follows the pull requests setting the same way.
+
 ## Pull requests
 
-When the pull requests setting is one per batch: before the first feature, if you're on the default branch, create a branch named after the batch. After the last feature, push it and open a pull request with `gh pr create`, using this body:
+When the pull requests setting is one per batch: before the first feature, if you're on the default branch, create a branch named after the batch. After the last feature, push it (asking first unless the setting says not to) and open a pull request with `gh pr create`, using this body:
 
 ```markdown
 ## Summary

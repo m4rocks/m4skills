@@ -23,7 +23,7 @@ Assume the next contributor is an agent that sees only the files it opened, copi
 
 Adding a new tool or dependency is the maintainer's call, so ask before doing it.
 
-Prove each new check fails on a real past instance of the mistake, then commit each class separately.
+Prove each new check fails on a real past instance of the mistake, then commit each class separately, per the commits setting.
 
 ## Keep the rule table
 

@@ -8,8 +8,8 @@
 
 - Tracker: {PLAN.md | GitHub issues in owner/repo}
 - Tests: {always | when a cheap test seam exists | only when asked}
-- Commits: {one per feature | ask before committing | none, the maintainer commits}
-- Pull requests: {one per batch, from a branch | none}
+- Commits: {one per feature, ask before each | one per feature, without asking | never, the maintainer commits}
+- Pull requests: {one per batch from a branch, ask before pushing | one per batch from a branch, push without asking | none}
 - Closing issues: {allowed | ask first}
 - Subagents: {only when the maintainer asks | allowed for read-only exploration}
 
