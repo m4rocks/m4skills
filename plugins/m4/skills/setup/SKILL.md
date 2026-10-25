@@ -20,11 +20,11 @@ Find out what the repo already answers, so the interview only covers real choice
 
 Ask in rounds with the harness's structured question tool when it has one; otherwise ask one question per message with numbered options. Put the recommended option first and say why in its description. Skip any question the repo already settled.
 
-1. Workflow: tracker (PLAN.md, or GitHub issues when the remote is GitHub and `gh` works), tests (always, when a cheap test seam exists, only when asked), commits (one per feature asking before each, one per feature without asking, or never). Say plainly in each option whether the agent will commit without asking.
-2. Collaboration: pull requests (one per batch asking before pushing, one per batch pushing without asking, or none), closing issues (GitHub tracker only: allowed or ask first), subagents (only when asked, or allowed for read-only exploration), and who else works here (solo, or people who don't use agents), which sets how much the project sentence and README must explain.
+1. Workflow: tracker (PLAN.md, or GitHub issues when the remote is GitHub and `gh` works), tests (always, when a cheap test seam exists, only when asked), commits (only when the user says, one per feature without asking, or one per feature asking before each). Say plainly in each option whether the agent will commit or ask on its own.
+2. Collaboration: pushes and pull requests (only when the user says, a pull request per batch without asking, or ask before pushing), closing issues (GitHub tracker only: allowed or ask first), subagents (only when asked, or allowed for read-only exploration), and who else works here (solo, or people who don't use agents), which sets how much the project sentence and README must explain.
 3. Finish: a one-sentence description of the project, confirmed or corrected; and, when the stack has a linter that can catch comments explaining what code does, whether to set that rule up.
 
-Recommend "when a cheap test seam exists", "one per feature, ask before each", no pull requests for a solo repo without a remote, and subagents only when asked.
+Recommend "when a cheap test seam exists", commits and pushes only when the user says, and subagents only when asked.
 
 ## Write
 
@@ -44,6 +44,6 @@ One heading per feature: a line or two on what and why, then a checklist of beha
 
 If the user chose the lint rule, add it to the linter config and record it in the enforced-rules table.
 
-Commit the files m4:setup wrote on their own, asking first unless the commits setting allows committing without asking, so they don't ride along with the next feature's commit.
+When the commits setting commits without asking, commit the files m4:setup wrote on their own; otherwise leave them uncommitted without asking.
 
 End by listing the files you wrote and the settings you chose.

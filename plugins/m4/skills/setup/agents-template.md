@@ -8,8 +8,8 @@
 
 - Tracker: {PLAN.md | GitHub issues in owner/repo}
 - Tests: {always | when a cheap test seam exists | only when asked}
-- Commits: {one per feature, ask before each | one per feature, without asking | never, the maintainer commits}
-- Pull requests: {one per batch from a branch, ask before pushing | one per batch from a branch, push without asking | none}
+- Commits: {only when the maintainer says | one per feature, without asking | one per feature, ask before each}
+- Pushes and pull requests: {only when the maintainer says | one pull request per batch from a branch, without asking | ask before pushing}
 - Closing issues: {allowed | ask first}
 - Subagents: {only when the maintainer asks | allowed for read-only exploration}
 
@@ -19,7 +19,7 @@
 {GitHub variant:} GitHub issues hold intent, one issue per feature with a checklist in its body; the code and the maintainer decide what is true.
 Check off items the code already does. Add entries for requests that aren't listed, and for problems you notice outside the task, rather than fixing those in passing, so every diff stays reviewable. Order is a suggestion: if a request seems to depend on unfinished work, say so in one line and continue.
 
-Ask the maintainer about product direction, scope, and anything irreversible or outward-facing, such as pushing, deleting data, adding a dependency or closing issues, unless the settings above allow it. Ask through the harness's structured question tool when it has one, recommended option first; otherwise ask one question per message with numbered options. Decide everything reversible yourself and report it. Ask a question only when you need a decision to continue; otherwise end your turn with the answer.
+Ask the maintainer about product direction, scope, and anything irreversible or outward-facing, such as pushing, deleting data, adding a dependency or closing issues, unless the settings above allow it. Ask through the harness's structured question tool when it has one, recommended option first; otherwise ask one question per message with numbered options. Decide everything reversible yourself and report it. Ask a question only when you can't continue without a decision. Finishing a change is not such a point: report it in a line or two and stop, and leave committing and pushing to the settings or the maintainer's word.
 
 The maintainer can override any setting for a single request, for example "go autonomous, commit and push everything" or "ask before each commit"; the override lasts until that request is done.
 

@@ -44,13 +44,15 @@ If the session's context gets long, finish and commit the current feature, then 
 
 ## Committing and pushing
 
-The request can set the mode for this run, overriding the settings: "autonomous" or "commit and push everything" means commit and push without asking; "ask" means ask before each commit and push. Without that, the commits and pull requests settings decide.
+The request can set the mode for this run, overriding the settings: "autonomous" or "commit and push everything" means commit and push without asking; "ask" means ask before each commit. Without that, the settings decide.
 
-In ask mode, when a feature passes, show its commit message and files and ask through the structured question tool: commit, commit this and the rest of the batch without asking, or leave it uncommitted. Then go on to the next feature. Pushing works the same way.
+When commits happen only when the user says, leave each feature uncommitted, don't ask, and go on to the next. When the user later says to commit, make one commit per feature wherever the files separate cleanly.
+
+In ask mode, when a feature passes, show its commit message and files and ask through the structured question tool: commit, commit this and the rest of the batch without asking, or leave it uncommitted. Then go on to the next feature.
 
 ## Pull requests
 
-When the pull requests setting is one per batch: before the first feature, if you're on the default branch, create a branch named after the batch. After the last feature, push it (asking first unless the setting says not to) and open a pull request with `gh pr create`, using this body:
+When the setting or the request calls for a pull request per batch: before the first feature, if you're on the default branch, create a branch named after the batch. After the last feature, push it and open a pull request with `gh pr create`, using this body:
 
 ```markdown
 ## Summary
