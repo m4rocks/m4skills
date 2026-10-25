@@ -44,7 +44,9 @@ If the session's context gets long, finish and commit the current feature, then 
 
 ## Committing and pushing
 
-When the commits setting says to ask, show the commit message and the files, and ask through the structured question tool with three options: commit, commit this and the rest of the batch without asking, or leave it uncommitted. Commit without asking only when the setting or the user's answer allows it. Pushing follows the pull requests setting the same way.
+The request can set the mode for this run, overriding the settings: "autonomous" or "commit and push everything" means commit and push without asking; "ask" means ask before each commit and push. Without that, the commits and pull requests settings decide.
+
+In ask mode, when a feature passes, show its commit message and files and ask through the structured question tool: commit, commit this and the rest of the batch without asking, or leave it uncommitted. Then go on to the next feature. Pushing works the same way.
 
 ## Pull requests
 
@@ -61,4 +63,4 @@ When the pull requests setting is one per batch: before the first feature, if yo
 <easy or hard to undo, and what could break>
 ```
 
-End by listing the commits, the tracker changes, anything skipped or unchecked, and any risk.
+End once, after the last feature, by listing the commits, the tracker changes, anything skipped or unchecked, and any risk. That report closes m4:do; later turns follow whatever the user brings up next.
