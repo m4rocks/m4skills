@@ -1,11 +1,11 @@
 ---
-name: m4plan
+name: shape
 description: Turn an idea into planned features through a structured interview, then write them to the tracker. Use when the user wants to plan, scope or think through something before building it, or asks to be grilled on a design.
 ---
 
-# m4plan
+# m4:shape
 
-Start with one line: you are running m4plan, and it will only write to the tracker named in AGENTS.md.
+Start with one line: you are running m4:shape, and it will only write to the tracker named in AGENTS.md.
 
 ## Interview
 
@@ -26,6 +26,6 @@ One entry per feature, sized so one build session can finish and commit it. An e
 
 When the tracker already has entries, reconcile first: check off behaviors the code already does, and point out entries the new plan replaces.
 
-The tracker is the only thing m4plan changes; building is m4do's job, so m4plan never starts the work, not even a branch. When the user doesn't want tracker entries, keep the plan in chat and suggest m4do to build it. Order entries the way you'd build them, but the user can build any of them at any time.
+The tracker is the only thing m4:shape changes; building is m4:do's job, so m4:shape never starts the work, not even a branch. When the user doesn't want tracker entries, keep the plan in chat and suggest m4:do to build it. Order entries the way you'd build them, but the user can build any of them at any time.
 
 End by listing the entries you added or changed.

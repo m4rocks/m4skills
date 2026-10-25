@@ -1,11 +1,11 @@
 ---
-name: m4do
+name: do
 description: Build one or more features end to end, test-first where the repo's settings call for it, committing each. Use when the user asks to implement, add or change something whose desired behavior is known, whether that is a tracker entry, several entries, or a plain sentence.
 ---
 
-# m4do
+# m4:do
 
-Before any other output or command, write one line: you are running m4do, the features you'll build, and what you expect to touch.
+Before any other output or command, write one line: you are running m4:do, the features you'll build, and what you expect to touch.
 
 When the tests setting calls for tests and the repo has no test runner, ask before the first feature whether to add one, since that adds a dependency.
 

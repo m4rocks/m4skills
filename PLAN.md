@@ -1,6 +1,6 @@
 # m4skills plan
 
-A small, harness-agnostic skillset: predictable skills, a lean AGENTS.md, agents that maintain the repo like its owner would. Installed through the harness's own plugin command.
+A small Claude Code skillset: predictable skills, a lean AGENTS.md, agents that maintain the repo like its owner would. Installed as a Claude Code plugin.
 
 ## Skill conventions
 
@@ -11,12 +11,12 @@ Rules every skill follows, so nothing runs that the user didn't expect.
 - [x] Auto-triggerable: descriptions are precise routing text with non-overlapping triggers, one sentence each
 - [x] No tool names; "the harness's structured question tool when it has one", falling back to one question per message
 - [x] Subagents only when AGENTS.md or the user allows them
-- [x] Names are `m4<verb>`, unique in any shared skills folder
+- [x] Short verbs invoked as `/m4:<verb>`, none matching a Claude Code built-in (hence `setup` and `shape`, not `init` and `plan`)
 - [x] Written to `prompt-audit` and `writing-for-agents`: reasons beside rules, positive phrasing, no caps or MUST, nothing the model does by default, nothing the environment already says
 
 ## AGENTS.md template
 
-The always-loaded file `m4init` generates, written as prose with reasons, not bullets.
+The always-loaded file `m4:setup` generates, written as prose with reasons, not bullets.
 
 - [x] Settings block: tracker, tests, commits, PRs, subagents
 - [x] Working here: tracker is advisory intent; check off what the code already does; add unlisted requests and noticed problems as entries; plan order is a suggestion, never a reason to refuse
@@ -28,9 +28,9 @@ The always-loaded file `m4init` generates, written as prose with reasons, not bu
 - [x] Comments say why, including known limits; restructure instead of what-comments; leave others' comments alone
 - [x] Risky logic (branches, parsers, money, security, data writes, bug fixes) ships with a test
 - [x] No debris; fix code rather than tests; README updated with user-visible changes
-- [x] Enforced-rules table, filled by `m4harden`
+- [x] Enforced-rules table, filled by `m4:harden`
 
-## m4init
+## m4:setup
 
 Use when: a new repo, or the user's preferences changed. Touches AGENTS.md, an `@AGENTS.md` line in an existing CLAUDE.md, and an empty PLAN.md in file mode.
 
@@ -42,7 +42,7 @@ Use when: a new repo, or the user's preferences changed. Touches AGENTS.md, an `
 - [x] Claude Code skips AGENTS.md when any CLAUDE.md or CLAUDE.local.md exists: add the import and warn about CLAUDE.local.md
 - [x] Won't create doc folders, labels, or overwrite the user's sections
 
-## m4plan
+## m4:shape
 
 Use when: shaping an idea into features. Touches the tracker only.
 
@@ -52,7 +52,7 @@ Use when: shaping an idea into features. Touches the tracker only.
 - [x] Reconcile on re-runs: check off what the code already does
 - [x] Won't create ticket-per-task, dependency graphs, spikes, or write code
 
-## m4do
+## m4:do
 
 Use when: the user knows what to build, one entry, several, or a sentence. Touches code, tests, tracker, commits.
 
@@ -64,7 +64,7 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
 - [x] Won't call reviewers, refuse over ordering, or push outside PR mode
 
-## m4fix
+## m4:fix
 
 Use when: something is broken and the cause is unknown. Touches code, tests, tracker, commits.
 
@@ -74,7 +74,7 @@ Use when: something is broken and the cause is unknown. Touches code, tests, tra
 - [x] Regression test; tagged debug logs removed; cause stated in the commit message
 - [x] Can't reproduce: say what was tried, ask once, continue best-effort
 
-## m4explore
+## m4:explore
 
 Use when: unfamiliar code, or "how does X work". Touches nothing.
 
@@ -82,7 +82,7 @@ Use when: unfamiliar code, or "how does X work". Touches nothing.
 - [x] Offer to add discovered conventions to AGENTS.md
 - [x] Won't write docs
 
-## m4tidy
+## m4:tidy
 
 Use when: before committing or merging a diff, including human-written ones. Touches only the diff's files.
 
@@ -92,7 +92,7 @@ Use when: before committing or merging a diff, including human-written ones. Tou
 - [x] Behavior-changing findings go to the user as one multi-select question
 - [x] Won't widen scope or write a report file
 
-## m4harden
+## m4:harden
 
 Use when: the user corrected the agent for the same thing twice. Touches code, types, lint config, AGENTS.md.
 
@@ -102,14 +102,14 @@ Use when: the user corrected the agent for the same thing twice. Touches code, t
 
 ## Packaging
 
-Skills live once in `plugins/m4/skills/`; each harness gets a thin manifest. No hooks, no always-on context file.
+Skills live in `plugins/m4/skills/`. No hooks, no always-on context file.
 
 - [x] Claude Code: `.claude-plugin/plugin.json` and `marketplace.json`; install with `/plugin marketplace add` then `/plugin install m4@m4skills`
-- [x] Codex: portable `plugins/m4/plugin.json` and `.agents/plugins/marketplace.json`; `codex plugin marketplace add`, then install from the plugins directory (Codex docs say the CLI doesn't install)
 - [x] Keep manifests to required fields so versions can't drift
-- [x] README: install lines per harness, the skill table, what each skill won't do
+- [x] README: install lines, the skill table, what each skill won't do
 
 ## Verification
 
 - [ ] Run `/claude-api prompt-audit` over the skills and the AGENTS.md template
-- [ ] Install in both harnesses and run m4init, m4plan, m4do end to end on a real repo
+- [x] Install in Claude Code and run setup, shape and do end to end on a real repo
+- [ ] Re-run after the renames and first-run fixes

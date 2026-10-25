@@ -1,11 +1,11 @@
 ---
-name: m4init
+name: setup
 description: Set up or update this repo's AGENTS.md through a short interview about tracker, tests, commits, pull requests and subagents. Use when starting to use m4 in a project, or when the user wants to change how agents work in this repo.
 ---
 
-# m4init
+# m4:setup
 
-Start with one line: you are running m4init, and it will touch AGENTS.md, possibly CLAUDE.md, and possibly create PLAN.md.
+Start with one line: you are running m4:setup, and it will touch AGENTS.md, possibly CLAUDE.md, and possibly create PLAN.md.
 
 ## Look before asking
 
@@ -44,6 +44,6 @@ One heading per feature: a line or two on what and why, then a checklist of beha
 
 If the user chose the lint rule, add it to the linter config and record it in the enforced-rules table.
 
-When the commits setting is one per feature, commit the files m4init wrote on their own, so they don't ride along with the next feature's commit.
+When the commits setting is one per feature, commit the files m4:setup wrote on their own, so they don't ride along with the next feature's commit.
 
 End by listing the files you wrote and the settings you chose.

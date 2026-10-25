@@ -1,11 +1,11 @@
 ---
-name: m4tidy
+name: tidy
 description: Review and clean up a diff before it is committed or merged, fixing clarity problems directly and raising correctness issues for the user to pick. Use when the user asks to review, tidy, clean up or check changes, including code a person wrote.
 ---
 
-# m4tidy
+# m4:tidy
 
-Start with one line: you are running m4tidy, and the diff you're reviewing, whose files are the only ones it will touch. The diff is what the user named, otherwise the uncommitted changes, otherwise the current branch against the default branch.
+Start with one line: you are running m4:tidy, and the diff you're reviewing, whose files are the only ones it will touch. The diff is what the user named, otherwise the uncommitted changes, otherwise the current branch against the default branch.
 
 Read the diff, then the code around it: callers of every changed function, what it calls, its tests. A change can break code it doesn't touch, so when a signature, return value or behavior changes, check every caller.
 

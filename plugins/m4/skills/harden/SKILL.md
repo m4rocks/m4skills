@@ -1,11 +1,11 @@
 ---
-name: m4harden
+name: harden
 description: Make a mistake agents keep repeating in this repo impossible, enforcing the fix through structure, types, lint or tests instead of another instruction. Use when the user has corrected the same agent behavior more than once, or asks to harden the repo against recurring mistakes.
 ---
 
-# m4harden
+# m4:harden
 
-Start with one line: you are running m4harden, the mistakes you'll address, and that it may touch code, types, lint config and AGENTS.md.
+Start with one line: you are running m4:harden, the mistakes you'll address, and that it may touch code, types, lint config and AGENTS.md.
 
 ## Find the mistake classes
 
