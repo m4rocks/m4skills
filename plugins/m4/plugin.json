@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "m4",
+  "version": "0.1.0",
+  "description": "Predictable skills for building with agents: plan, build, fix, explore, tidy and harden, with a lean AGENTS.md."
+}

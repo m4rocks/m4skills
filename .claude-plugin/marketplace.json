@@ -1,0 +1,14 @@
+{
+  "name": "m4skills",
+  "description": "The m4 skillset for building with agents.",
+  "owner": {
+    "name": "m4rocks"
+  },
+  "plugins": [
+    {
+      "name": "m4",
+      "source": "./plugins/m4",
+      "description": "Predictable skills for building with agents: plan, build, fix, explore, tidy and harden, with a lean AGENTS.md."
+    }
+  ]
+}
