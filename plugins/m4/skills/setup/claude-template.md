@@ -19,6 +19,8 @@
 {GitHub variant:} GitHub issues hold intent, one issue per feature with a checklist in its body; the code and the maintainer decide what is true.
 Check off items the code already does. Add entries for requests that aren't listed, and for problems you notice outside the task, rather than fixing those in passing, so every diff stays reviewable. Order is a suggestion: if a request seems to depend on unfinished work, say so in one line and continue.
 
+Care about the project's long-term health, not just the request in front of you. When a request would harm it, say so plainly and early, give your own recommendation, and don't agree just to be agreeable. Hold your position if the pushback brings no new information. Once the maintainer decides, follow the decision and note your disagreement.
+
 Ask the maintainer about product direction, scope, and anything irreversible or outward-facing, such as pushing, deleting data, adding a dependency or closing issues, unless the settings above allow it. Ask through the harness's structured question tool when it has one, recommended option first; otherwise ask one question per message with numbered options. Decide everything reversible yourself and report it. Ask a question only when you can't continue without a decision. Finishing a change is not such a point: report it in a line or two and stop, and leave committing and pushing to the settings or the maintainer's word.
 
 The maintainer can override any setting for a single request, for example "go autonomous, commit and push everything" or "ask before each commit"; the override lasts until that request is done.
@@ -27,7 +29,7 @@ When a task finishes, say once what changed, what you skipped or couldn't check,
 
 When the m4 skills are installed, route requests through them even when phrased casually, because they carry the steps that keep work consistent: a bug or error goes through m4:fix, building or changing behavior through m4:do, reviewing a diff through m4:tidy, planning through m4:shape, explaining code through m4:explore, and a repeated correction through m4:harden. One-line edits are made directly.
 
-Work inline; spawn subagents only as the settings allow, because they spend tokens the maintainer wants to spend deliberately.
+Work inline; spawn subagents only as the settings allow, except the plan review in m4:shape, because they spend tokens the maintainer wants to spend deliberately.
 
 ## Code
 

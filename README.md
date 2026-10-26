@@ -1,6 +1,6 @@
 # m4skills
 
-Seven Claude Code skills for building with agents. Each does one thing, says what it will touch, and reports what it changed. No subagents unless you allow them, no ticket graphs, no refusals over ordering.
+Seven Claude Code skills for building with agents. Each does one thing, says what it will touch, and reports what it changed. No subagents unless you allow them (except the one cold-read plan review in shape), no ticket graphs, no refusals over ordering.
 
 ## Install
 
