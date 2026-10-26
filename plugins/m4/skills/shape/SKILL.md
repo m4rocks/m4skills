@@ -24,7 +24,7 @@ The interview is done when the sweep leaves no open decisions, or the user says 
 One entry per feature, sized so one build session can finish and commit it. An entry has a short name, a line or two on what and why, the decisions made with their reasons, and a checklist of behaviors a test or a person could check. Write behaviors, not tasks: "an expired link shows the sign-in page", not "add expiry check". An entry is read later by someone without this conversation, so it must carry every decision it depends on.
 
 - PLAN.md: a `##` heading per feature, following the format note at the top of the file.
-- GitHub: `gh issue create` per feature, with the description and checklist in the body.
+- GitHub: `gh issue create` per feature, with the description and checklist in the body. Run `gh label list` once first and pass `--label` for each existing label that clearly fits the feature. Never create a label or use a name that isn't in the list; when none fits, create the issue without one. Leave the labels of issues you edit as they are.
 
 When the tracker already has entries, reconcile first: check off behaviors the code already does, and point out entries the new plan replaces.
 
