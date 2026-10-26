@@ -21,7 +21,7 @@ Work through the features in the order given. For each:
 4. Run the checks the project has for this area: tests, type checker, linter.
 5. Check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage files by name, only those this feature changed, so other uncommitted work stays out of its commit.
 
-With a GitHub tracker, when every behavior in the feature's issue is checked off and its checks pass, end the commit message with a `Closes #N` line so merging closes the issue. When the closing setting is "ask first", write `Refs #N` instead. A feature left partly done gets `Refs #N`, never `Closes`. PLAN.md entries have no issue to close.
+With a GitHub tracker, when every behavior in the issue is checked off and its checks pass, end the commit message with a `Closes #N` line so merging closes the issue. When the closing setting is "ask first", write `Refs #N` instead. A feature left partly done, or an earlier feature in an issue that still has unchecked ones, gets `Refs #N`, never `Closes`. Never close a root issue that tracks others; it closes when its task list is complete, and that is the maintainer's call. PLAN.md entries have no issue to close.
 
 A good test fails when the behavior breaks and keeps passing when the internals are restructured. A test whose expected value is computed the way the code computes it proves nothing; take expected values from the requirement.
 
