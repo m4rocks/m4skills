@@ -9,7 +9,7 @@ Before any other output or command, write one line: you are running m4:do, the f
 
 When the tests setting calls for tests and the repo has no test runner, ask before the first feature whether to add one, since that adds a dependency.
 
-A request that isn't in the tracker gets an entry, then you build it. If a feature seems to depend on unfinished work, say so in one line and continue.
+A request that isn't in the tracker gets an entry, then you build it. Ask first through the structured question tool before adding the entry, whether it's a GitHub issue or a PLAN.md line; if declined, build without one and use no `Closes` or `Refs` line. If a feature seems to depend on unfinished work, say so in one line and continue.
 
 ## Each feature
 
