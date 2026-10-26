@@ -1,6 +1,6 @@
 # m4skills
 
-Seven Claude Code skills for building with agents. Each does one thing, says what it will touch, and reports what it changed. No subagents unless you allow them (except the one cold-read plan review in shape), no ticket graphs, no refusals over ordering.
+Eight Claude Code skills for building with agents. Each does one thing, says what it will touch, and reports what it changed. No subagents unless you allow them (except the one cold-read plan review in shape), no ticket graphs, no refusals over ordering.
 
 ## Install
 
@@ -22,8 +22,13 @@ In Claude Code:
 | `/m4:explore` | Understanding unfamiliar code | Nothing | Write docs |
 | `/m4:tidy` | Reviewing a diff before commit or merge | The diff's files | Change behavior without asking, widen scope |
 | `/m4:harden` | The agent repeats a mistake you've corrected | Code, types, lint config, CLAUDE.md | Add a prose rule where a check can enforce it |
+| `/m4:unslop` | Before the agent writes docs, commit or PR text, or tracker entries, or when you hand it text to clean up | The draft text | Change meaning or tone |
 
 Start with `/m4:setup`. It interviews you, then writes a CLAUDE.md with your settings, code rules, and a line routing requests to the m4 skills so casual phrasing like "fix X" still uses them.
+
+## Credits
+
+`/m4:unslop` is adapted from the unslop skill by poteto. The rule numbers come from their skill.
 
 ## Tracker
 
