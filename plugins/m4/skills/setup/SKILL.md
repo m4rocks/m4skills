@@ -1,11 +1,11 @@
 ---
 name: setup
-description: Set up or update this repo's AGENTS.md through a short interview about tracker, tests, commits, pull requests and subagents. Use when starting to use m4 in a project, or when the user wants to change how agents work in this repo.
+description: Use when the user says set up, init, configure or onboard m4 or agents for this repo, or wants to change standing rules for tracker, tests, commits, pushes or subagents. Interviews them, then writes CLAUDE.md. Skip for an instruction about the current request only.
 ---
 
 # m4:setup
 
-Start with one line: you are running m4:setup, and it will touch AGENTS.md, possibly CLAUDE.md, and possibly create PLAN.md.
+Start with one line: you are running m4:setup, and it will touch CLAUDE.md, possibly AGENTS.md, and possibly create PLAN.md.
 
 ## Look before asking
 
@@ -28,11 +28,11 @@ Recommend "when a cheap test seam exists", commits and pushes only when the user
 
 ## Write
 
-Fill `agents-template.md` from this skill's folder: keep the tracker variant that matches, drop the commands paragraph when the repo's scripts already say everything, drop the closing-issues setting for the PLAN.md tracker, and write the settings as plain values. Show the result and write it on approval.
+Fill `claude-template.md` from this skill's folder: keep the tracker variant that matches, drop the commands paragraph when the repo's scripts already say everything, drop the closing-issues setting for the PLAN.md tracker, and write the settings as plain values. Show the result and write it on approval.
 
-When AGENTS.md already exists, keep the user's own sections and replace only the sections the template owns. On a re-run, change only the settings that moved.
+Write to `CLAUDE.md` at the repo root, or to `.claude/CLAUDE.md` when that is where the repo keeps it. When it already exists, keep the user's own sections and replace only the sections the template owns. On a re-run, change only the settings that moved.
 
-Claude Code reads AGENTS.md only when no CLAUDE.md, `.claude/CLAUDE.md` or CLAUDE.local.md exists in the working directory or above. When one exists, add a line `@AGENTS.md` to it, and move its rules into AGENTS.md if the user agrees. Tell the user that creating a CLAUDE.local.md later stops Claude Code from reading AGENTS.md.
+When AGENTS.md exists, carry its rules into CLAUDE.md and drop any `@AGENTS.md` import, so each rule has one home. Ask before deleting AGENTS.md, since other tools may still read it.
 
 For the PLAN.md tracker, create PLAN.md if it doesn't exist:
 

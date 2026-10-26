@@ -1,6 +1,6 @@
 # m4skills plan
 
-A small Claude Code skillset: predictable skills, a lean AGENTS.md, agents that maintain the repo like its owner would. Installed as a Claude Code plugin.
+A small Claude Code skillset: predictable skills, a lean CLAUDE.md, agents that maintain the repo like its owner would. Installed as a Claude Code plugin.
 
 ## Skill conventions
 
@@ -8,13 +8,13 @@ Rules every skill follows, so nothing runs that the user didn't expect.
 
 - [x] No skill invokes another skill
 - [x] Opens by naming itself and what it will touch; ends with what changed, what was skipped or unchecked, and any risk
-- [x] Auto-triggerable: descriptions are precise routing text with non-overlapping triggers, one sentence each
+- [x] Model-invocable: each description opens with the plain words users type (fix, add, review), then what it does and when to skip, so common verbs still route
 - [x] No tool names; "the harness's structured question tool when it has one", falling back to one question per message
-- [x] Subagents only when AGENTS.md or the user allows them
+- [x] Subagents only when CLAUDE.md or the user allows them
 - [x] Short verbs invoked as `/m4:<verb>`, none matching a Claude Code built-in (hence `setup` and `shape`, not `init` and `plan`)
 - [x] Written to `prompt-audit` and `writing-for-agents`: reasons beside rules, positive phrasing, no caps or MUST, nothing the model does by default, nothing the environment already says
 
-## AGENTS.md template
+## CLAUDE.md template
 
 The always-loaded file `m4:setup` generates, written as prose with reasons, not bullets.
 
@@ -28,18 +28,19 @@ The always-loaded file `m4:setup` generates, written as prose with reasons, not 
 - [x] Comments say why, including known limits; restructure instead of what-comments; leave others' comments alone
 - [x] Risky logic (branches, parsers, money, security, data writes, bug fixes) ships with a test
 - [x] No debris; fix code rather than tests; README updated with user-visible changes
+- [x] Routing line: send casual requests ("fix X") through the matching m4 skill
 - [x] Enforced-rules table, filled by `m4:harden`
 
 ## m4:setup
 
-Use when: a new repo, or the user's preferences changed. Touches AGENTS.md, an `@AGENTS.md` line in an existing CLAUDE.md, and an empty PLAN.md in file mode.
+Use when: a new repo, or the user's preferences changed. Touches CLAUDE.md, and an empty PLAN.md in file mode.
 
-- [x] Detect first: stack, test runner, formatter, existing AGENTS.md or CLAUDE.md, git remote; skip questions the repo already answers
+- [x] Detect first: stack, test runner, formatter, existing CLAUDE.md or AGENTS.md, git remote; skip questions the repo already answers
 - [x] Multistep structured questions, recommended option first: tracker (PLAN.md or GitHub), tests default, commits, PRs, subagents, auto-close issues in GitHub mode, contributor profile
 - [x] Offer a lint rule or hook for the comment policy when the stack has one
 - [x] Add only commands the agent can't discover from the repo
 - [x] Show the draft, write on approval, update its own section in place on re-runs
-- [x] Claude Code skips AGENTS.md when any CLAUDE.md or CLAUDE.local.md exists: add the import and warn about CLAUDE.local.md
+- [x] Writes CLAUDE.md; an existing AGENTS.md's rules move into it, and deleting AGENTS.md is asked first
 - [x] Won't create doc folders, labels, or overwrite the user's sections
 
 ## m4:shape
@@ -79,7 +80,7 @@ Use when: something is broken and the cause is unknown. Touches code, tests, tra
 Use when: unfamiliar code, or "how does X work". Touches nothing.
 
 - [x] Explain structure, flow and conventions in chat
-- [x] Offer to add discovered conventions to AGENTS.md
+- [x] Offer to add discovered conventions to CLAUDE.md
 - [x] Won't write docs
 
 ## m4:tidy
@@ -94,11 +95,11 @@ Use when: before committing or merging a diff, including human-written ones. Tou
 
 ## m4:harden
 
-Use when: the user corrected the agent for the same thing twice. Touches code, types, lint config, AGENTS.md.
+Use when: the user corrected the agent for the same thing twice. Touches code, types, lint config, CLAUDE.md.
 
 - [x] Find recurring mistake classes from the user's input and git history
-- [x] Fix each at the highest level that works: structure, types, a lint whose error names the fix, a test, an AGENTS.md line last
-- [x] Record each rule with its enforcer in the AGENTS.md table; drop rules whose mistake can no longer happen
+- [x] Fix each at the highest level that works: structure, types, a lint whose error names the fix, a test, a CLAUDE.md line last
+- [x] Record each rule with its enforcer in the CLAUDE.md table; drop rules whose mistake can no longer happen
 
 ## Packaging
 
@@ -110,6 +111,6 @@ Skills live in `plugins/m4/skills/`. No hooks, no always-on context file.
 
 ## Verification
 
-- [ ] Run `/claude-api prompt-audit` over the skills and the AGENTS.md template
+- [ ] Run `/claude-api prompt-audit` over the skills and the CLAUDE.md template
 - [x] Install in Claude Code and run setup, shape and do end to end on a real repo
 - [ ] Re-run after the renames and first-run fixes

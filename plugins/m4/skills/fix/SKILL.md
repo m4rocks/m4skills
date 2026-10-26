@@ -1,6 +1,6 @@
 ---
 name: fix
-description: Find and fix the root cause of a bug whose cause isn't known yet, such as something broken, throwing, failing, flaky or slow. Use when the user reports wrong behavior rather than asking for a specific change.
+description: Use whenever the user says fix, debug, broken, bug, doesn't work, error, crash, failing, flaky, slow or regression, or pastes an error or stack trace, even phrased as a casual 'fix X'. Reproduces, finds the root cause, fixes it with a regression test. Skip only when they dictate the exact edit to make.
 ---
 
 # m4:fix

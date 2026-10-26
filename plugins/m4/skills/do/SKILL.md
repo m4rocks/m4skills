@@ -1,6 +1,6 @@
 ---
 name: do
-description: Build one or more features end to end, test-first where the repo's settings call for it, committing each. Use when the user asks to implement, add or change something whose desired behavior is known, whether that is a tracker entry, several entries, or a plain sentence.
+description: Use for any request to build, add, implement, make, change, update, refactor or wire up behavior in this repo, a tracker entry, several entries, or a plain sentence, including short ones like 'add X' or 'make it Y'. Builds end to end, test-first per settings, committing as settings or the user say. Skip for bugs (m4:fix) and one-line edits like a rename, typo or config value.
 ---
 
 # m4:do

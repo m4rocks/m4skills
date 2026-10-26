@@ -1,11 +1,11 @@
 ---
 name: shape
-description: Turn an idea into planned features through a structured interview, then write them to the tracker. Use when the user wants to plan, scope or think through something before building it, or asks to be grilled on a design.
+description: Use when the user says plan, scope, spec, design, brainstorm, think through, or grill me, or describes an idea that still has open decisions. Interviews them, then writes features to the tracker without building. Skip when they ask to build now, however large.
 ---
 
 # m4:shape
 
-Start with one line: you are running m4:shape, and it will only write to the tracker named in AGENTS.md.
+Start with one line: you are running m4:shape, and it will only write to the tracker named in CLAUDE.md.
 
 ## Interview
 

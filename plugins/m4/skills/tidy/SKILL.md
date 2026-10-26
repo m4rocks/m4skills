@@ -1,6 +1,6 @@
 ---
 name: tidy
-description: Review and clean up a diff before it is committed or merged, fixing clarity problems directly and raising correctness issues for the user to pick. Use when the user asks to review, tidy, clean up or check changes, including code a person wrote.
+description: Use when the user says review, tidy, clean up, check, look over or polish changes, a diff, a branch or a PR, including code a person wrote. Fixes clarity directly and raises correctness issues for the user to pick. Skip unprompted after the agent's own changes.
 ---
 
 # m4:tidy
