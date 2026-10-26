@@ -21,6 +21,8 @@ Work through the features in the order given. For each:
 4. Run the checks the project has for this area: tests, type checker, linter.
 5. Check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage files by name, only those this feature changed, so other uncommitted work stays out of its commit.
 
+With a GitHub tracker, when every behavior in the feature's issue is checked off and its checks pass, end the commit message with a `Closes #N` line so merging closes the issue. When the closing setting is "ask first", write `Refs #N` instead. A feature left partly done gets `Refs #N`, never `Closes`. PLAN.md entries have no issue to close.
+
 A good test fails when the behavior breaks and keeps passing when the internals are restructured. A test whose expected value is computed the way the code computes it proves nothing; take expected values from the requirement.
 
 ## Shaping the code
@@ -64,5 +66,7 @@ When the setting or the request calls for a pull request per batch: before the f
 ## Risk
 <easy or hard to undo, and what could break>
 ```
+
+With a GitHub tracker, end the body with one `Closes #N` line per fully finished issue, each on its own line because GitHub reads one issue per keyword. Use `Refs #N` for unfinished issues, and for all of them when the closing setting is "ask first". The commit lines are not enough on their own, since a squash merge drops them.
 
 End once, after the last feature, by listing the commits, the tracker changes, anything skipped or unchecked, and any risk. That report closes m4:do; later turns follow whatever the user brings up next.
