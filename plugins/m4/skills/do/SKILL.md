@@ -15,13 +15,15 @@ A request that isn't in the tracker gets an entry, then you build it. Ask first 
 
 Work through the features in the order given. For each:
 
-1. Read the code it touches and find every place the change must reach: callers, tests, fixtures, config, exports.
+1. Read the code it touches and find every place the change must reach: callers, tests, fixtures, config, exports. Also read what the repo promises: the README and CLAUDE.md for supported platforms, targets and modes, and how existing code branches on them, such as `cfg` attributes or platform modules. The feature works on every one of them unless the entry says otherwise.
 2. When the tests setting calls for a test, or the user asked for one, write a test that drives the new behavior through the public interface. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red. When there's no cheap seam, name the closest real check you'll use instead and move on; a test that mostly tests mocks is worse than none.
 3. Implement until it passes.
 4. Run the checks the project has for this area: tests, type checker, linter.
 5. Check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage files by name, only those this feature changed, so other uncommitted work stays out of its commit.
 
 With a GitHub tracker, when every behavior in the issue is checked off and its checks pass, end the commit message with a `Closes #N` line so merging closes the issue. When the closing setting is "ask first", write `Refs #N` instead. A feature left partly done, or an earlier feature in an issue that still has unchecked ones, gets `Refs #N`, never `Closes`. Never close a root issue that tracks others; it closes when its task list is complete, and that is the maintainer's call. PLAN.md entries have no issue to close.
+
+When building shows that part of the feature won't work somewhere it should, such as a platform, a mode or an existing data case, or can't be built as the entry says, stop and ask through the structured question tool, recommending that you build it or saying why not. Narrowing scope is the user's decision, never something to report afterwards.
 
 A good test fails when the behavior breaks and keeps passing when the internals are restructured. A test whose expected value is computed the way the code computes it proves nothing; take expected values from the requirement.
 
@@ -69,4 +71,4 @@ When the setting or the request calls for a pull request per batch: before the f
 
 With a GitHub tracker, end the body with one `Closes #N` line per fully finished issue, each on its own line because GitHub reads one issue per keyword. Use `Refs #N` for unfinished issues, and for all of them when the closing setting is "ask first". The commit lines are not enough on their own, since a squash merge drops them.
 
-End once, after the last feature, by listing the commits, the tracker changes, anything skipped or unchecked, and any risk. That report closes m4:do; later turns follow whatever the user brings up next.
+End once, after the last feature, with a report. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. Then list the commits, the tracker changes, anything else skipped or unchecked, and any risk. That report closes m4:do; later turns follow whatever the user brings up next.

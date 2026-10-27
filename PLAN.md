@@ -63,6 +63,8 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Vertical slices through public interfaces; a test must fail when behavior breaks and survive internal changes; no cheap seam means the closest real check, stated
 - [x] Design moves: data shape first, parse at the boundary, pass in clock and I/O, split flag-driven functions, inline one-caller wrappers
 - [x] Batch runs inline, one commit per feature, stops at the first feature that can't go green
+- [x] Builds for every platform, target and mode the repo promises; a scope cut found mid-build is asked, never reported after
+- [x] Final report leads with what doesn't work where it should, then what wasn't verified
 - [x] Unlisted request: add the entry and proceed
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
 - [x] Won't call reviewers, refuse over ordering, or push outside PR mode
