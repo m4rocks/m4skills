@@ -65,6 +65,9 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Batch runs inline, one commit per feature, stops at the first feature that can't go green
 - [x] Builds for every platform, target and mode the repo promises; a scope cut found mid-build is asked, never reported after
 - [x] Final report leads with what doesn't work where it should, then what wasn't verified
+- [x] The user decides every choice that changes what gets built or how it fits, with a recommendation; pushes back and raises gaps when found
+- [x] New code follows the shape of the closest existing feature and reuses its helpers; departing from it is asked
+- [x] Per feature, after the checks: use it as its user would, idle included, then review the whole diff against a bar of edge cases, cost on hot paths, readability and scaling
 - [x] Unlisted request: add the entry and proceed
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
 - [x] Won't call reviewers, refuse over ordering, or push outside PR mode
