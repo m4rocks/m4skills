@@ -48,8 +48,10 @@ Use when: a new repo, or the user's preferences changed. Touches CLAUDE.md, and 
 Use when: shaping an idea into features. Touches the tracker only.
 
 - [x] Read relevant code first; finding facts is the agent's job
-- [x] Rounds of up to four independent structured questions, recommended option first, worded so "yes" accepts it
-- [x] Done when no open decisions remain; one entry per feature with a short description and checklist
+- [x] Rounds of every ready decision through the structured question tool, recommended option first, worded so "yes" accepts it
+- [x] Every decision in the plan, details included, is the user's answer or approval; facts that drive a decision are shown in the question
+- [x] Done when every branch of the decision tree is visited and nothing is assumed; only the user ends it early
+- [x] Shows the reviewed entries verbatim and writes only after approval; one entry per feature with a short description and checklist
 - [x] Reconcile on re-runs: check off what the code already does
 - [x] Won't create ticket-per-task, dependency graphs, spikes, or write code
 
