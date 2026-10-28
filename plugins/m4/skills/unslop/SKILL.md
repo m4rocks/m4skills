@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: Use before writing prose that lands somewhere, such as docs, a README, comments, commit or pull request text, tracker entries, or a message to another person, and whenever the user says unslop, de-AI or humanize. Cuts AI tells from the draft. Skip for code and for short chat replies.
+description: Use before writing prose that lands somewhere, such as docs, a README, comments, commit or pull request text, tracker entries, or a message to another person, and whenever the user says unslop, de-AI or humanize. Skip for code and for short chat replies.
 ---
 
 # m4:unslop

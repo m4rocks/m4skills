@@ -20,15 +20,17 @@ In Claude Code:
 | `/m4:do` | Building features whose behavior is known | Code, tests, tracker, commits | Spawn reviewers, refuse over ordering, push without PR mode |
 | `/m4:fix` | Something is broken and the cause is unknown | Code, tests, tracker, commits | Patch symptoms with guards, leave debug logs |
 | `/m4:explore` | Understanding unfamiliar code | Nothing | Write docs |
-| `/m4:tidy` | Reviewing a diff before commit or merge | The diff's files | Change behavior without asking, widen scope |
+| `/m4:tidy` | Reviewing a diff before commit or merge, or addressing review comments | The diff's files | Change behavior without asking, widen scope |
 | `/m4:harden` | The agent repeats a mistake you've corrected | Code, types, lint config, CLAUDE.md | Add a prose rule where a check can enforce it |
 | `/m4:unslop` | Before the agent writes docs, commit or PR text, or tracker entries, or when you hand it text to clean up | The draft text | Change meaning or tone |
 
-Start with `/m4:setup`. It interviews you, then writes a CLAUDE.md with your settings, code rules, and a line routing requests to the m4 skills so casual phrasing like "fix X" still uses them.
+Start with `/m4:setup`, which runs only when you type it. It interviews you, then writes a CLAUDE.md with your settings, code rules, a golden-files table naming the file to copy for each kind of code the repo repeats, and a line routing requests to the m4 skills so casual phrasing like "fix X" still uses them.
 
 ## Credits
 
 `/m4:unslop` is adapted from the unslop skill by poteto. The rule numbers come from their skill.
+
+The test rules in `/m4:do`, the debugging techniques in `/m4:fix` and the review-comment steps in `/m4:tidy` are adapted from [superpowers](https://github.com/obra/superpowers) by Jesse Vincent. The golden-files table and the new-file check are adapted from `inherit-legacy-style` and `gateguard` in [everything-claude-code](https://github.com/affaan-m/everything-claude-code) by Affaan Mustafa.
 
 ## Tracker
 

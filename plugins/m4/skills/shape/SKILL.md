@@ -1,6 +1,6 @@
 ---
 name: shape
-description: Use when the user says plan, scope, spec, design, brainstorm, think through, or grill me, or describes an idea that still has open decisions. Interviews them, then writes features to the tracker without building. Skip when they ask to build now, however large.
+description: Use when the user says plan, scope, spec, design, brainstorm, think through, or grill me, or describes an idea that still has open decisions. Skip when they ask to build now, however large.
 ---
 
 # m4:shape

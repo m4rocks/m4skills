@@ -1,6 +1,6 @@
 ---
 name: harden
-description: Use when the user corrects the same agent behavior a second time ('again', 'I told you', 'stop doing X'), or asks to harden the repo or make a mistake impossible. Enforces the fix through structure, types, lint or tests instead of another instruction. Skip for a first correction, which is simply fixed.
+description: Use when the user corrects the same agent behavior a second time ('again', 'I told you', 'stop doing X'), or asks to harden the repo or make a mistake impossible. Skip for a first correction, which is simply fixed.
 ---
 
 # m4:harden
@@ -11,11 +11,13 @@ Start with one line: you are running m4:harden, the mistakes you'll address, and
 
 Start from what the user describes, then look for more: reverts and fix-up commits in the git history, review comments, CLAUDE.md rules nothing enforces, comments that explain workarounds. Group them into classes. A class counts once it has happened twice.
 
+For each class, work out what context led the agent there: what it read, which example it copied, which instruction it followed or missed. When the mistake was made in this session, give that account from your own reasoning; otherwise reconstruct it from the transcript or the commits. Treat the account as a lead, confirm it against the files, and fix that context along with the code.
+
 Assume the next contributor is an agent that sees only the files it opened, copies the nearest example, and takes the shortest path that compiles. The goal is a repo where a change that looks right from one file is right for the whole repo.
 
 ## Fix each class at the highest level that works
 
-1. Structure: give each piece of state one owner and each task one supported way; hide internals so the wrong import fails; replace hand-synced lists with one source of truth; delete old patterns an agent would copy.
+1. Structure: give each piece of state one owner and each task one supported way; hide internals so the wrong import fails; replace hand-synced lists with one source of truth; delete old patterns an agent would copy. When the mistake came from copying the wrong example, point that kind's row in the golden-files table at a file that shows the right shape, adding the row if it's missing, and propose moving the minority files to that shape.
 2. Types, so the wrong state can't be written.
 3. A lint rule or CI check whose error message names the fix. If the pattern is already common, fail only on new occurrences.
 4. A test of the behavior.
@@ -27,6 +29,6 @@ Prove each new check fails on a real past instance of the mistake, then commit e
 
 ## Keep the rule table
 
-Record each rule and what enforces it in the enforced-rules table in CLAUDE.md. Remove rules whose mistake can no longer happen, and replace any prose rule that a check now covers.
+Record each rule and what enforces it in the enforced-rules table in CLAUDE.md. Remove rules whose mistake can no longer happen, and replace any prose rule that a check now covers. A CLAUDE.md rule whose prevented failure nobody can name costs context in every session; propose deleting it.
 
 End by listing each class with its evidence, the level you chose, and why a higher level didn't work.
