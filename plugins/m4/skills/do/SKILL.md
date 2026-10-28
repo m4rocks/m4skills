@@ -1,6 +1,17 @@
 ---
 name: do
 description: Use for any request to build, add, implement, make, change, update, refactor or wire up behavior in this repo, a tracker entry, several entries, or a plain sentence, including short ones like 'add X' or 'make it Y'. Skip for bugs (m4:fix) and one-line edits like a rename, typo or config value.
+allowed-tools: Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" *)
+hooks:
+  Stop:
+    - hooks:
+        - type: command
+          command: node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" gate
+  PreToolUse:
+    - matcher: "Edit|Write|MultiEdit|NotebookEdit"
+      hooks:
+        - type: command
+          command: node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" guard
 ---
 
 # m4:do
@@ -27,15 +38,28 @@ Work through the features in the order given. For each:
 
 1. Read the code it touches and find every place the change must reach, as CLAUDE.md describes. Also read what the repo promises: the README and CLAUDE.md for supported platforms, targets and modes, and how existing code branches on them, such as `cfg` attributes or platform modules. The feature works on every one of them unless the entry says otherwise.
 2. Read the golden file for this kind of code from CLAUDE.md, or when there is none, the code in this repo that already does something like it, end to end: where its files live, how it names things, how it handles state, errors and I/O, how its UI is put together and how it is tested. Build the new feature in the same shape and reuse its helpers instead of writing new ones, so a reader can't tell the two were written apart. When the existing shape doesn't fit, ask before inventing a new one. When the feature starts a kind of code that later features will repeat, add its row to the golden-files table.
-3. When the tests setting calls for a test, or the user asked for one, write a test that drives the new behavior through the public interface, following "Tests" below. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red. When there's no cheap seam, name the closest real check you'll use instead and move on.
-4. Implement until it passes, writing to the bar in "Shaping the code".
+3. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write a test that drives the new behavior through the public interface, following "Tests" below. Otherwise, or when there's no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
+4. Register it, see "Checks" below, then implement until it passes, writing to the bar in "Shaping the code".
 5. Run the checks the project has for this area: tests, type checker, linter.
 6. Use the feature the way its user would. For an app, CLI or server, launch it (the `run` skill covers how) and go through each behavior in the entry, including the empty and error paths. Anything you couldn't exercise goes into the report by name as not verified.
-7. Check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage files by name, only those this feature changed, so other uncommitted work stays out of its commit.
+7. Clear the check, check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage files by name, only those this feature changed, so other uncommitted work stays out of its commit.
 
 With a GitHub tracker, when every behavior in the issue is checked off and its checks pass, end the commit message with a `Closes #N` line so merging closes the issue. When the closing setting is "ask first", write `Refs #N` instead. A feature left partly done, or an earlier feature in an issue that still has unchecked ones, gets `Refs #N`, never `Closes`. Never close a root issue that tracks others; it closes when its task list is complete, and that is the maintainer's call. PLAN.md entries have no issue to close.
 
 When building shows that part of the feature won't work somewhere it should, such as a platform, a mode or an existing data case, or can't be built as the entry says, stop and ask through the structured question tool, recommending that you build it or saying why not. Narrowing scope is the user's decision, never something to report afterwards.
+
+## Checks
+
+Every feature is finished by a command passing, not by the code looking done. Register the feature's check once it fails for the right reason:
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" set "<command>"
+node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" freeze <test files the check runs>
+```
+
+While a check is set, this skill's hooks rerun it whenever you try to end a turn and send you back with its output while it fails, and they refuse edits to the frozen files. Make the check pass by building the behavior, never by special-casing the inputs it uses or weakening the command.
+
+`check.js clear` runs the check and clears it only if it passes, so run it on its own once the feature works. Before you stop to ask the user something, or when you give up on the feature, use `check.js clear --abandon` and say why in your reply. When a frozen test's expectation looks wrong, ask the user before abandoning the check to edit the test.
 
 ## Tests
 
@@ -73,7 +97,7 @@ Moves that often get there:
 
 ## Batches
 
-Several features run one after another in this session, each committed before the next starts. Stop at the first feature you can't get to pass: leave its changes uncommitted and report what you tried, because later features may depend on it.
+Several features run one after another in this session, each committed before the next starts. Stop at the first feature you can't get to pass: abandon its check, leave its changes uncommitted and report what you tried, because later features may depend on it.
 
 If the session's context gets long, finish and commit the current feature, then suggest continuing the remaining entries in a fresh session; the commits and tracker carry everything over.
 
@@ -102,4 +126,4 @@ When the setting or the request calls for a pull request per batch: before the f
 
 With a GitHub tracker, end the body with one `Closes #N` line per fully finished issue, each on its own line because GitHub reads one issue per keyword. Use `Refs #N` for unfinished issues, and for all of them when the closing setting is "ask first". The commit lines are not enough on their own, since a squash merge drops them.
 
-End once, after the last feature, with a report. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. Then list the commits, the tracker changes, the calls you made yourself, anything else skipped or unchecked, any disagreement with a decision the user made, and any risk. Close with what you'd do next and why, if anything, as one recommendation, not a menu. That report closes m4:do; later turns follow whatever the user brings up next.
+End once, after the last feature, with a report. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits, the tracker changes, the calls you made yourself, anything else skipped or unchecked, any disagreement with a decision the user made, and any risk. Close with what you'd do next and why, if anything, as one recommendation, not a menu. That report closes m4:do; later turns follow whatever the user brings up next.

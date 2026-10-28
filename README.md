@@ -26,6 +26,10 @@ In Claude Code:
 
 Start with `/m4:setup`, which runs only when you type it. It interviews you, then writes a CLAUDE.md with your settings, code rules, a golden-files table naming the file to copy for each kind of code the repo repeats, and a line routing requests to the m4 skills so casual phrasing like "fix X" still uses them.
 
+## Checks, not guesses
+
+`/m4:do` finishes each feature on a command passing, not on the code looking done. Once the feature's test fails for the right reason, the skill registers it as the check. Until it passes, the turn can't end, the test files can't be edited, and the check can't be cleared without saying why. The state lives in `.git/m4/`, so nothing extra gets committed. Needs Node, which Claude Code already ships with.
+
 ## Credits
 
 `/m4:unslop` is adapted from the unslop skill by poteto. The rule numbers come from their skill.
