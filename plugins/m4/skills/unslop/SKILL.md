@@ -7,7 +7,7 @@ description: Use before writing prose that lands somewhere, such as docs, a READ
 
 Adapted from the unslop skill by poteto. The rule numbers are theirs.
 
-Edit text to remove AI patterns. When you are about to write prose, draft it, scan it for the patterns below, rewrite, and only then write it to its destination. When the user hands you text, edit that text. Preserve meaning and match the intended tone.
+Edit text to remove AI patterns. When you are about to write prose, draft it, scan it for the patterns below, rewrite, and only then write it to its destination. When the user hands you text, edit that text. Preserve meaning and match the intended tone. Add no claims, trailers or explanations the source didn't give; when a rule below asks for a mechanism or a number you don't have, cut the sentence rather than supply one.
 
 ## Patterns to detect and fix
 
