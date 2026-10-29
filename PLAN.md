@@ -75,7 +75,7 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Before creating a file, names the file that would otherwise hold the code and the line that will call it (from ECC's `gateguard`)
 - [x] Code is written to a bar of edge cases, cost on hot paths, readability and scaling; per feature, after the checks, it is used as its user would. No separate re-review step, since current models over-verify when told to
 - [x] Tests name the break they catch, use hand-written expected values, test behavior rather than decisions, never assert on mocks, keep test-only code in test utilities, compare against a reference implementation when one exists, and end with a mental mutation check (from superpowers' `writing-good-tests`)
-- [x] Checks, not guesses: each feature gets one command that passes only when it works. Once it fails for the right reason it is registered; while set, a Stop hook reruns it and sends the agent back while it fails, a PreToolUse hook refuses edits to the frozen test files, and `clear` refuses until it passes (`--abandon` to ask the user or give up). State lives in the git dir, so nothing is committed
+- [x] Checks, not guesses: each feature gets one command that passes only when it works. The check is a sample of the inputs, not the whole set: pass it by building the behavior, try inputs it doesn't cover before calling it done, and rerun it before every claim that it works. Steered by the skill's prose, not enforced by hooks, since a model can route around a hook
 - [x] Unlisted request: add the entry and proceed
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
 - [x] Won't call reviewers, refuse over ordering, or push outside PR mode
@@ -123,7 +123,7 @@ Use when: the user corrected the agent for the same thing twice. Touches code, t
 
 ## Packaging
 
-Skills live in `plugins/m4/skills/`, scripts in `plugins/m4/scripts/`. No plugin-wide hooks and no always-on context file; `m4:do` registers its two check hooks for the session it runs in, and they do nothing while no check is set.
+Skills live in `plugins/m4/skills/`. No hooks, no scripts and no always-on context file: the skills steer the model rather than enforce.
 
 - [x] Claude Code: `.claude-plugin/plugin.json` and `marketplace.json`; install with `/plugin marketplace add` then `/plugin install m4@m4skills`
 - [x] Keep manifests to required fields so versions can't drift
@@ -133,5 +133,6 @@ Skills live in `plugins/m4/skills/`, scripts in `plugins/m4/scripts/`. No plugin
 
 - [x] Run `/doctor prompt-audit` over the skills and the CLAUDE.md template; its two template conflicts with `shape` and `do` are fixed, and the "moves" list it suggested cutting stays by choice
 - [x] Install in Claude Code and run setup, shape and do end to end on a real repo
-- [x] Eval suite in `plugins/m4/evals/`, run with `claude plugin eval`, each case with and without the plugin: fix leaves a regression test, do registers and clears a check and copies the golden file, a premature "done" is sent back, a commit message has no AI tells, a small task asks nothing, tidy removes debris and keeps behavior
+- [x] Eval suite in `plugins/m4/evals/`, run with `claude plugin eval`, each case with and without the plugin: fix leaves a regression test, do runs a failing test before writing code and copies the golden file, a premature "done" is caught, a commit message has no AI tells, a small task asks nothing, tidy removes debris and keeps behavior
+- [ ] do cases per section, run on Linux or macOS with and without the plugin and against copies of do with one section removed: a helper reaches index.js and the README, titleCase reuses capitalize, a sibling bug is raised rather than fixed in passing, initials() is judged against held-out inputs, the report shows the check, a test covers empty input. The seeded CLAUDE.md is the real template
 - [x] `m4:do` cut to state each rule once; the design-moves list is gone, since the bar it served stays

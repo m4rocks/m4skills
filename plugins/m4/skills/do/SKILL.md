@@ -1,17 +1,6 @@
 ---
 name: do
 description: Use for any request to build, add, implement, make, change, update, refactor or wire up behavior in this repo, a tracker entry, several entries, or a plain sentence, including short ones like 'add X' or 'make it Y'. Skip for bugs (m4:fix) and one-line edits like a rename, typo or config value.
-allowed-tools: Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" *)
-hooks:
-  Stop:
-    - hooks:
-        - type: command
-          command: node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" gate
-  PreToolUse:
-    - matcher: "Edit|Write|MultiEdit|NotebookEdit"
-      hooks:
-        - type: command
-          command: node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" guard
 ---
 
 # m4:do
@@ -31,24 +20,17 @@ Ask what CLAUDE.md says to ask, up to four ready questions per call. A new modul
 1. Read the code the feature touches and find every place the change must reach, as CLAUDE.md describes, including every platform, target and mode the README and CLAUDE.md promise.
 2. Read the golden file for this kind of code from CLAUDE.md, or when there is none, the closest code that does something like it, end to end. Build the feature in the same shape and reuse its helpers, so a reader can't tell the two were written apart. When the feature starts a kind of code later features will repeat, add its golden-files row.
 3. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write it as "Tests" describes. Otherwise, or with no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
-4. Register the check (see "Checks"), then implement until it and the project's checks for this area pass, writing to the bar in "Shaping the code".
+4. Implement until the check and the project's checks for this area pass (see "Checks"), writing to the bar in "Shaping the code".
 5. Use the feature the way its user would. For an app, CLI or server, launch it (the `run` skill covers how) and go through each behavior, including the empty and error paths. Name anything you couldn't exercise in the report as not verified.
-6. Clear the check, check the behaviors off in the tracker, and commit per the commits setting with a message saying what the feature does. Stage files by name, only those this feature changed.
+6. Check the behaviors off in the tracker, and commit per the commits setting with a message saying what the feature does. Stage files by name, only those this feature changed.
 
 With a GitHub tracker, a commit that finishes every behavior in an issue ends with `Closes #N`, or `Refs #N` when the closing setting is "ask first". Partial work gets `Refs #N`. Never close a root issue that tracks others; that is the maintainer's call.
 
 ## Checks
 
-A feature is finished by a command passing, not by the code looking done. Once the check fails for the right reason, register it:
+A feature is finished when its check passes, not when the code looks done. Treat the check as a sample of the inputs the feature will meet, not the whole set: make it pass by building the behavior, never by special-casing its inputs, weakening the command or editing the test to match the code. Before calling the feature done, try two or three inputs the check doesn't cover, such as the edges in "Shaping the code", and add any that fail to the test.
 
-```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" set "<command>"
-node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" freeze <test files the check runs>
-```
-
-While it is set, this skill's hooks rerun it whenever you try to end a turn, send you back with its output while it fails, and refuse edits to the frozen files. Pass it by building the behavior, never by special-casing its inputs or weakening the command.
-
-When the check passes as you end a turn, the hook clears it. `check.js clear` does the same on demand, refusing while the check fails, so run it on its own. Before stopping to ask the user something, or when giving up on the feature, run `check.js clear --abandon` and say why. When a frozen test's expectation looks wrong, ask the user before abandoning the check to edit it.
+Rerun the check before every claim that the feature works, and quote the end of that run; output from before your last edit doesn't count. When a test's expectation looks wrong, ask the user rather than change it.
 
 ## Tests
 
@@ -77,7 +59,7 @@ The code you leave is:
 
 ## Batches and commits
 
-Features run one after another, each committed before the next starts. Stop at the first one you can't get to pass: abandon its check, leave it uncommitted and report what you tried, since later features may depend on it. When the context gets long, finish the current feature and suggest a fresh session for the rest; the commits and tracker carry over.
+Features run one after another, each committed before the next starts. Stop at the first one you can't get to pass: leave it uncommitted and report what you tried, since later features may depend on it. When the context gets long, finish the current feature and suggest a fresh session for the rest; the commits and tracker carry over.
 
 The request can override the commits setting for this run: "autonomous" or "commit and push everything" commits and pushes without asking, "ask" asks before each commit. When commits wait for the user, leave each feature uncommitted without asking; when they later say to commit, make one commit per feature where the files separate cleanly. In ask mode, show each passing feature's message and files and ask: commit, commit the rest of the batch too, or leave it.
 

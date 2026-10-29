@@ -21,6 +21,3 @@ test('drops leading and trailing hyphens', () => {
   assert.strictEqual(slugify('  --Hello!--  '), 'hello');
 });
 JS
-mkdir -p .git/m4
-echo 'node --test test/slugify.test.js' > .git/m4/check
-echo 'test/slugify.test.js' > .git/m4/frozen

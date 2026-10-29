@@ -28,11 +28,11 @@ Start with `/m4:setup`, which runs only when you type it. It interviews you, the
 
 ## Checks, not guesses
 
-`/m4:do` finishes each feature on a command passing, not on the code looking done. Once the feature's test fails for the right reason, the skill registers it as the check. Until it passes, the turn can't end, the test files can't be edited, and the check can't be cleared without saying why. The state lives in `.git/m4/`, so nothing extra gets committed. Needs Node, which Claude Code already ships with.
+`/m4:do` finishes each feature on a command passing, not on the code looking done. The feature's test has to fail for the right reason before any code is written, the agent tries inputs the test doesn't cover before calling it done, and every claim that it works quotes a run made after the last edit. The skill steers rather than enforces: no hooks, nothing to install.
 
 ## Evals
 
-`plugins/m4/evals/` holds six cases that run each skill on a small seeded repo, with and without the plugin, so a change to a skill can be measured instead of guessed:
+`plugins/m4/evals/` holds eleven cases that run each skill on a small seeded repo, with and without the plugin, so a change to a skill can be measured instead of guessed. The seeded repo gets the CLAUDE.md `/m4:setup` would write, so the cases measure the template too. Shell tools need a sandbox, so run them on Linux or macOS:
 
 ```text
 cd plugins/m4

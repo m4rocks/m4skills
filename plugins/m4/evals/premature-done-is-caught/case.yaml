@@ -1,4 +1,4 @@
 schema_version: "1.1"
-name: do-registers-check
+name: premature-done-is-caught
 context:
   scaffold_script: scaffold.sh
