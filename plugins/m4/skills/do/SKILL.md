@@ -11,7 +11,7 @@ When the user declines a tracker entry for an unlisted request, build without on
 
 ## Each feature
 
-1. Before the first line of code, walk through the feature as its user: what they do first, what goes wrong, what they'll ask for next. Read the code the feature touches and find every place the change must reach, as CLAUDE.md describes, including every platform, target and mode the README and CLAUDE.md promise. Note any problem you see in the code you read that is outside the task, such as the same bug in a sibling function; it goes in the report, not into this diff.
+1. Before the first line of code, walk through the feature as its user: what they do first, what goes wrong, what they'll ask for next. Read the code the feature touches, and cover every platform, target and mode the README and CLAUDE.md promise.
 2. Read the golden file for this kind of code end to end, or when there is none, the closest code that does something like it. When the feature starts a kind of code later features will repeat, add its golden-files row.
 3. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write it as "Tests" describes. Otherwise, or with no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
 4. Implement until the check and the project's checks for this area pass (see "Checks"), writing to the bar in "Shaping the code".
@@ -22,7 +22,7 @@ With a GitHub tracker, a commit that finishes every behavior in an issue ends wi
 
 ## Checks
 
-A feature is finished when its check passes, not when the code looks done. Treat the check as a sample of the inputs the feature will meet, not the whole set: make it pass by building the behavior, never by special-casing its inputs, weakening the command or editing the test to match the code. Before calling the feature done, try two or three inputs the check doesn't cover, such as the edges in "Shaping the code", and add any that fail to the test.
+A feature is finished when its check passes, not when the code looks done. Treat the check as a sample of the inputs the feature will meet, not the whole set: make it pass by building the behavior, never by special-casing its inputs, weakening the command or editing the test to match the code. Before calling the feature done, try two or three inputs the check doesn't cover, such as empty input or the last item, and add any that fail to the test.
 
 Output from before your last edit doesn't count as passing. When a feature the user called done fails its check, finishing it is the task, not a question. When a test's expectation looks wrong, ask the user rather than change it.
 
@@ -44,10 +44,7 @@ When more than one design is reasonable and they differ in what a user or the ne
 
 Before creating a file, name the existing file that would otherwise hold the code and the line that will call the new one. When an existing file is the natural home, use it; when nothing will call the code yet, don't write it.
 
-The code you leave is:
-
-- Correct at the edges: empty, zero, one, the last item, errors and timeouts, a second call while the first runs, and data written by older versions.
-- Cheap where it runs often. Name what runs per frame, keystroke, item or request; there, nothing does I/O on the UI or request thread, nothing grows with all the data when it could grow with what changed, and nothing wakes up with no work to do. Code that runs once can stay simple.
+Keep the code cheap where it runs often. Name what runs per frame, keystroke, item or request; there, nothing does I/O on the UI or request thread, nothing grows with all the data when it could grow with what changed, and nothing wakes up with no work to do. Code that runs once can stay simple.
 
 ## Batches and commits
 
@@ -70,4 +67,4 @@ When the setting or the request calls for a pull request per batch, branch off t
 
 ## Report
 
-End once, after the last feature. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then name each problem you noted outside the task, with where it is and an offer to add a tracker entry. Then list the commits, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Close with one recommendation for what to do next, if any. Later turns follow whatever the user brings up.
+End once, after the last feature. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Close with one recommendation for what to do next, if any. Later turns follow whatever the user brings up.
