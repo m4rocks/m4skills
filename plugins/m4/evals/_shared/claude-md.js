@@ -13,7 +13,8 @@ const settings = {
   'Tests': 'always',
   'Commits': 'only when the maintainer says',
   'Pushes and pull requests': 'only when the maintainer says',
-  'Closing issues': 'ask first',
+  // m4:setup drops the closing-issues setting for a PLAN.md tracker.
+  'Closing issues': null,
   'Subagents': 'only when the maintainer asks',
 };
 
@@ -26,15 +27,16 @@ const lines = [];
 for (const line of template.split(/\r?\n/)) {
   if (line.startsWith('{One sentence')) {
     lines.push('A tiny string-utilities library.');
-  } else if (line.startsWith('{Commands') || line.startsWith('{GitHub variant:}')) {
+  } else if (line.startsWith('{Commands') || line.startsWith('{GitHub variant:}') || line.startsWith('{Solo variant:}')) {
     continue;
-  } else if (line.startsWith('{PLAN.md variant:} ')) {
-    lines.push(line.slice('{PLAN.md variant:} '.length));
+  } else if (line.startsWith('{PLAN.md variant:} ') || line.startsWith('{Team variant:} ')) {
+    lines.push(line.slice(line.indexOf('} ') + 2));
   } else if (line.startsWith('{One row')) {
     lines.push(...goldenRows);
   } else {
     const setting = line.match(/^- ([^:]+): \{/);
-    lines.push(setting ? `- ${setting[1]}: ${settings[setting[1]]}` : line);
+    if (!setting) lines.push(line);
+    else if (settings[setting[1]] !== null) lines.push(`- ${setting[1]}: ${settings[setting[1]]}`);
   }
 }
 

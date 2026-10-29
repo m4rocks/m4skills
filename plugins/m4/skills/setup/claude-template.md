@@ -33,7 +33,9 @@ Work inline; spawn subagents only as the settings allow, except the plan review 
 
 ## Code
 
-People who don't use agents read and maintain this code, so aim for code that is obviously correct to a newcomer. Rank choices by correctness, then how easily the code reads and tests, then size; a one-liner that needs decoding is not simple.
+{Team variant:} People who don't use agents read and maintain this code, so aim for code that is obviously correct to a newcomer.
+{Solo variant:} Aim for code that is obviously correct to a newcomer, since the next reader won't have this session's context.
+Rank choices by correctness, then how easily the code reads and tests, then size; a one-liner that needs decoding is not simple.
 
 Build only what was asked: features, options and configuration nobody requested wait until someone needs them. New code of a kind listed under Golden files takes that file's shape: its file layout, naming, error handling, state, UI and tests, and its helpers rather than new ones. Other new code takes the shape of the closest code that does something similar. When neither fits, ask before inventing a new shape. Before writing new code, look for it in this repo, then the standard library and platform, then installed dependencies.
 

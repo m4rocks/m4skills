@@ -25,14 +25,14 @@ For each kind, when one convention covers 95% or more of its files, that convent
 Ask in rounds with the harness's structured question tool when it has one; otherwise ask one question per message with numbered options. Put the recommended option first and say why in its description. Skip any question the repo already settled.
 
 1. Workflow: tracker (PLAN.md, or GitHub issues when the remote is GitHub and `gh` works), tests (always, when a cheap test seam exists, only when asked), commits (only when the user says, one per feature without asking, or one per feature asking before each). Say plainly in each option whether the agent will commit or ask on its own.
-2. Collaboration: pushes and pull requests (only when the user says, a pull request per batch without asking, or ask before pushing), closing issues (GitHub tracker only: allowed or ask first), subagents (only when asked, or allowed for read-only exploration), and who else works here (solo, or people who don't use agents), which sets how much the project sentence and README must explain.
+2. Collaboration: pushes and pull requests (only when the user says, a pull request per batch without asking, or ask before pushing), closing issues (GitHub tracker only: allowed or ask first), subagents (only when asked, or allowed for read-only exploration), and who else works here (solo, or people who don't use agents), which picks the Code section's opening line and sets how much the project sentence and README must explain.
 3. Finish: a one-sentence description of the project, confirmed or corrected; the golden-files table, with each convention split as its own question; and, when the stack has a linter that can catch comments explaining what code does, whether to set that rule up.
 
 Recommend "when a cheap test seam exists", commits and pushes only when the user says, and subagents only when asked.
 
 ## Write
 
-Fill `claude-template.md` from this skill's folder: keep the tracker variant that matches, drop the commands paragraph when the repo's scripts already say everything, drop the closing-issues setting for the PLAN.md tracker, write the settings as plain values, and fill the golden-files table with the confirmed rows, leaving it empty when the repo has no repeated kinds yet. Show the result and write it on approval.
+Fill `claude-template.md` from this skill's folder: keep the tracker variant and the team or solo variant that match, drop the commands paragraph when the repo's scripts already say everything, drop the closing-issues setting for the PLAN.md tracker, write the settings as plain values, and fill the golden-files table with the confirmed rows, leaving it empty when the repo has no repeated kinds yet. Show the result and write it on approval.
 
 Write to `CLAUDE.md` at the repo root, or to `.claude/CLAUDE.md` when that is where the repo keeps it. When it already exists, keep the user's own sections and replace only the sections the template owns.
 

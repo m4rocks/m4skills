@@ -41,7 +41,7 @@ Use when: a new repo, or the user's preferences changed. Touches CLAUDE.md, and 
 - [x] Detect first: stack, test runner, formatter, existing CLAUDE.md or AGENTS.md, git remote; skip questions the repo already answers
 - [x] Scan repeated kinds of code for golden files: a convention covering 95% or more wins, closer splits are asked with a path for each side
 - [x] User-invoked only (`disable-model-invocation`), so its description costs no context
-- [x] Multistep structured questions, recommended option first: tracker (PLAN.md or GitHub), tests default, commits, PRs, subagents, auto-close issues in GitHub mode, contributor profile
+- [x] Multistep structured questions, recommended option first: tracker (PLAN.md or GitHub), tests default, commits, PRs, subagents, auto-close issues in GitHub mode, contributor profile, which picks the template's team or solo line on who reads the code
 - [x] Offer a lint rule or hook for the comment policy when the stack has one
 - [x] Add only commands the agent can't discover from the repo
 - [x] Show the draft, write on approval, update its own section in place on re-runs
@@ -70,7 +70,7 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Batch runs inline, one commit per feature, stops at the first feature that can't go green
 - [x] Builds for every platform, target and mode the repo promises; a scope cut found mid-build is asked, never reported after
 - [x] Final report leads with what doesn't work where it should, then what wasn't verified
-- [x] Asks what CLAUDE.md says to ask, up to four questions per call; a new module, pattern, dependency or departure from similar code is always asked; pushes back and raises gaps when found
+- [x] Asks what CLAUDE.md says to ask, up to four questions per call; narrowing scope is always asked. Rules the template already carries (unlisted requests, raising gaps, golden-file shape, output from this turn, readability, setting overrides) are not repeated in the skill, so nothing loads twice
 - [x] New code follows the golden file, or the closest existing feature, and reuses its helpers; departing from it is asked
 - [x] Before creating a file, names the file that would otherwise hold the code and the line that will call it (from ECC's `gateguard`)
 - [x] Code is written to a bar of edge cases, cost on hot paths, readability and scaling; per feature, after the checks, it is used as its user would. No separate re-review step, since current models over-verify when told to
