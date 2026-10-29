@@ -32,7 +32,7 @@ Start with `/m4:setup`, which runs only when you type it. It interviews you, the
 
 ## Evals
 
-`plugins/m4/evals/` holds eleven cases that run each skill on a small seeded repo, with and without the plugin, so a change to a skill can be measured instead of guessed. The seeded repo gets the CLAUDE.md `/m4:setup` would write, so the cases measure the template too. Shell tools need a sandbox, so run them on Linux or macOS:
+`plugins/m4/evals/` holds ten cases that run each skill on a small seeded repo, with and without the plugin, so a change to a skill can be measured instead of guessed. The seeded repo gets the CLAUDE.md `/m4:setup` would write, so the cases measure the template too. Shell tools need a sandbox, so run them on Linux or macOS:
 
 ```text
 cd plugins/m4

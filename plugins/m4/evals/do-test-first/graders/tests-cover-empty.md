@@ -1,5 +1,5 @@
 ---
 type: regex
-target: files
+target: { source: file, path: test/slugify.test.js }
 pattern: 'slugify\((''''|"")\)'
 ---

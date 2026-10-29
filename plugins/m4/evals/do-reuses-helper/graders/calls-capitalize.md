@@ -1,5 +1,5 @@
 ---
 type: regex
-target: files
+target: { source: file, path: src/titleCase.js }
 pattern: 'require\([''"]\./capitalize(\.js)?[''"]\)'
 ---

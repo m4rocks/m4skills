@@ -11,7 +11,7 @@ When the user declines a tracker entry for an unlisted request, build without on
 
 ## Each feature
 
-1. Before the first line of code, walk through the feature as its user: what they do first, what goes wrong, what they'll ask for next. Read the code the feature touches and find every place the change must reach, as CLAUDE.md describes, including every platform, target and mode the README and CLAUDE.md promise.
+1. Before the first line of code, walk through the feature as its user: what they do first, what goes wrong, what they'll ask for next. Read the code the feature touches and find every place the change must reach, as CLAUDE.md describes, including every platform, target and mode the README and CLAUDE.md promise. Note any problem you see in the code you read that is outside the task, such as the same bug in a sibling function; it goes in the report, not into this diff.
 2. Read the golden file for this kind of code end to end, or when there is none, the closest code that does something like it. When the feature starts a kind of code later features will repeat, add its golden-files row.
 3. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write it as "Tests" describes. Otherwise, or with no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
 4. Implement until the check and the project's checks for this area pass (see "Checks"), writing to the bar in "Shaping the code".
@@ -70,4 +70,4 @@ When the setting or the request calls for a pull request per batch, branch off t
 
 ## Report
 
-End once, after the last feature. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Close with one recommendation for what to do next, if any. Later turns follow whatever the user brings up.
+End once, after the last feature. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then name each problem you noted outside the task, with where it is and an offer to add a tracker entry. Then list the commits, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Close with one recommendation for what to do next, if any. Later turns follow whatever the user brings up.
