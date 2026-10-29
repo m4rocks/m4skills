@@ -22,6 +22,7 @@ The always-loaded file `m4:setup` generates, written as prose with reasons, not 
 - [x] Working here: tracker is advisory intent; check off what the code already does; unlisted requests and noticed problems become entries after asking; plan order is a suggestion, never a reason to refuse
 - [x] Ask only about product direction, scope, irreversible or outward-facing actions, and choices where readings of the request lead to materially different work; make every other call and name it in the report
 - [x] Claims of done, passing or fixed carry output from the same turn; a subagent's success is checked against the diff
+- [x] Chat with the maintainer is direct, honest and brief, grammar dropped where meaning survives, never at the cost of a failure, risk, skipped step, gap or disagreement; explanations take the space they need. Unslop's rule against over-compression applies to prose that lands somewhere, not to chat
 - [x] Code: obviously correct to a newcomer; rank correctness, then readability and testability, then size
 - [x] YAGNI on what gets built, open about how; reuse order: repo, stdlib and platform, installed dependencies
 - [x] Golden files table: one file per recurring kind of code to copy, kept current in the same commit (from ECC's `inherit-legacy-style`)
