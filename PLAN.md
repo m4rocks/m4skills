@@ -134,7 +134,4 @@ Skills live in `plugins/m4/skills/`. No hooks, no scripts and no always-on conte
 
 - [x] Run `/doctor prompt-audit` over the skills and the CLAUDE.md template; its two template conflicts with `shape` and `do` are fixed, and the "moves" list it suggested cutting stays by choice
 - [x] Install in Claude Code and run setup, shape and do end to end on a real repo
-- [x] Eval suite in `plugins/m4/evals/`, run with `claude plugin eval` on Linux or macOS, each case with and without the plugin. The seeded CLAUDE.md is the real template, so "without" means template only. Kept cases separate the arms on Opus: do runs a failing test before code, covers empty input and shows its check in the report; a feature called done but broken gets finished; a commit message has no AI tells
-- [x] Cases both arms pass are deleted, and the do text behind them cut, since the model does it unprompted: reusing helpers, reaching index and README, edge handling, noting problems outside the task. fix and tidy have no discriminating case yet
-- [ ] Section ablations with `evals/_shared/ablate.js`, once more do cases separate the arms
 - [x] `m4:do` cut to state each rule once; the design-moves list is gone, since the bar it served stays

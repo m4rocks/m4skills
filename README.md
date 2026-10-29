@@ -30,21 +30,6 @@ Start with `/m4:setup`, which runs only when you type it. It interviews you, the
 
 `/m4:do` finishes each feature on a command passing, not on the code looking done. The feature's test has to fail for the right reason before any code is written, the agent tries inputs the test doesn't cover before calling it done, and every claim that it works quotes a run made after the last edit. The skill steers rather than enforces: no hooks, nothing to install.
 
-## Evals
-
-`plugins/m4/evals/` holds cases that run a skill on a small seeded repo, with and without the plugin, so a change to a skill can be measured instead of guessed. Only cases where the arms differ are kept: a case both arms pass measures nothing, and the skill text behind it is cut, since the model does it unprompted. The seeded repo gets the CLAUDE.md `/m4:setup` would write, so the cases measure the template too. Shell tools need a sandbox, so run them on Linux or macOS:
-
-```text
-cd plugins/m4
-claude plugin eval . --scaffold --allow-tools Write Edit "Bash(node *)" "Bash(npm *)" "Bash(git *)"
-```
-
-To see what one section of a skill is worth, `evals/_shared/ablate.js` copies the plugin once per section with that section removed, and the same command run inside a copy with `--ablation none` scores it:
-
-```text
-node evals/_shared/ablate.js do /tmp/variants Checks Tests "Shaping the code" Report
-```
-
 ## Credits
 
 `/m4:unslop` is adapted from the unslop skill by poteto. The rule numbers come from their skill.
