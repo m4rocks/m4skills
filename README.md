@@ -39,6 +39,12 @@ cd plugins/m4
 claude plugin eval . --scaffold --allow-tools Write Edit "Bash(node *)" "Bash(npm *)" "Bash(git *)"
 ```
 
+To see what one section of a skill is worth, `evals/_shared/ablate.js` copies the plugin once per section with that section removed, and the same command run inside a copy with `--ablation none` scores it:
+
+```text
+node evals/_shared/ablate.js do /tmp/variants Checks Tests "Shaping the code" Report
+```
+
 ## Credits
 
 `/m4:unslop` is adapted from the unslop skill by poteto. The rule numbers come from their skill.
