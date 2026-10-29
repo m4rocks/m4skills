@@ -45,6 +45,7 @@ Use when: a new repo, or the user's preferences changed. Touches CLAUDE.md, and 
 - [x] Offer a lint rule or hook for the comment policy when the stack has one
 - [x] Add only commands the agent can't discover from the repo
 - [x] Show the draft, write on approval, update its own section in place on re-runs
+- [x] Re-runs also diff the template-owned prose against the current template and offer a per-section refresh, so repos set up with an older m4 get fixes; settings values, filled tables and the user's sections stay
 - [x] Writes CLAUDE.md; an existing AGENTS.md's rules move into it, and deleting AGENTS.md is asked first
 - [x] Won't create doc folders, labels, or overwrite the user's sections
 
@@ -66,7 +67,6 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 
 - [x] Per feature: test per the tests setting, confirm it fails for the predicted reason, implement, run project checks, check off, commit
 - [x] Vertical slices through public interfaces; a test must fail when behavior breaks and survive internal changes; no cheap seam means the closest real check, stated
-- [x] Design moves: data shape first, parse at the boundary, pass in clock and I/O, split flag-driven functions, inline one-caller wrappers
 - [x] Batch runs inline, one commit per feature, stops at the first feature that can't go green
 - [x] Builds for every platform, target and mode the repo promises; a scope cut found mid-build is asked, never reported after
 - [x] Final report leads with what doesn't work where it should, then what wasn't verified
@@ -102,13 +102,12 @@ Use when: unfamiliar code, or "how does X work". Touches nothing.
 
 ## m4:tidy
 
-Use when: before committing or merging a diff, including human-written ones. Touches only the diff's files.
+Use when: cleaning up a diff, including human-written ones, or working through review findings. Touches only the diff's files.
 
-- [x] Check in order: correct, safe, holds under real load, tested, fast, lean; a finding needs a concrete failing case
-- [x] Fix slop directly: what-comments, needless defensive code, one-caller wrappers, debris
+- [x] Doesn't hunt bugs: Claude Code's `/code-review` does that in fresh-context reviewers; asked for a review, tidy says so once and its findings can come back to tidy
+- [x] Fix slop directly: what-comments, needless defensive code, one-caller wrappers, debris, departures from the golden file
 - [x] Check callers outside the diff
-- [x] Behavior-changing findings go to the user as one multi-select question
-- [x] Reviewing the agent's own work from this session: says once that a fresh session or `/code-review` will catch more
+- [x] Findings need a concrete failing case; behavior-changing fixes go to the user as one multi-select question
 - [x] Review comments: read all, clarify unclear ones before changing anything, check each against the code, search for callers before building something out, push back with evidence, fix one at a time, answer without thanks (from superpowers' `receiving-code-review`)
 - [x] Won't widen scope or write a report file
 
@@ -134,4 +133,5 @@ Skills live in `plugins/m4/skills/`, scripts in `plugins/m4/scripts/`. No plugin
 
 - [x] Run `/doctor prompt-audit` over the skills and the CLAUDE.md template; its two template conflicts with `shape` and `do` are fixed, and the "moves" list it suggested cutting stays by choice
 - [x] Install in Claude Code and run setup, shape and do end to end on a real repo
-- [ ] Re-run after the renames and first-run fixes
+- [x] Eval suite in `plugins/m4/evals/`, run with `claude plugin eval`, each case with and without the plugin: fix leaves a regression test, do registers and clears a check and copies the golden file, a premature "done" is sent back, a commit message has no AI tells, a small task asks nothing, tidy removes debris and keeps behavior
+- [x] `m4:do` cut to state each rule once; the design-moves list is gone, since the bar it served stays

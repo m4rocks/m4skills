@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Set up m4 for this repo, or change its standing rules for tracker, tests, commits, pushes and subagents. Interviews you, then writes CLAUDE.md.
+description: Set up m4 for this repo, change its standing rules for tracker, tests, commits, pushes and subagents, or refresh a CLAUDE.md written by an older m4. Interviews you, then writes CLAUDE.md.
 disable-model-invocation: true
 ---
 
@@ -34,7 +34,9 @@ Recommend "when a cheap test seam exists", commits and pushes only when the user
 
 Fill `claude-template.md` from this skill's folder: keep the tracker variant that matches, drop the commands paragraph when the repo's scripts already say everything, drop the closing-issues setting for the PLAN.md tracker, write the settings as plain values, and fill the golden-files table with the confirmed rows, leaving it empty when the repo has no repeated kinds yet. Show the result and write it on approval.
 
-Write to `CLAUDE.md` at the repo root, or to `.claude/CLAUDE.md` when that is where the repo keeps it. When it already exists, keep the user's own sections and replace only the sections the template owns. On a re-run, change only the settings that moved.
+Write to `CLAUDE.md` at the repo root, or to `.claude/CLAUDE.md` when that is where the repo keeps it. When it already exists, keep the user's own sections and replace only the sections the template owns.
+
+On a re-run, change the settings that moved, then compare the template-owned prose in CLAUDE.md with this version of `claude-template.md`, since repos set up with an older m4 keep the old text. When they differ, show the changes section by section and ask in one multi-select question which sections to refresh, recommending all. A refresh replaces only the template's prose: settings values, filled tables such as golden files and enforced rules, and every section the user wrote stay as they are. Add any section the template has gained, such as Golden files, as part of the refresh.
 
 When AGENTS.md exists, carry its rules into CLAUDE.md and drop any `@AGENTS.md` import, so each rule has one home. Ask before deleting AGENTS.md, since other tools may still read it.
 

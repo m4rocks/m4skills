@@ -7,7 +7,7 @@
 //   check.js clear            drop the check and the frozen list, only once the check passes
 //   check.js clear --abandon  drop them while the check still fails
 //   check.js status           print both
-//   check.js gate             Stop hook: block while the check fails
+//   check.js gate             Stop hook: block while the check fails, clear it once it passes
 //   check.js guard            PreToolUse hook: deny edits to frozen files
 
 const { execFileSync, spawnSync } = require('child_process');
@@ -86,9 +86,18 @@ function gate() {
   const [command] = readLines(where.checkFile);
   if (!command) return 0;
   const failure = runCheck(where.root, command);
-  if (!failure) return 0;
-  process.stderr.write(failure);
-  return 2;
+  if (failure) {
+    process.stderr.write(failure);
+    return 2;
+  }
+  // A passing check is done, and leaving it set would rerun it after every later turn.
+  clearState(where);
+  return 0;
+}
+
+function clearState(where) {
+  fs.rmSync(where.checkFile, { force: true });
+  fs.rmSync(where.frozenFile, { force: true });
 }
 
 function guard() {
@@ -144,8 +153,7 @@ function main([command, ...args]) {
       process.stderr.write(failure);
       return 1;
     }
-    fs.rmSync(where.checkFile, { force: true });
-    fs.rmSync(where.frozenFile, { force: true });
+    clearState(where);
     return 0;
   }
   if (command === 'status') {

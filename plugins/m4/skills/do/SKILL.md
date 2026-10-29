@@ -18,112 +18,82 @@ hooks:
 
 Before any other output or command, write one line: you are running m4:do, the features you'll build, and what you expect to touch.
 
-When the tests setting calls for tests and the repo has no test runner, ask before the first feature whether to add one, since that adds a dependency.
-
-A request that isn't in the tracker gets an entry, then you build it. Ask first through the structured question tool before adding the entry, whether it's a GitHub issue or a PLAN.md line; if declined, build without one and use no `Closes` or `Refs` line. If a feature seems to depend on unfinished work, say so in one line and continue.
+A request that isn't in the tracker gets an entry, after asking through the structured question tool; if declined, build without one and use no `Closes` or `Refs` line. When the tests setting calls for tests and the repo has no test runner, ask before the first feature whether to add one, since that adds a dependency. If a feature seems to depend on unfinished work, say so in one line and continue.
 
 ## Own the outcome
 
-Build as if you'll be the one using the feature and answering for it. You are judged by whether the user's problem goes away, not by whether the entry's checklist is ticked.
+You are judged by whether the user's problem goes away, not by whether the checklist is ticked. Before the first line of code, walk through the feature as its user: what they do first, what goes wrong, what they'll ask for next. When the request misses something they'll hit, or a clearly better approach exists, say so when you find it, with your recommendation, rather than in the final report.
 
-Ask what CLAUDE.md says to ask, up to four ready questions per call rather than one at a time. A new module, pattern or dependency, or a departure from how similar code works, changes how the feature fits the codebase, so it is one of those questions.
-
-Before the first line of code, walk through the feature as its user: what they do first, what goes wrong, what they'll ask for next. When the request misses something they'll hit, would solve the problem badly, or has a clearly better approach, say so and put it to the user through the structured question tool, with your recommendation first and the reason. Don't build what you think is wrong without saying so.
-
-Keep doing this while you build. When you notice something the user would want to know, such as a gap, a better option or a problem the feature creates, raise it when you find it, not in the report at the end. If the user has to ask "what about X?" about something you already knew, you raised it too late.
+Ask what CLAUDE.md says to ask, up to four ready questions per call. A new module, pattern or dependency, or a departure from how similar code works, is always one of them. So is narrowing scope: when part of the feature won't work somewhere the repo promises, such as a platform, a mode or existing data, or can't be built as the entry says, ask before building less.
 
 ## Each feature
 
-Work through the features in the order given. For each:
+1. Read the code the feature touches and find every place the change must reach, as CLAUDE.md describes, including every platform, target and mode the README and CLAUDE.md promise.
+2. Read the golden file for this kind of code from CLAUDE.md, or when there is none, the closest code that does something like it, end to end. Build the feature in the same shape and reuse its helpers, so a reader can't tell the two were written apart. When the feature starts a kind of code later features will repeat, add its golden-files row.
+3. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write it as "Tests" describes. Otherwise, or with no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
+4. Register the check (see "Checks"), then implement until it and the project's checks for this area pass, writing to the bar in "Shaping the code".
+5. Use the feature the way its user would. For an app, CLI or server, launch it (the `run` skill covers how) and go through each behavior, including the empty and error paths. Name anything you couldn't exercise in the report as not verified.
+6. Clear the check, check the behaviors off in the tracker, and commit per the commits setting with a message saying what the feature does. Stage files by name, only those this feature changed.
 
-1. Read the code it touches and find every place the change must reach, as CLAUDE.md describes. Also read what the repo promises: the README and CLAUDE.md for supported platforms, targets and modes, and how existing code branches on them, such as `cfg` attributes or platform modules. The feature works on every one of them unless the entry says otherwise.
-2. Read the golden file for this kind of code from CLAUDE.md, or when there is none, the code in this repo that already does something like it, end to end: where its files live, how it names things, how it handles state, errors and I/O, how its UI is put together and how it is tested. Build the new feature in the same shape and reuse its helpers instead of writing new ones, so a reader can't tell the two were written apart. When the existing shape doesn't fit, ask before inventing a new one. When the feature starts a kind of code that later features will repeat, add its row to the golden-files table.
-3. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write a test that drives the new behavior through the public interface, following "Tests" below. Otherwise, or when there's no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
-4. Register it, see "Checks" below, then implement until it passes, writing to the bar in "Shaping the code".
-5. Run the checks the project has for this area: tests, type checker, linter.
-6. Use the feature the way its user would. For an app, CLI or server, launch it (the `run` skill covers how) and go through each behavior in the entry, including the empty and error paths. Anything you couldn't exercise goes into the report by name as not verified.
-7. Clear the check, check the behaviors off in the tracker and commit per the commits setting, with a message saying what the feature does. Stage files by name, only those this feature changed, so other uncommitted work stays out of its commit.
-
-With a GitHub tracker, when every behavior in the issue is checked off and its checks pass, end the commit message with a `Closes #N` line so merging closes the issue. When the closing setting is "ask first", write `Refs #N` instead. A feature left partly done, or an earlier feature in an issue that still has unchecked ones, gets `Refs #N`, never `Closes`. Never close a root issue that tracks others; it closes when its task list is complete, and that is the maintainer's call. PLAN.md entries have no issue to close.
-
-When building shows that part of the feature won't work somewhere it should, such as a platform, a mode or an existing data case, or can't be built as the entry says, stop and ask through the structured question tool, recommending that you build it or saying why not. Narrowing scope is the user's decision, never something to report afterwards.
+With a GitHub tracker, a commit that finishes every behavior in an issue ends with `Closes #N`, or `Refs #N` when the closing setting is "ask first". Partial work gets `Refs #N`. Never close a root issue that tracks others; that is the maintainer's call.
 
 ## Checks
 
-Every feature is finished by a command passing, not by the code looking done. Register the feature's check once it fails for the right reason:
+A feature is finished by a command passing, not by the code looking done. Once the check fails for the right reason, register it:
 
 ```bash
 node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" set "<command>"
 node "${CLAUDE_PLUGIN_ROOT}/scripts/check.js" freeze <test files the check runs>
 ```
 
-While a check is set, this skill's hooks rerun it whenever you try to end a turn and send you back with its output while it fails, and they refuse edits to the frozen files. Make the check pass by building the behavior, never by special-casing the inputs it uses or weakening the command.
+While it is set, this skill's hooks rerun it whenever you try to end a turn, send you back with its output while it fails, and refuse edits to the frozen files. Pass it by building the behavior, never by special-casing its inputs or weakening the command.
 
-`check.js clear` runs the check and clears it only if it passes, so run it on its own once the feature works. Before you stop to ask the user something, or when you give up on the feature, use `check.js clear --abandon` and say why in your reply. When a frozen test's expectation looks wrong, ask the user before abandoning the check to edit the test.
+When the check passes as you end a turn, the hook clears it. `check.js clear` does the same on demand, refusing while the check fails, so run it on its own. Before stopping to ask the user something, or when giving up on the feature, run `check.js clear --abandon` and say why. When a frozen test's expectation looks wrong, ask the user before abandoning the check to edit it.
 
 ## Tests
 
-A good test fails when the behavior breaks and keeps passing when the internals are restructured. Before writing one, name the production change that would make it fail, such as a wrong branch, a missing side effect, a wrong argument or a missed edge case. If you can't name one, test a behavior you can observe instead.
+A good test fails when the behavior breaks and survives a restructuring of the internals. Before writing one, name the production change that would make it fail, such as a wrong branch, a missing side effect or a missed edge case; if you can't, test something you can observe instead.
 
-- Write expected values by hand, as literals or hand-checked fixtures. An expected value computed the way the code computes it, or with its helpers, passes whatever the code does.
-- Test the behavior a decision drives, not the decision: "a failing call is retried five times and the sixth never happens", not `MAX_RETRIES == 5`. A test that fails only on deliberate changes sleeps through bugs.
-- Assert on the real code, never on a mock. Mock only the slow or external layer, after learning which side effects of the real code the test relies on, and give the mock the full shape of the real data, because code that reads a field the mock left out passes the test and breaks in production.
-- Code that only tests call lives in test utilities, not in production code.
-- When a reference implementation exists, such as the code being ported or replaced, an official tool, or the previous version, compare outputs against it over many inputs. It finds more than any expected value written by hand.
+- Write expected values by hand. A value computed the way the code computes it passes whatever the code does.
+- Test the behavior a decision drives, not the decision: "a failing call is retried five times and the sixth never happens", not `MAX_RETRIES == 5`.
+- Assert on the real code, never on a mock. Mock only the slow or external layer, and give the mock the full shape of the real data, because code that reads a field the mock left out passes the test and breaks in production.
+- Code only tests call lives in test utilities.
+- When a reference implementation exists, such as the code being replaced, an official tool or the previous version, compare outputs against it over many inputs.
 
-Then picture realistic mistakes in the new code: a wrong constant, the wrong branch, a missing state change, an empty return, no validation for empty or malformed input. Some test should fail for each one; a mistake nothing catches marks behavior that is unprotected.
+Then picture realistic mistakes in the new code: a wrong constant, the wrong branch, a missing state change, an empty return, missing validation. Some test should fail for each.
 
 ## Shaping the code
 
-Start from the shape the golden file or closest existing code uses. When more than one design is reasonable and they differ in what a user or the next developer would see, put them to the user with your recommendation: the one that matches the codebase and whose correctness is most obvious. Otherwise pick that one yourself and say which.
+When more than one design is reasonable and they differ in what a user or the next developer would see, put them to the user with your recommendation: the one that matches the codebase and whose correctness is most obvious. Otherwise pick that one and say which.
 
-Before creating a file, name the existing file that would otherwise hold this code and the line that will call the new one. When an existing file is the natural home, put the code there; when nothing will call it yet, don't create it.
+Before creating a file, name the existing file that would otherwise hold the code and the line that will call the new one. When an existing file is the natural home, use it; when nothing will call the code yet, don't write it.
 
-The code you leave meets this bar:
+The code you leave is:
 
-- Correct at the edges: empty, zero, one, the last item, errors and timeouts, a second call while the first is running, and data written by older versions.
-- Cost fits how often it runs. Name what runs per frame, tick, keystroke, item or request. There, nothing does I/O on the UI or request thread, nothing grows with all the data when it could grow with what's visible or what changed, nothing wakes up with no work to do, and events replace polling where the platform has them. Code that runs once can stay simple.
-- Readable by a newcomer: names say what things are, each function does one thing at one level, each piece of state has one owner, and the flow can be followed from where it enters without chasing indirection.
-- Scales with the codebase: the next feature of the same kind is added by following this one, not by copying and editing it. Shared logic lives in one place, and general code carries no special cases for this feature.
+- Correct at the edges: empty, zero, one, the last item, errors and timeouts, a second call while the first runs, and data written by older versions.
+- Cheap where it runs often. Name what runs per frame, keystroke, item or request; there, nothing does I/O on the UI or request thread, nothing grows with all the data when it could grow with what changed, and nothing wakes up with no work to do. Code that runs once can stay simple.
+- Readable by a newcomer: names say what things are, each function does one thing, each piece of state has one owner, and the flow can be followed from where it enters.
+- Repeatable: the next feature of the same kind is added by following this one, shared logic lives in one place, and general code carries no special cases for this feature.
 
-Moves that often get there:
+## Batches and commits
 
-- get the data shape right before writing logic
-- parse input once where it enters, so inner code can trust it
-- keep logic pure and pass in time, randomness and I/O, so it tests without mocks
-- split a function that branches on a boolean flag into two
-- inline a wrapper that has a single caller
-- replace a chain of conditionals with a lookup table when the cases are data
+Features run one after another, each committed before the next starts. Stop at the first one you can't get to pass: abandon its check, leave it uncommitted and report what you tried, since later features may depend on it. When the context gets long, finish the current feature and suggest a fresh session for the rest; the commits and tracker carry over.
 
-## Batches
+The request can override the commits setting for this run: "autonomous" or "commit and push everything" commits and pushes without asking, "ask" asks before each commit. When commits wait for the user, leave each feature uncommitted without asking; when they later say to commit, make one commit per feature where the files separate cleanly. In ask mode, show each passing feature's message and files and ask: commit, commit the rest of the batch too, or leave it.
 
-Several features run one after another in this session, each committed before the next starts. Stop at the first feature you can't get to pass: abandon its check, leave its changes uncommitted and report what you tried, because later features may depend on it.
-
-If the session's context gets long, finish and commit the current feature, then suggest continuing the remaining entries in a fresh session; the commits and tracker carry everything over.
-
-## Committing and pushing
-
-The request can set the mode for this run, overriding the settings: "autonomous" or "commit and push everything" means commit and push without asking; "ask" means ask before each commit. Without that, the settings decide.
-
-When commits happen only when the user says, leave each feature uncommitted, don't ask, and go on to the next. When the user later says to commit, make one commit per feature wherever the files separate cleanly.
-
-In ask mode, when a feature passes, show its commit message and files and ask through the structured question tool: commit, commit this and the rest of the batch without asking, or leave it uncommitted. Then go on to the next feature.
-
-## Pull requests
-
-When the setting or the request calls for a pull request per batch: before the first feature, if you're on the default branch, create a branch named after the batch. After the last feature, push it and open a pull request with `gh pr create`, using this body:
+When the setting or the request calls for a pull request per batch, branch off the default branch before the first feature, then push and open it with `gh pr create` after the last, with this body and one `Closes #N` or `Refs #N` line per issue, since a squash merge drops the commit lines:
 
 ```markdown
 ## Summary
 <the smallest view that makes the change clear: pseudocode, a call tree, or a file tree>
 
 ## Evidence
-<the failing test output before, the passing output after>
+<the failing check output before, the passing output after>
 
 ## Risk
 <easy or hard to undo, and what could break>
 ```
 
-With a GitHub tracker, end the body with one `Closes #N` line per fully finished issue, each on its own line because GitHub reads one issue per keyword. Use `Refs #N` for unfinished issues, and for all of them when the closing setting is "ask first". The commit lines are not enough on their own, since a squash merge drops them.
+## Report
 
-End once, after the last feature, with a report. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits, the tracker changes, the calls you made yourself, anything else skipped or unchecked, any disagreement with a decision the user made, and any risk. Close with what you'd do next and why, if anything, as one recommendation, not a menu. That report closes m4:do; later turns follow whatever the user brings up next.
+End once, after the last feature. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Close with one recommendation for what to do next, if any. Later turns follow whatever the user brings up.

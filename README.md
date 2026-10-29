@@ -15,12 +15,12 @@ In Claude Code:
 
 | Skill | Use when | Changes | Won't |
 |---|---|---|---|
-| `/m4:setup` | Setting up a repo, or changing preferences | CLAUDE.md, PLAN.md | Create doc folders or labels, overwrite your sections |
+| `/m4:setup` | Setting up a repo, changing preferences, or refreshing a CLAUDE.md from an older m4 | CLAUDE.md, PLAN.md | Create doc folders or labels, overwrite your sections |
 | `/m4:shape` | Shaping an idea into features | The tracker only | Write code, split work into ticket graphs or spikes |
 | `/m4:do` | Building features whose behavior is known | Code, tests, tracker, commits | Spawn reviewers, refuse over ordering, push without PR mode |
 | `/m4:fix` | Something is broken and the cause is unknown | Code, tests, tracker, commits | Patch symptoms with guards, leave debug logs |
 | `/m4:explore` | Understanding unfamiliar code | Nothing | Write docs |
-| `/m4:tidy` | Reviewing a diff before commit or merge, or addressing review comments | The diff's files | Change behavior without asking, widen scope |
+| `/m4:tidy` | Cleaning up a diff, or working through review comments and `/code-review` findings | The diff's files | Hunt bugs (that's `/code-review`), change behavior without asking, widen scope |
 | `/m4:harden` | The agent repeats a mistake you've corrected | Code, types, lint config, CLAUDE.md | Add a prose rule where a check can enforce it |
 | `/m4:unslop` | Before the agent writes docs, commit or PR text, or tracker entries, or when you hand it text to clean up | The draft text | Change meaning or tone |
 
@@ -29,6 +29,15 @@ Start with `/m4:setup`, which runs only when you type it. It interviews you, the
 ## Checks, not guesses
 
 `/m4:do` finishes each feature on a command passing, not on the code looking done. Once the feature's test fails for the right reason, the skill registers it as the check. Until it passes, the turn can't end, the test files can't be edited, and the check can't be cleared without saying why. The state lives in `.git/m4/`, so nothing extra gets committed. Needs Node, which Claude Code already ships with.
+
+## Evals
+
+`plugins/m4/evals/` holds six cases that run each skill on a small seeded repo, with and without the plugin, so a change to a skill can be measured instead of guessed:
+
+```text
+cd plugins/m4
+claude plugin eval . --scaffold --allow-tools Write Edit "Bash(node *)" "Bash(npm *)" "Bash(git *)"
+```
 
 ## Credits
 
