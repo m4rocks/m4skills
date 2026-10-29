@@ -21,7 +21,7 @@ Look at what changed first: `git log` and `git diff` on the files involved, and 
 
 List three to five hypotheses, each with a prediction that would prove it wrong ("if X is the cause, changing Y makes the bug disappear"). Mention the list in a line, since the user may know which one to rule out, and keep going.
 
-Test one variable at a time. Prefer a debugger or REPL; otherwise add logs at the boundaries that tell hypotheses apart, each tagged `[m4:fix]` so they can all be found and removed.
+Test one variable at a time. Add logs at the boundaries that tell hypotheses apart, each tagged `[m4:fix]` so they can all be found and removed.
 
 When two fixes that share an assumption have failed, test the assumption itself before a third fix. After three failed fixes, stop and put the design question to the user with your recommendation: when each fix reveals a new problem somewhere else, the structure is usually wrong, not the latest hypothesis.
 
