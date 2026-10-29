@@ -24,7 +24,7 @@ With a GitHub tracker, a commit that finishes every behavior in an issue ends wi
 
 A feature is finished when its check passes, not when the code looks done. Treat the check as a sample of the inputs the feature will meet, not the whole set: make it pass by building the behavior, never by special-casing its inputs, weakening the command or editing the test to match the code. Before calling the feature done, try two or three inputs the check doesn't cover, such as the edges in "Shaping the code", and add any that fail to the test.
 
-Output from before your last edit doesn't count as passing. When a test's expectation looks wrong, ask the user rather than change it.
+Output from before your last edit doesn't count as passing. When a feature the user called done fails its check, finishing it is the task, not a question. When a test's expectation looks wrong, ask the user rather than change it.
 
 ## Tests
 
