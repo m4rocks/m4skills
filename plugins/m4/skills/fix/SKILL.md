@@ -5,7 +5,7 @@ description: Use whenever the user says fix, debug, broken, bug, doesn't work, e
 
 # m4:fix
 
-Start with one line: you are running m4:fix, the symptom as you understand it, and that it will touch code, tests and commits.
+Start with one line: you are running m4:fix, the symptom as you understand it, and that it will touch code, tests and commits, naming any repo besides this one.
 
 ## Reproduce
 
@@ -31,6 +31,6 @@ The root cause is the first place the code made a wrong decision, not where the 
 
 ## Fix
 
-Fix the cause, then search for the same fault elsewhere and fix those too. Turn the shrunk reproduction into a regression test at a level that exercises the real bug pattern; if no such level exists, say so, since that is a finding about the code's structure. Rerun the original reproduction, remove every `[m4:fix]` log, run the project's checks, and commit per the commits setting with the cause stated in the message.
+Fix the cause, then search for the same fault elsewhere and fix those too. Elsewhere means wherever the behavior lives or is described, including other repos the project mentions, clients, docs and version pins. In another repo, read its CLAUDE.md before editing, since only this repo's loads on its own, and fetch first, because a local checkout can be days behind. When its checkout is dirty or on another branch, use `git worktree add` rather than switching it, because another session may be working there. Turn the shrunk reproduction into a regression test at a level that exercises the real bug pattern; if no such level exists, say so, since that is a finding about the code's structure. Rerun the original reproduction, remove every `[m4:fix]` log, run the project's checks, and commit and push per the settings and what the maintainer has said this session, with the cause stated in the message. An earlier "commit and push to next" covers this fix too, so they don't have to repeat it; a branch they didn't name is still a question.
 
-If the bug matches a tracker entry, check it off. End by stating the cause, the fix, where else it appeared, and anything unverified.
+If the bug matches a tracker entry, check it off. Before you stop, picture the maintainer's next message. If it would be "you forgot X" or "now push that", do that first. Run `git status -sb` in every repo you touched and name anything still uncommitted or unpushed, counting a branch with no upstream as unpushed. End by stating the cause, the fix, where else it appeared, and anything unverified.

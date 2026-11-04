@@ -26,8 +26,12 @@ The always-loaded file `m4:setup` generates, written as prose with reasons, not 
 - [x] Code: obviously correct to a newcomer; rank correctness, then readability and testability, then size
 - [x] YAGNI on what gets built, open about how; reuse order: repo, stdlib and platform, installed dependencies
 - [x] Golden files table: one file per recurring kind of code to copy, kept current in the same commit (from ECC's `inherit-legacy-style`)
-- [x] Find every place a change must reach, parallel paths included (mock or sandbox mode, platforms, both sides of a flag), and finish all of them; better structure that simplifies the task goes in, bigger redesigns go to the plan with a reason
-- [x] Values and project facts live in the template, procedure in the skills, so no rule is loaded twice
+- [x] Find every place a change must reach, parallel paths and other repos included (mock or sandbox mode, platforms, both sides of a flag, docs, version pins), and finish all of them; better structure that simplifies the task goes in, bigger redesigns go to the plan with a reason
+- [x] Values and project facts live in the template, procedure in the skills, so no rule is loaded twice. The exceptions are the next-message test and the rule that the maintainer's word holds: `do` and `fix` repeat them because a repo may have no template, and the template keeps them because follow-ups may skip the skills
+- [x] The request names a goal and the job is what the goal needs: a change that leaves something it affects stale is unfinished, a retired thing has no users left, and improvements the change doesn't require stay separate entries
+- [x] What the maintainer says holds for the rest of the session unless limited, facts and ways of working alike, and gives no new permission. Named early stops and wanted stops follow Anthropic's prompting guide for Opus 5.5
+- [x] Before stopping, picture the maintainer's next message and do what it would ask for
+- [x] Related repos and where they're checked out, as a fact the agent can't see from the repo
 - [x] Never cut: validation of untrusted input, data-loss error handling, security, accessibility
 - [x] Comments say why, including known limits; restructure instead of what-comments; leave others' comments alone
 - [x] Risky logic (branches, parsers, money, security, data writes, bug fixes) ships with a test
@@ -48,6 +52,7 @@ Use when: a new repo, or the user's preferences changed. Touches CLAUDE.md, and 
 - [x] Show the draft, write on approval, update its own section in place on re-runs
 - [x] Re-runs also diff the template-owned prose against the current template and offer a per-section refresh, so repos set up with an older m4 get fixes; settings values, filled tables and the user's sections stay
 - [x] Writes CLAUDE.md; an existing AGENTS.md's rules move into it, and deleting AGENTS.md is asked first
+- [x] Finds repos that depend on this one or describe it and confirms them in the interview; the commits and pushes questions say that a word from the user holds for the session
 - [x] Won't create doc folders, labels, or overwrite the user's sections
 
 ## m4:shape
@@ -60,6 +65,7 @@ Use when: shaping an idea into features. Touches the tracker only.
 - [x] Done when every branch of the decision tree is visited and nothing is assumed; only the user ends it early
 - [x] Shows the reviewed entries verbatim and writes only after approval; one entry per feature with a short description and checklist
 - [x] Reconcile on re-runs: check off what the code already does
+- [x] The gap sweep asks what else depends on or describes the idea, so other repos and docs become checklist lines
 - [x] Won't create ticket-per-task, dependency graphs, spikes, or write code
 
 ## m4:do
@@ -71,7 +77,7 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Batch runs inline, one commit per feature, stops at the first feature that can't go green
 - [x] Builds for every platform, target and mode the repo promises; a scope cut found mid-build is asked, never reported after
 - [x] Final report leads with what doesn't work where it should, then what wasn't verified
-- [x] Asks what CLAUDE.md says to ask, up to four questions per call; narrowing scope is always asked. Rules the template already carries (unlisted requests, raising gaps, golden-file shape, output from this turn, readability, setting overrides) are not repeated in the skill, so nothing loads twice
+- [x] Asks what CLAUDE.md says to ask, up to four questions per call; narrowing scope is always asked. Rules the template already carries (unlisted requests, raising gaps, golden-file shape, output from this turn, readability) are not repeated in the skill, so nothing loads twice
 - [x] New code follows the golden file, or the closest existing feature, and reuses its helpers; departing from it is asked
 - [x] Before creating a file, names the file that would otherwise hold the code and the line that will call it (from ECC's `gateguard`)
 - [x] Code is written to a bar of cost on hot paths, and inputs the check doesn't cover are tried before done; per feature, after the checks, it is used as its user would. No separate re-review step, since current models over-verify when told to
@@ -79,7 +85,11 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Checks, not guesses: each feature gets one command that passes only when it works. The check is a sample of the inputs, not the whole set: pass it by building the behavior, try inputs it doesn't cover before calling it done, and rerun it before every claim that it works. Steered by the skill's prose, not enforced by hooks, since a model can route around a hook
 - [x] Unlisted request: add the entry and proceed
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
-- [x] Won't call reviewers, refuse over ordering, or push outside PR mode
+- [x] Before building, finds everything the change reaches, including repos and docs the request didn't name, and reads a sibling's CLAUDE.md before editing it, since Claude Code only loads CLAUDE.md files from the working directory, its parents and its subfolders
+- [x] Works in a sibling from its default or named branch, through a worktree when the checkout is dirty or elsewhere, since another session may be using it
+- [x] Before stopping, runs `git status -sb` in every repo it touched, counting a branch with no upstream as unpushed; the report covers pushes by repo, what's left and each place the change reached, and recommends only decisions that are the maintainer's
+- [x] Repos with no m4 settings get working defaults and one mention of `/m4:setup`
+- [x] Won't call reviewers, refuse over ordering, or push unless the maintainer or the settings said to
 
 ## m4:fix
 
@@ -92,6 +102,7 @@ Use when: something is broken and the cause is unknown. Touches code, tests, tra
 - [x] Fix the first wrong decision, then the same fault elsewhere; guards only for legitimate states
 - [x] Regression test; tagged debug logs removed; cause stated in the commit message
 - [x] Can't reproduce: say what was tried, ask once, continue best-effort
+- [x] The same fault is searched for across other repos, clients, docs and version pins; commits and pushes follow the settings and the maintainer's earlier word
 
 ## m4:explore
 
@@ -110,6 +121,7 @@ Use when: cleaning up a diff, including human-written ones, or working through r
 - [x] Check callers outside the diff
 - [x] Findings need a concrete failing case; behavior-changing fixes go to the user as one multi-select question
 - [x] Review comments: read all, clarify unclear ones before changing anything, check each against the code, search for callers before building something out, push back with evidence, fix one at a time, answer without thanks (from superpowers' `receiving-code-review`)
+- [x] Leaves changes uncommitted unless the maintainer already said to commit this work
 - [x] Won't widen scope or write a report file
 
 ## m4:harden

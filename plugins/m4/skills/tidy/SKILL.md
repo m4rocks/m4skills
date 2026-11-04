@@ -36,4 +36,4 @@ Findings include review comments from a person or a bot, `/code-review` output, 
 
 If the diff belongs to a tracker entry, check that it does what the entry says, and mention any gap.
 
-Run the project's checks afterwards. Leave your changes uncommitted, and end by listing what you cleaned up, what you fixed, what the user chose not to fix, and what you couldn't check.
+Run the project's checks afterwards. Leave your changes uncommitted unless the maintainer already said to commit this work, and end by listing what you cleaned up, what you fixed, what the user chose not to fix, and what you couldn't check.

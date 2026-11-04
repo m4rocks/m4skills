@@ -1,28 +1,29 @@
 ---
 name: do
-description: Use for any request to build, add, implement, make, change, update, refactor or wire up behavior in this repo, a tracker entry, several entries, or a plain sentence, including short ones like 'add X' or 'make it Y'. Skip for bugs (m4:fix) and one-line edits like a rename, typo or config value.
+description: Use for any request to build, add, implement, make, change, update, refactor or wire up behavior, a tracker entry, several entries, or a plain sentence, including short ones like 'add X' or 'make it Y'. Skip for bugs (m4:fix) and one-line edits like a rename, typo or config value.
 ---
 
 # m4:do
 
-Before any other output or command, write one line: you are running m4:do, the features you'll build, and what you expect to touch.
+Before any other output or command, write one line: you are running m4:do, the features you'll build, and what you expect to touch, naming any repo besides this one.
 
-When the user declines a tracker entry for an unlisted request, build without one and use no `Closes` or `Refs` line. When the tests setting calls for tests and the repo has no test runner, ask before the first feature whether to add one, since that adds a dependency. Ask up to four ready questions per call. Narrowing scope is always a question: when part of the feature won't work somewhere the repo promises, such as a platform, a mode or existing data, or can't be built as the entry says, ask before building less.
+When CLAUDE.md has no m4 settings, skip the tracker, write tests where a cheap seam exists, commit and push on the maintainer's word, and mention `/m4:setup` once in the report. When the user declines a tracker entry for an unlisted request, build without one and use no `Closes` or `Refs` line. When the tests setting calls for tests and the repo has no test runner, ask before the first feature whether to add one, since that adds a dependency. Ask up to four ready questions per call. Narrowing scope is always a question: when part of the feature won't work somewhere the repo promises, such as a platform, a mode or existing data, or can't be built as the entry says, ask before building less.
 
 ## Each feature
 
 1. Before the first line of code, walk through the feature as its user: what they do first, what goes wrong, what they'll ask for next. Read the code the feature touches, and cover every platform, target and mode the README and CLAUDE.md promise.
-2. Read the golden file for this kind of code end to end, or when there is none, the closest code that does something like it. When the feature starts a kind of code later features will repeat, add its golden-files row.
-3. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write it as "Tests" describes. Otherwise, or with no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
-4. Implement until the check and the project's checks for this area pass (see "Checks"), writing to the bar in "Shaping the code".
-5. Use the feature the way its user would. For an app, CLI or server, launch it and go through each behavior, including the empty and error paths. Name anything you couldn't exercise in the report as not verified.
-6. Check the behaviors off in the tracker, and commit per the commits setting with a message saying what the feature does. Stage files by name, only those this feature changed.
+2. Find everything the change reaches, including places the request doesn't mention. Search for the names you're changing here and in every repo the project mentions in CLAUDE.md, the README or the manifests, or keeps beside this one. Clients, docs, examples and version pins that use or describe the old behavior are part of this feature, because they go wrong the moment it ships. Say in a line what you found. In another repo, read its CLAUDE.md before editing, since only this repo's loads on its own, and fetch first, because a local checkout can be days behind. Work from its default branch or the branch the maintainer named. When its checkout is dirty or on another branch, use `git worktree add` rather than switching it, because another session may be working there.
+3. Read the golden file for this kind of code end to end, or when there is none, the closest code that does something like it. When the feature starts a kind of code later features will repeat, add its golden-files row.
+4. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write it as "Tests" describes. Otherwise, or with no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
+5. Implement until the check and the project's checks for this area pass (see "Checks"), writing to the bar in "Shaping the code".
+6. Use the feature the way its user would. For an app, CLI or server, launch it and go through each behavior, including the empty and error paths. Name anything you couldn't exercise in the report as not verified.
+7. Check the behaviors off in the tracker, and commit and push per the settings and what the maintainer has said this session, with a message saying what the feature does. Stage files by name, only those this feature changed.
 
 With a GitHub tracker, a commit that finishes every behavior in an issue ends with `Closes #N`, or `Refs #N` when the closing setting is "ask first". Partial work gets `Refs #N`. Never close a root issue that tracks others; that is the maintainer's call.
 
 ## Checks
 
-A feature is finished when its check passes, not when the code looks done. Treat the check as a sample of the inputs the feature will meet, not the whole set: make it pass by building the behavior, never by special-casing its inputs, weakening the command or editing the test to match the code. Before calling the feature done, try two or three inputs the check doesn't cover, such as empty input or the last item, and add any that fail to the test.
+A feature isn't finished until its check passes, however done the code looks. Treat the check as a sample of the inputs the feature will meet, not the whole set: make it pass by building the behavior, never by special-casing its inputs, weakening the command or editing the test to match the code. Before calling the feature done, try two or three inputs the check doesn't cover, such as empty input or the last item, and add any that fail to the test.
 
 Output from before your last edit doesn't count as passing. When a feature the user called done fails its check, finishing it is the task, not a question. When a test's expectation looks wrong, ask the user rather than change it.
 
@@ -52,6 +53,8 @@ Features run one after another, each committed before the next starts. Stop at t
 
 When commits wait for the user, leave each feature uncommitted without asking; when they later say to commit, make one commit per feature where the files separate cleanly. In ask mode, show each passing feature's message and files and ask: commit, commit the rest of the batch too, or leave it.
 
+What the maintainer says about delivery holds for the rest of the session. "Commit and push to next" covers every later fix and every repo this work reached, so they don't have to repeat it. It goes as far as their words: "commit" alone isn't a push, and a branch they didn't name is still a question. When a repo has no such branch, ask once which to use and keep the answer.
+
 When the setting or the request calls for a pull request per batch, branch off the default branch before the first feature, then push and open it with `gh pr create` after the last, with this body and one `Closes #N` or `Refs #N` line per issue, since a squash merge drops the commit lines:
 
 ```markdown
@@ -65,6 +68,10 @@ When the setting or the request calls for a pull request per batch, branch off t
 <easy or hard to undo, and what could break>
 ```
 
+## Before you stop
+
+Picture the maintainer's next message. If it would be "you forgot X" or "now push that", do that first. Run `git status -sb` in every repo you touched, so nothing meant to ship stays uncommitted or unpushed; a branch with no upstream counts as unpushed. Two endings make them repeat themselves: a report that announces the next step without taking it, and an offer to do what they already told you to do. Stop and wait only when nothing can move without them, or before a step nothing they've said allows.
+
 ## Report
 
-Write the report once, after the last feature. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Close with one recommendation for what to do next, if any. Later turns follow whatever the user brings up.
+Write the report once, after the last feature. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits and pushes by repo, anything left uncommitted or unpushed, each place the change reached or why it needed nothing, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Close with a recommendation only for a decision that is theirs. Later turns follow whatever the user brings up.

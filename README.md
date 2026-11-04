@@ -17,7 +17,7 @@ In Claude Code:
 |---|---|---|---|
 | `/m4:setup` | Setting up a repo, changing preferences, or refreshing a CLAUDE.md from an older m4 | CLAUDE.md, PLAN.md | Create doc folders or labels, overwrite your sections |
 | `/m4:shape` | Shaping an idea into features | The tracker only | Write code, split work into ticket graphs or spikes |
-| `/m4:do` | Building features whose behavior is known | Code, tests, tracker, commits | Spawn reviewers, refuse over ordering, push without PR mode |
+| `/m4:do` | Building features whose behavior is known | Code, tests, tracker, commits | Spawn reviewers, refuse over ordering, push unless you or the settings said to |
 | `/m4:fix` | Something is broken and the cause is unknown | Code, tests, tracker, commits | Patch symptoms with guards, leave debug logs |
 | `/m4:explore` | Understanding unfamiliar code | Nothing | Write docs |
 | `/m4:tidy` | Cleaning up a diff, or working through review comments and `/code-review` findings | The diff's files | Hunt bugs (that's `/code-review`), change behavior without asking, widen scope |
@@ -29,6 +29,10 @@ Start with `/m4:setup`, which runs only when you type it. It interviews you, the
 ## Checks, not guesses
 
 `/m4:do` finishes each feature on a command passing, not on the code looking done. The feature's test has to fail for the right reason before any code is written, the agent tries inputs the test doesn't cover before calling it done, and every claim that it works quotes a run made after the last edit. The skill steers rather than enforces: no hooks, nothing to install.
+
+## Finishing the job
+
+`/m4:do` and `/m4:fix` look for everything a change reaches, including other repos and docs the request didn't name, and treat those as part of the work. When you say "commit and push to next", that holds for the rest of the session: later fixes and other repos follow without asking again, and a branch you never named is still a question. Before stopping, the agent pictures your next message and does the work it would ask for.
 
 ## Credits
 

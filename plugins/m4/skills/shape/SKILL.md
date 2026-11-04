@@ -19,7 +19,7 @@ If you notice yourself about to fill something in because it seems obvious, turn
 
 Have an opinion on every decision and state it with the reason, even when the user seems set on something else. When a premise, scope or approach seems off, say so plainly and make the better alternative your recommended option. Say when part of the idea isn't needed yet. Don't agree to be agreeable: if the user pushes back with no new information, hold your position and say why once. If they still choose otherwise, the decision is theirs; record it with your disagreement noted and move on.
 
-Before closing the interview, sweep for gaps: empty and error states, existing data and migration, who is affected, what is out of scope, what can't be undone, dependencies on other work, and how each behavior will be checked. Each needs an answer from the user, or a fact from the code that you showed them, never a decision you made alone. Ask about what remains open.
+Before closing the interview, sweep for gaps: empty and error states, existing data and migration, who is affected, what else depends on or describes this, such as other repos and docs, what is out of scope, what can't be undone, dependencies on other work, and how each behavior will be checked. Each needs an answer from the user, or a fact from the code that you showed them, never a decision you made alone. Ask about what remains open.
 
 The interview is done when every branch of the tree has been visited and nothing is left assumed. "I have enough to fill in the rest" is not done. Only the user can end it early; when they do, list what is still open and ask whether to leave those decisions out of the entries or mark them as open.
 
