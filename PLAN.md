@@ -85,6 +85,10 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Checks, not guesses: each feature gets one command that passes only when it works. The check is a sample of the inputs, not the whole set: pass it by building the behavior, try inputs it doesn't cover before calling it done, and rerun it before every claim that it works. Steered by the skill's prose, not enforced by hooks, since a model can route around a hook
 - [x] Unlisted request: add the entry and proceed
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
+- [x] PR summary opens with the problem in a sentence or two, then the fix
+- [x] Visible changes get before and after screenshots, motion or timing a short recording; performance claims get old and new measured alternately on realistic data
+- [x] Commit titles follow the repo's style, else a conventional prefix and the user-visible outcome
+- [x] After opening a PR, wait on checks and review bots, fix findings that hold up, stop when green, after three non-converging rounds, or at a product decision; never reply on GitHub
 - [x] Before building, finds everything the change reaches, including repos and docs the request didn't name, and reads a sibling's CLAUDE.md before editing it, since Claude Code only loads CLAUDE.md files from the working directory, its parents and its subfolders
 - [x] Works in a sibling from its default or named branch, through a worktree when the checkout is dirty or elsewhere, since another session may be using it
 - [x] Before stopping, runs `git status -sb` in every repo it touched, counting a branch with no upstream as unpushed; the report covers pushes by repo, what's left and each place the change reached, and recommends only decisions that are the maintainer's
@@ -101,6 +105,8 @@ Use when: something is broken and the cause is unknown. Touches code, tests, tra
 - [x] Flaky tests: bisect the suite for a polluting neighbor, replace fixed sleeps with waits on the condition; reproduce against a reference implementation when one exists
 - [x] Fix the first wrong decision, then the same fault elsewhere; guards only for legitimate states
 - [x] Regression test; tagged debug logs removed; cause stated in the commit message
+- [x] Visual bugs get a before screenshot; slow bugs reproduce as a measurement and the fix states old and new numbers
+- [x] Commit titles follow the repo's style, else a conventional prefix and the user-visible outcome
 - [x] Can't reproduce: say what was tried, ask once, continue best-effort
 - [x] The same fault is searched for across other repos, clients, docs and version pins; commits and pushes follow the settings and the maintainer's earlier word
 

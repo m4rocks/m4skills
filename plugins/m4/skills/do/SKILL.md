@@ -14,10 +14,10 @@ When CLAUDE.md has no m4 settings, skip the tracker, write tests where a cheap s
 1. Before the first line of code, walk through the feature as its user: what they do first, what goes wrong, what they'll ask for next. Read the code the feature touches, and cover every platform, target and mode the README and CLAUDE.md promise.
 2. Find everything the change reaches, including places the request doesn't mention. Search for the names you're changing here and in every repo the project mentions in CLAUDE.md, the README or the manifests, or keeps beside this one. Clients, docs, examples and version pins that use or describe the old behavior are part of this feature, because they go wrong the moment it ships. Say in a line what you found. In another repo, read its CLAUDE.md before editing, since only this repo's loads on its own, and fetch first, because a local checkout can be days behind. Work from its default branch or the branch the maintainer named. When its checkout is dirty or on another branch, use `git worktree add` rather than switching it, because another session may be working there.
 3. Read the golden file for this kind of code end to end, or when there is none, the closest code that does something like it. When the feature starts a kind of code later features will repeat, add its golden-files row.
-4. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write it as "Tests" describes. Otherwise, or with no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red.
+4. Give the feature a check: one command that passes only when the feature works. When the tests setting calls for a test, or the user asked for one, write it as "Tests" describes. Otherwise, or with no cheap seam, use the closest real check, such as a script that runs the feature and diffs its output, a curl against a dev server, or the existing tests for this area. Run it and confirm it fails for the reason you predicted, quoting the failure, because a typo or import error also shows red. When the feature changes what the user sees, and the harness can drive the app or a browser, capture a before screenshot now, since it can't be taken once the code has changed. When it claims to be faster or lighter, measure the current code on realistic data, such as a dev server seeded like a real install, so the after numbers have something to compare against.
 5. Implement until the check and the project's checks for this area pass (see "Checks"), writing to the bar in "Shaping the code".
-6. Use the feature the way its user would. For an app, CLI or server, launch it and go through each behavior, including the empty and error paths. Name anything you couldn't exercise in the report as not verified.
-7. Check the behaviors off in the tracker, and commit and push per the settings and what the maintainer has said this session, with a message saying what the feature does. Stage files by name, only those this feature changed.
+6. Use the feature the way its user would. For an app, CLI or server, launch it and go through each behavior, including the empty and error paths. Capture the after screenshot from the same place as the before one, and a short recording when the change is motion or timing, because a reviewer can judge those faster than they can read the diff. For a performance claim, run the old and new code alternately on the same data, several runs each, and keep the numbers. Name anything you couldn't exercise in the report as not verified.
+7. Check the behaviors off in the tracker, and commit and push per the settings and what the maintainer has said this session, with a message saying what the feature does. Write the title in the repo's existing title style; when it has none, use a conventional prefix and the outcome a user would notice, like `fix(web): new threads no longer spike CPU`. Stage files by name, only those this feature changed.
 
 With a GitHub tracker, a commit that finishes every behavior in an issue ends with `Closes #N`, or `Refs #N` when the closing setting is "ask first". Partial work gets `Refs #N`. Never close a root issue that tracks others; that is the maintainer's call.
 
@@ -59,14 +59,18 @@ When the setting or the request calls for a pull request per batch, branch off t
 
 ```markdown
 ## Summary
-<the smallest view that makes the change clear: pseudocode, a call tree, or a file tree>
+<the problem in a sentence or two, then how this fixes it, with the smallest view that makes the change clear: pseudocode, a call tree, or a file tree>
 
 ## Evidence
-<the failing check output before, the passing output after>
+<the failing check output before, the passing output after; before and after screenshots or a recording for visible changes; measured numbers for performance claims>
 
 ## Risk
 <easy or hard to undo, and what could break>
 ```
+
+`gh` can't attach images, so put screenshots and recordings where the maintainer can open them and say in the report where they are. Don't commit them to the branch, since they'd ship with the code.
+
+After opening it, wait on `gh pr checks --watch`, then read what review bots posted. Fix each finding that holds up, meaning you can name a concrete case where the code fails, push, and wait again, with no status messages between rounds. Stop when the checks pass on the latest commit and no bot finding is left unanswered, after three rounds that don't converge, or when a finding needs a product decision. List the findings you rejected and any human comments in the report instead of replying on GitHub, because a reply is public.
 
 ## Before you stop
 
