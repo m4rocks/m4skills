@@ -19,7 +19,7 @@ Rules every skill follows, so nothing runs that the user didn't expect.
 The always-loaded file `m4:setup` generates, written as prose with reasons, not bullets.
 
 - [x] Settings block: tracker, tests, commits, PRs, subagents
-- [x] Working here: tracker is advisory intent; check off what the code already does; unlisted requests and noticed problems become entries after asking; plan order is a suggestion, never a reason to refuse
+- [x] Working here: tracker is advisory intent; check off what the code already does; checking off is the only tracker change made unasked: unlisted requests are built without an entry, noticed problems go in the report, and adding, opening or editing an entry is asked each time with its text; plan order is a suggestion, never a reason to refuse
 - [x] Ask only about product direction, scope, irreversible or outward-facing actions, and choices where readings of the request lead to materially different work; make every other call and name it in the report
 - [x] Claims of done, passing or fixed carry output from the same turn; a subagent's success is checked against the diff
 - [x] Chat with the maintainer is direct, honest and brief, grammar dropped where meaning survives, never at the cost of a failure, risk, skipped step, gap or disagreement; explanations take the space they need. Unslop's rule against over-compression applies to prose that lands somewhere, not to chat
@@ -84,7 +84,7 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Code is written to a bar of cost on hot paths, and inputs the check doesn't cover are tried before done; per feature, after the checks, it is used as its user would. No separate re-review step, since current models over-verify when told to
 - [x] Tests name the break they catch, use hand-written expected values, test behavior rather than decisions, never assert on mocks, keep test-only code in test utilities, compare against a reference implementation when one exists, and end with a mental mutation check (from superpowers' `writing-good-tests`)
 - [x] Checks, not guesses: each feature gets one command that passes only when it works. The check is a sample of the inputs, not the whole set: pass it by building the behavior, try inputs it doesn't cover before calling it done, and rerun it before every claim that it works. Steered by the skill's prose, not enforced by hooks, since a model can route around a hook
-- [x] Unlisted request: add the entry and proceed
+- [x] Unlisted request: build without an entry; `do`, `fix` and `full-send` create entries or issues only on the maintainer's word, and repeat the rule because a repo may have no template or an older one
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
 - [x] PR summary opens with the problem in a sentence or two, then the fix
 - [x] Visible changes get before and after screenshots, motion or timing a short recording; performance claims get old and new measured alternately on realistic data

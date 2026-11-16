@@ -50,4 +50,4 @@ The test rules in `/m4:do`, the debugging techniques in `/m4:fix` and the review
 
 ## Tracker
 
-PLAN.md or GitHub issues, chosen in `m4:setup`: one entry per feature with a checklist of behaviors. It records intent; the code and you decide what is true. Agents check off what the code already does, add entries for unlisted requests, and treat order as a suggestion.
+PLAN.md or GitHub issues, chosen in `m4:setup`: one entry per feature with a checklist of behaviors. It records intent; the code and you decide what is true. Agents check off what the code already does and treat order as a suggestion. They never add an entry or open an issue on their own: a request that isn't listed is built without one, and anything else is asked first with its text.
