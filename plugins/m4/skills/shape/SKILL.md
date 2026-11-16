@@ -5,7 +5,7 @@ description: Use when the user says plan, scope, spec, design, brainstorm, think
 
 # m4:shape
 
-Start with one line: you are running m4:shape, and it will only write to the tracker named in CLAUDE.md.
+Start with one line: you are running m4:shape, and it changes nothing unless the maintainer sends the plan to the tracker named in CLAUDE.md.
 
 ## Interview
 
@@ -21,9 +21,15 @@ Have an opinion on every decision and state it with the reason, even when the us
 
 Before closing the interview, sweep for gaps: empty and error states, existing data and migration, who is affected, what else depends on or describes this, such as other repos and docs, what is out of scope, what can't be undone, dependencies on other work, and how each behavior will be checked. Each needs an answer from the user, or a fact from the code that you showed them, never a decision you made alone. Ask about what remains open.
 
-The interview is done when every branch of the tree has been visited and nothing is left assumed. "I have enough to fill in the rest" is not done. Only the user can end it early; when they do, list what is still open and ask whether to leave those decisions out of the entries or mark them as open.
+The interview is done when every branch of the tree has been visited and nothing is left assumed. "I have enough to fill in the rest" is not done. Only the user can end it early; when they do, list what is still open and ask whether to leave those decisions out of the plan or mark them as open.
 
-Then draft the entries in full (see Write), put the draft through the Review, and show it in chat exactly as it will be written: names, descriptions, decisions, every checklist line, and for GitHub whether it is one issue or several and which labels go on each. Mark where you disagreed and every line the Review reworded. Write only after the user approves that text. Treat each change they ask for as a decision like any other, then show the changed entries again and get approval before writing.
+## Plan
+
+The plan lands in chat first, and that is where it stays unless the maintainer sends it to the tracker. Draft it in full, one entry per feature as "Write" describes, and show it: names, descriptions, decisions and every checklist line. Mark where you disagreed. Treat each change the user asks for as a decision like any other, and show the changed entries again.
+
+Then ask where it goes, through the question tool: keep it in chat, or write it to the tracker. Skip the question when they already said, since "just plan it here" or "put it in the tracker" holds for the rest of the session, and when CLAUDE.md names no tracker, where chat is the only place. A plan kept in chat is finished: say that m4:do can build it from this conversation, and stop.
+
+For the tracker, put the entries through the Review, then show them exactly as they will be written, with every line the Review reworded marked, and for GitHub whether it is one issue or several and which labels go on each. Write only after the user approves that text.
 
 ## Write
 
@@ -36,10 +42,10 @@ When the tracker already has entries, reconcile first: find behaviors the code a
 
 ## Review
 
-Before the user sees the draft, have it cold-read. Spawn one read-only subagent, which this skill is allowed to do regardless of the Subagents setting, because only a reader without this conversation can tell what the entries leave out. Give it the entries and the paths of the code they touch, nothing else: no interview, no summary. Ask it to list every point where an implementer would have to guess, every behavior that can't be checked as written, and every contradiction between entries or with the code. Each finding that needs a decision goes to the user through the question tool, with your recommendation first, like any other interview question. Findings that only need clearer wording, with no change in meaning, you may fix yourself and mark in the draft; when in doubt, it is a decision. Re-run the review on changed entries until it finds nothing. Do not weaken an entry to make a finding go away.
+Before entries go to the tracker, have them cold-read. A plan kept in chat skips this, because its reader has the conversation. Spawn one read-only subagent, which this skill is allowed to do regardless of the Subagents setting, because only a reader without this conversation can tell what the entries leave out. Give it the entries and the paths of the code they touch, nothing else: no interview, no summary. Ask it to list every point where an implementer would have to guess, every behavior that can't be checked as written, and every contradiction between entries or with the code. Each finding that needs a decision goes to the user through the question tool, with your recommendation first, like any other interview question. Findings that only need clearer wording, with no change in meaning, you may fix yourself and mark in the draft; when in doubt, it is a decision. Re-run the review on changed entries until it finds nothing. Do not weaken an entry to make a finding go away.
 
 When the harness has no subagents, re-read each entry as if you had never seen the interview and do the same pass inline, and say that it was weaker.
 
-The tracker is the only thing m4:shape changes; building is m4:do's job, so m4:shape never starts the work, not even a branch. When the user doesn't want tracker entries, keep the plan in chat and suggest m4:do to build it. Order entries the way you'd build them, but the user can build any of them at any time.
+The tracker is the only thing m4:shape changes, and only when the maintainer chose it; building is m4:do's job, so m4:shape never starts the work, not even a branch. Order entries the way you'd build them, but the user can build any of them at any time.
 
-End by listing the entries you added or changed.
+End by listing the entries you added or changed, or by saying that the plan stayed in chat and nothing was written.

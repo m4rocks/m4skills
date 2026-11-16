@@ -6,12 +6,12 @@ A small Claude Code skillset: predictable skills, a lean CLAUDE.md, agents that 
 
 Rules every skill follows, so nothing runs that the user didn't expect.
 
-- [x] No skill invokes another skill
+- [x] No skill invokes another skill; `half-send` reads `full-send`'s file rather than repeat it
 - [x] Opens by naming itself and what it will touch; ends with what changed, what was skipped or unchecked, and any risk
 - [x] Model-invocable except `setup`, which writes CLAUDE.md and runs only when the user types it: each description opens with the plain words users type (fix, add, review), then when to skip, so common verbs still route. Descriptions name triggers, not steps, because an agent that reads a summary of the steps may follow it instead of the body (from superpowers' `writing-skills`)
 - [x] No tool names; "the harness's structured question tool when it has one", falling back to one question per message
-- [x] Subagents only when CLAUDE.md or the user allows them
-- [x] Short verbs invoked as `/m4:<verb>`, none matching a Claude Code built-in (hence `setup` and `shape`, not `init` and `plan`)
+- [x] Subagents only when CLAUDE.md or the user allows them, except one cold-read reviewer in `shape`, `full-send` and `half-send`
+- [x] Short verbs invoked as `/m4:<verb>`, none matching a Claude Code built-in (hence `setup` and `shape`, not `init` and `plan`). `full-send` and `half-send` are named for the phrase that triggers them
 - [x] Written to `prompt-audit` and `writing-for-agents`: reasons beside rules, positive phrasing, no caps or MUST, nothing the model does by default, nothing the environment already says
 
 ## CLAUDE.md template
@@ -57,13 +57,14 @@ Use when: a new repo, or the user's preferences changed. Touches CLAUDE.md, and 
 
 ## m4:shape
 
-Use when: shaping an idea into features. Touches the tracker only.
+Use when: shaping an idea into features. Touches nothing, or the tracker when the maintainer sends the plan there.
 
 - [x] Read relevant code first; finding facts is the agent's job
 - [x] Rounds of every ready decision through the structured question tool, recommended option first, worded so "yes" accepts it
 - [x] Every decision in the plan, details included, is the user's answer or approval; facts that drive a decision are shown in the question
 - [x] Done when every branch of the decision tree is visited and nothing is assumed; only the user ends it early
-- [x] Shows the reviewed entries verbatim and writes only after approval; one entry per feature with a short description and checklist
+- [x] The plan lands in chat, one entry per feature with a short description and checklist, then one question asks whether it stays there or goes to the tracker; an earlier word such as "just plan it here" holds for the session
+- [x] For the tracker: cold-read review, entries shown verbatim, written only after approval. A plan kept in chat skips the review, since its reader has the conversation
 - [x] Reconcile on re-runs: check off what the code already does
 - [x] The gap sweep asks what else depends on or describes the idea, so other repos and docs become checklist lines
 - [x] Won't create ticket-per-task, dependency graphs, spikes, or write code
@@ -132,13 +133,38 @@ Use when: cleaning up a diff, including human-written ones, or working through r
 
 ## m4:harden
 
-Use when: the user corrected the agent for the same thing twice. Touches code, types, lint config, CLAUDE.md.
+Use when: the user corrected the agent for the same thing twice, or asks for a retro on a session. Touches code, types, lint config, CLAUDE.md.
 
 - [x] Find recurring mistake classes from the user's input and git history
 - [x] Fix each at the highest level that works: structure, types, a lint whose error names the fix, a test, a CLAUDE.md line last
 - [x] Record each rule with its enforcer in the CLAUDE.md table; drop rules whose mistake can no longer happen, and propose deleting rules whose prevented failure nobody can name
 - [x] Work out what context led the agent to each mistake, confirm it against the files, and fix that context too
 - [x] Mistakes from copying the wrong example fix the golden-files row and propose moving the minority files
+- [x] Retro: reads a session's record for slow searches, mistakes a check could have caught, costly tool calls, information out of reach and instructions that changed nothing; a check that exists but nothing runs is the finding (from Matt Pocock's `retro`)
+- [x] Every retro candidate traces to a moment in the record, a smooth session yields none, and nothing changes until the maintainer picks from one multi-select question
+- [x] Left out of the retro: a reviewer agent and its standards file, since m4 has neither
+
+## m4:full-send
+
+Use when: the user says "full send". Touches code, tests, tracker, commits, a branch, a pull request and the merge. Adapted from tstack's `full-send`, with what it took from `sol-loop`, `file-pr` and `babysit-pr` written inline.
+
+- [x] Runs only on the words themselves, which override the commits and pushes settings for the task and drop ask-first rules for testing, never rules about how to test
+- [x] Proof is output observed after the last edit; a change that can't be proved is a question, not a merge
+- [x] One read-only cold-read reviewer regardless of the Subagents setting, since nobody else reads the diff before it merges; findings labeled blocker, should or nit, up to three rounds, and running out of rounds isn't approval
+- [x] Opens a ready pull request, problem first, after rebasing and checking for an existing one; fixes check failures and findings that hold up, proves each fix, and declines what the goal doesn't need
+- [x] Merge gate on the latest commit: proof covers the diff, required checks pass, bot findings answered, no review requesting changes, branch up to date, and no later default-branch commit touches the same files
+- [x] Merges the way the repo does, never around branch protection; replies on GitHub only where a thread must be resolved to merge
+- [x] Questions go through the structured question tool so the session shows as waiting; with no answer, the pull request stays open and unmerged
+- [x] Left out: tstack's reviewer on another provider's model, its watcher script and its comment header, since m4 ships no scripts and stays inside Claude Code
+- [ ] Run a full send end to end on a real repo
+
+## m4:half-send
+
+Use when: the user says "half send". Touches what full send touches, except the merge. Adapted from tstack's `full-stop` and renamed.
+
+- [x] Follows `full-send`'s file for steps, proof, review and asking; its own file wins where they differ
+- [x] Never merges, turns off auto-merge and leaves a merge queue before working, and checks again before each push
+- [x] Ends with one of three verdicts: ready to merge, waiting for approval, or blocked
 
 ## Packaging
 
