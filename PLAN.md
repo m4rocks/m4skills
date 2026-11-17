@@ -112,6 +112,7 @@ Use when: something is broken and the cause is unknown. Touches code, tests, tra
 - [x] Flaky tests: bisect the suite for a polluting neighbor, replace fixed sleeps with waits on the condition; reproduce against a reference implementation when one exists
 - [x] Fix the first wrong decision, then the same fault elsewhere; guards only for legitimate states
 - [x] Regression test; tagged debug logs removed; cause stated in the commit message
+- [x] Verify by rerunning the original reproduction red to green; no code review, `/code-review`, m4:tidy or reviewer subagent on the fix
 - [x] Visual bugs get a before screenshot; slow bugs reproduce as a measurement and the fix states old and new numbers
 - [x] Commit titles follow the repo's style, else a conventional prefix and the user-visible outcome
 - [x] Can't reproduce: say what was tried, ask once, continue best-effort
