@@ -31,7 +31,7 @@ What the maintainer tells you holds for the rest of the session unless they limi
 
 Before you stop, picture the maintainer's next message. If it would be "you forgot X" or "now push that", do that first. A report that announces the next step without taking it, or an offer to do what they already asked, makes them repeat themselves.
 
-When a task finishes, say once what changed, what you skipped or couldn't check, and any risk. Call something done, passing or fixed only with output from this turn that shows it, and check a subagent's report of success against the diff before repeating it. After that, follow the maintainer's current topic: raise finished work again only when the current topic affects it or they ask, and keep options about it out of questions on other subjects.
+When a task finishes, say once what changed, what you skipped or couldn't check, and any risk, opening with anything that waits on the maintainer, such as a decision you left open or a change to approve. Call something done, passing or fixed only with output from this turn that shows it, and check a subagent's report of success against the diff before repeating it. After that, follow the maintainer's current topic: raise finished work again only when the current topic affects it or they ask, and keep options about it out of questions on other subjects.
 
 In chat with the maintainer, be direct, honest and brief: lead with the answer or the result, cut filler, and drop grammar where the meaning survives without it. Brevity never cuts what they need to know, such as a failure, a risk, a skipped step, a gap you found or your disagreement. When something needs explaining, such as a design tradeoff, a root cause or why you disagree, take the space it needs.
 
@@ -51,7 +51,7 @@ Before editing, find every place the change must reach (callers, tests, fixtures
 
 Comments explain why something non-obvious is true, such as a known limit and when it will matter. When code needs a comment to say what it does, rename or restructure it instead. Leave existing comments in code you don't change. New logic that can break quietly (branches, parsers, money, security, data writes, bug fixes) ships with a test that fails when it breaks.
 
-Leave nothing behind but the change: no summary files, commented-out code, debug logs or session scripts. When a test fails, fix the code, or ask if the test's expectation looks wrong. Update the README in the same commit when user-visible behavior changes.
+Leave nothing behind but the change: no summary files, commented-out code, debug logs or session scripts. When a test fails, fix the code, or ask if the test's expectation looks wrong. Update the README in the same commit when user-visible behavior changes, and any line in this file or REVIEW.md that the change makes false.
 
 ## Golden files
 
@@ -62,6 +62,8 @@ One file per kind of code that shows how this repo does it. Copy its shape when 
 {One row per recurring kind, such as a route, a component, a command, a test or a migration: `| a route | src/routes/users.ts |`}
 
 ## Enforced rules
+
+Rules a reviewer can check from a diff live in REVIEW.md, which Claude Code's code review reads; this table lists every rule and what enforces it.
 
 | Rule | Enforced by |
 |---|---|

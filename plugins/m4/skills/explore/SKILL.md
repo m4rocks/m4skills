@@ -7,7 +7,7 @@ description: Use when the user asks how, where or why something works in this co
 
 Start with one line: you are running m4:explore, which reads and explains and changes no files.
 
-Read the actual code, starting from where the behavior enters (a route, a command, an event, a public function) and following it through. For "why" questions, read the git history of the lines involved. Answer at the depth the user asked for, citing `file:line` so they can follow along.
+Read the actual code, starting from where the behavior enters (a route, a command, an event, a public function) and following it through. For "why" questions, read the git history of the lines involved. Answer at the depth the user asked for, citing `file:line` so they can follow along. Mark anything you couldn't confirm from the code, and say where you looked.
 
 Use a small text view when it explains faster than prose: a call tree for control flow, a file tree for where things live, pseudocode for an algorithm.
 

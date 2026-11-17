@@ -21,7 +21,7 @@ In Claude Code:
 | `/m4:fix` | Something is broken and the cause is unknown | Code, tests, tracker, commits | Patch symptoms with guards, leave debug logs |
 | `/m4:explore` | Understanding unfamiliar code | Nothing | Write docs |
 | `/m4:tidy` | Cleaning up a diff, or working through review comments and `/code-review` findings | The diff's files | Hunt bugs (that's `/code-review`), change behavior without asking, widen scope |
-| `/m4:harden` | The agent repeats a mistake you've corrected, or you want a retro on a session | Code, types, lint config, CLAUDE.md | Add a prose rule where a check can enforce it, change anything after a retro before you pick |
+| `/m4:harden` | The agent repeats a mistake you've corrected, or you want a retro on a session | Code, types, lint config, REVIEW.md, CLAUDE.md | Add a prose rule where a check can enforce it, change anything after a retro before you pick |
 | `/m4:full-send` | You say "full send" and stop watching | Code, tests, tracker, commits, a pull request, the merge | Merge before the gate passes, go around branch protection, run without those words |
 | `/m4:half-send` | You say "half send": the same, stopping at ready to merge | Code, tests, tracker, commits, a pull request | Merge, or leave auto-merge on |
 | `/m4:unslop` | Before the agent writes docs, commit or PR text, or tracker entries, or when you hand it text to clean up | The draft text | Change meaning or tone |
@@ -30,7 +30,7 @@ Start with `/m4:setup`, which runs only when you type it. It interviews you, the
 
 ## Checks, not guesses
 
-`/m4:do` finishes each feature on a command passing, not on the code looking done. The feature's test has to fail for the right reason before any code is written, the agent tries inputs the test doesn't cover before calling it done, and every claim that it works quotes a run made after the last edit. The skill steers rather than enforces: no hooks, nothing to install.
+`/m4:do` finishes each feature on a command passing, not on the code looking done. The feature's test has to fail for the right reason before any code is written, the agent tries inputs the test doesn't cover before calling it done, and every claim that it works quotes a run made after the last edit. When the goal is a number, such as speed or how often a prompt gets it right, it climbs one change at a time, keeps only gains larger than chance, and holds some cases back to catch a change that only fits the ones it read. The skill steers rather than enforces: no hooks, nothing to install.
 
 ## Finishing the job
 
@@ -38,7 +38,7 @@ Start with `/m4:setup`, which runs only when you type it. It interviews you, the
 
 ## Sending it
 
-Say "full send" and the agent takes the change to a merged pull request with nobody watching. It proves the change with output from the session, has one reviewer without the conversation read the diff, opens the pull request, fixes what the checks and review bots find, and merges when the gate passes: required checks passing on the latest commit, no review requesting changes, the branch up to date, and nothing landed on the default branch since the last passing run that touches the same files. "Half send" does the same and stops with the pull request ready for you to merge. Either phrase overrides the commits and pushes settings for that task, and neither runs unless you say it.
+Say "full send" and the agent takes the change to a merged pull request with nobody watching. It proves the change with output from the session, has one reviewer without the conversation read the diff, opens the pull request, fixes what the checks and review bots find, and merges when the gate passes: required checks passing on the latest commit, no review requesting changes, the branch up to date, and nothing landed on the default branch since the last passing run that touches the same files. "Half send" does the same and stops with the pull request ready for you to merge. Either phrase overrides the commits and pushes settings for that task, and neither runs unless you say it. Neither stops to ask along the way: the agent makes the calls and lists them in the report, and when it can't prove the change or pass the gate it leaves the pull request open. Only a step that can't be taken back, such as deleting data or touching production, waits for you.
 
 ## Credits
 
@@ -47,6 +47,8 @@ Say "full send" and the agent takes the change to a merged pull request with nob
 The test rules in `/m4:do`, the debugging techniques in `/m4:fix` and the review-comment steps in `/m4:tidy` are adapted from [superpowers](https://github.com/obra/superpowers) by Jesse Vincent. The golden-files table and the new-file check are adapted from `inherit-legacy-style` and `gateguard` in [everything-claude-code](https://github.com/affaan-m/everything-claude-code) by Affaan Mustafa.
 
 `/m4:full-send` and `/m4:half-send` are adapted from `full-send`, `full-stop`, `sol-loop`, `file-pr` and `babysit-pr` in [tstack](https://github.com/t3dotgg/tstack) by Theo Browne. The retro in `/m4:harden` is adapted from the `retro` skill in [skills](https://github.com/mattpocock/skills) by Matt Pocock.
+
+Property tests, REVIEW.md as the home for review-time rules, fixing every instance of a finding, the pre-existing label, reports that open with what waits on you, and climbing a number against held-out cases come from Anthropic's posts on [verification](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/), [code review](https://claude.dev/blog/solving-code-review-at-anthropic/), [eval design and hillclimbing](https://claude.dev/blog/automating-eval-design-and-hillclimbing/) and [Opus 5.5](https://claude.dev/blog/getting-the-most-out-of-opus-5-5/).
 
 ## Tracker
 

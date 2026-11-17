@@ -6,14 +6,14 @@ disable-model-invocation: true
 
 # m4:setup
 
-Start with one line: you are running m4:setup, and it will touch CLAUDE.md, possibly AGENTS.md, and possibly create PLAN.md.
+Start with one line: you are running m4:setup, and it will touch CLAUDE.md, possibly AGENTS.md and REVIEW.md, and possibly create PLAN.md.
 
 ## Look before asking
 
 Find out what the repo already answers, so the interview only covers real choices:
 
 - language, package manager, test runner, type checker, linter, formatter
-- whether AGENTS.md, CLAUDE.md, `.claude/CLAUDE.md` or CLAUDE.local.md exist, and what they say
+- whether AGENTS.md, CLAUDE.md, `.claude/CLAUDE.md`, CLAUDE.local.md or REVIEW.md exist, and what they say
 - the git remote, and whether `gh auth status` succeeds
 - an existing PLAN.md, or open GitHub issues
 - the kinds of code the repo repeats, such as routes, components, commands, tests or migrations, and for each the file that best shows how most of the repo does it
@@ -38,6 +38,8 @@ Fill `claude-template.md` from this skill's folder: keep the tracker variant and
 Write to `CLAUDE.md` at the repo root, or to `.claude/CLAUDE.md` when that is where the repo keeps it. When it already exists, keep the user's own sections and replace only the sections the template owns.
 
 On a re-run, change the settings that moved, then compare the template-owned prose in CLAUDE.md with this version of `claude-template.md`, since repos set up with an older m4 keep the old text. When they differ, show the changes section by section and ask in one multi-select question which sections to refresh, recommending all. A refresh replaces only the template's prose: settings values, filled tables such as golden files and enforced rules, and every section the user wrote stay as they are. Add any section the template has gained, such as Golden files, as part of the refresh.
+
+When the user's own sections hold rules a reviewer could check from a diff, such as "new endpoints need an auth test", offer in one multi-select question to move them to REVIEW.md, which Claude Code's code review reads at review time, so they stop loading in every session. Move only the ones they pick.
 
 When AGENTS.md exists, carry its rules into CLAUDE.md and drop any `@AGENTS.md` import, so each rule has one home. Ask before deleting AGENTS.md, since other tools may still read it.
 

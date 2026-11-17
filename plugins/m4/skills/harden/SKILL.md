@@ -5,13 +5,13 @@ description: Use when the user corrects the same agent behavior a second time ('
 
 # m4:harden
 
-Start with one line: you are running m4:harden, the mistakes you'll address or the session you'll review, and that it may touch code, types, lint config and CLAUDE.md.
+Start with one line: you are running m4:harden, the mistakes you'll address or the session you'll review, and that it may touch code, types, lint config, REVIEW.md and CLAUDE.md.
 
 ## Find the mistake classes
 
 Start from what the user describes, then look for more: reverts and fix-up commits in the git history, review comments, CLAUDE.md rules nothing enforces, comments that explain workarounds. Group them into classes. A class counts once it has happened twice.
 
-For each class, work out what context led the agent there: what it read, which example it copied, which instruction it followed or missed. When the mistake was made in this session, give that account from your own reasoning; otherwise reconstruct it from the transcript or the commits. Treat the account as a lead, confirm it against the files, and fix that context along with the code.
+For each class, work out what context led the agent there: what it read, which example it copied, which instruction it followed or missed. When the mistake was made in this session, say what you read and which example or instruction you followed; otherwise reconstruct it from the transcript or the commits. Treat the account as a lead, confirm it against the files, and fix that context along with the code.
 
 Assume the next contributor is an agent that sees only the files it opened, copies the nearest example, and takes the shortest path that compiles. The goal is a repo where a change that looks right from one file is right for the whole repo.
 
@@ -23,7 +23,7 @@ When the user asks for a retro, the session is the evidence instead of a repeate
 - It made a mistake a check could have caught. Read the repo's check commands and CI first: a check that exists but nothing runs, or that fails without anyone seeing, is the finding, and running it is the fix. A repo where nothing runs lint, types and tests before a merge is a finding of its own.
 - A tool call cost far more than it returned, such as a command that prints thousands of lines to answer a yes or no. Propose the flag, script or narrower command.
 - It needed information it couldn't reach, such as dev server logs or the state of an outside service. Propose a way in, like writing the log to a file or read-only access.
-- An instruction in CLAUDE.md or another steering file changed nothing the agent did. Propose deleting it.
+- An instruction in CLAUDE.md or another steering file changed nothing the agent did, such as a line telling the model to think carefully, which current models do unasked. Propose deleting it.
 
 Every candidate points to a moment in the record: what the agent did there and what it cost. Drop any you can't trace to one, because categories invite generic advice, and a session that went smoothly has little to teach. Say so rather than fill the list.
 
@@ -35,7 +35,10 @@ Show the candidates in chat, most costly first, each with its moment and the fix
 2. Types, so the wrong state can't be written.
 3. A lint rule or CI check whose error message names the fix. Use a check the repo already has before writing one. If the pattern is already common, fail only on new occurrences.
 4. A test of the behavior.
-5. A CLAUDE.md sentence, only for judgment calls nothing can check.
+5. A line in REVIEW.md at the repo root, for a judgment call that shows in a diff. Claude Code's code review reads that file when it reviews, so the rule costs nothing in the sessions that write code. Write what a reviewer needs: the trigger that can be read from a diff, what to check when it matches, and the mistake behind it. Create the file when the repo has none.
+6. A CLAUDE.md sentence, only for what has to be known while writing the code and nothing above can catch.
+
+Write each rule for the class, not the instance. A rule that names the one file or value that went wrong passes on that case and misses the next one, so say what makes the mistake a mistake.
 
 Adding a new tool or dependency is the maintainer's call, so ask before doing it.
 
@@ -43,6 +46,6 @@ Prove each new check fails on a real past instance of the mistake, then commit e
 
 ## Keep the rule table
 
-Record each rule and what enforces it in the enforced-rules table in CLAUDE.md. Remove rules whose mistake can no longer happen, and replace any prose rule that a check now covers. A CLAUDE.md rule whose prevented failure nobody can name costs context in every session; propose deleting it.
+Record each rule and what enforces it in the enforced-rules table in CLAUDE.md, with REVIEW.md as the enforcer for the rules that live there. Remove rules whose mistake can no longer happen, and replace any prose rule that a check now covers. A CLAUDE.md rule whose prevented failure nobody can name costs context in every session; propose deleting it.
 
 End by listing each class with its evidence, the level you chose, and why a higher level didn't work, and after a retro, the candidates the maintainer didn't pick.

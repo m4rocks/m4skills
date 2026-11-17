@@ -37,7 +37,8 @@ The always-loaded file `m4:setup` generates, written as prose with reasons, not 
 - [x] Risky logic (branches, parsers, money, security, data writes, bug fixes) ships with a test
 - [x] No debris; fix code rather than tests; README updated with user-visible changes
 - [x] Routing line: send casual requests ("fix X") through the matching m4 skill
-- [x] Enforced-rules table, filled by `m4:harden`
+- [x] Enforced-rules table, filled by `m4:harden`; rules a reviewer can check from a diff live in REVIEW.md, read at review time rather than in every session
+- [x] Reports open with anything that waits on the maintainer; a change that makes a line in CLAUDE.md or REVIEW.md false updates it in the same commit (from Anthropic's Opus 5.5 and code review posts)
 
 ## m4:setup
 
@@ -53,6 +54,7 @@ Use when: a new repo, or the user's preferences changed. Touches CLAUDE.md, and 
 - [x] Re-runs also diff the template-owned prose against the current template and offer a per-section refresh, so repos set up with an older m4 get fixes; settings values, filled tables and the user's sections stay
 - [x] Writes CLAUDE.md; an existing AGENTS.md's rules move into it, and deleting AGENTS.md is asked first
 - [x] Finds repos that depend on this one or describe it and confirms them in the interview; the commits and pushes questions say that a word from the user holds for the session
+- [x] Offers to move the user's own rules that a reviewer could check from a diff into REVIEW.md
 - [x] Won't create doc folders, labels, or overwrite the user's sections
 
 ## m4:shape
@@ -94,6 +96,10 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Works in a sibling from its default or named branch, through a worktree when the checkout is dirty or elsewhere, since another session may be using it
 - [x] Before stopping, runs `git status -sb` in every repo it touched, counting a branch with no upstream as unpushed; the report covers pushes by repo, what's left and each place the change reached, and recommends only decisions that are the maintainer's
 - [x] Repos with no m4 settings get working defaults and one mention of `/m4:setup`
+- [x] Property tests where something must hold for every input; comparisons against a reference ignore differences that don't matter and list the meant ones (from Anthropic's verification post)
+- [x] Whatever judges the change, tests, lint rules, type settings or CI steps, isn't altered without asking
+- [x] Climbing a number: baseline measured several times, one change a round, kept only above chance, cases set aside and never read, failing cases never copied in, remaining failures sorted by cause when rounds stall (from Anthropic's hillclimbing post)
+- [x] A finding that holds is fixed everywhere the change makes that mistake; bugs the change didn't introduce go in the report; the PR body says how to undo the change
 - [x] Won't call reviewers, refuse over ordering, or push unless the maintainer or the settings said to
 
 ## m4:fix
@@ -117,6 +123,7 @@ Use when: unfamiliar code, or "how does X work". Touches nothing.
 
 - [x] Explain structure, flow and conventions in chat
 - [x] Offer to add discovered conventions to CLAUDE.md
+- [x] Marks what it couldn't confirm from the code and says where it looked
 - [x] Won't write docs
 
 ## m4:tidy
@@ -129,6 +136,7 @@ Use when: cleaning up a diff, including human-written ones, or working through r
 - [x] Findings need a concrete failing case; behavior-changing fixes go to the user as one multi-select question
 - [x] Review comments: read all, clarify unclear ones before changing anything, check each against the code, search for callers before building something out, push back with evidence, fix one at a time, answer without thanks (from superpowers' `receiving-code-review`)
 - [x] Leaves changes uncommitted unless the maintainer already said to commit this work
+- [x] Fixes every place the diff makes a finding's mistake, labels bugs the diff didn't introduce as pre-existing and leaves them, and updates CLAUDE.md or REVIEW.md lines the diff makes false
 - [x] Won't widen scope or write a report file
 
 ## m4:harden
@@ -136,13 +144,14 @@ Use when: cleaning up a diff, including human-written ones, or working through r
 Use when: the user corrected the agent for the same thing twice, or asks for a retro on a session. Touches code, types, lint config, CLAUDE.md.
 
 - [x] Find recurring mistake classes from the user's input and git history
-- [x] Fix each at the highest level that works: structure, types, a lint whose error names the fix, a test, a CLAUDE.md line last
+- [x] Fix each at the highest level that works: structure, types, a lint whose error names the fix, a test, a REVIEW.md line for judgment calls that show in a diff, a CLAUDE.md line last
+- [x] Rules are written for the class, not the instance that went wrong; the account of a mistake names what was read and followed, since a request to reproduce reasoning can be declined
 - [x] Record each rule with its enforcer in the CLAUDE.md table; drop rules whose mistake can no longer happen, and propose deleting rules whose prevented failure nobody can name
 - [x] Work out what context led the agent to each mistake, confirm it against the files, and fix that context too
 - [x] Mistakes from copying the wrong example fix the golden-files row and propose moving the minority files
 - [x] Retro: reads a session's record for slow searches, mistakes a check could have caught, costly tool calls, information out of reach and instructions that changed nothing; a check that exists but nothing runs is the finding (from Matt Pocock's `retro`)
 - [x] Every retro candidate traces to a moment in the record, a smooth session yields none, and nothing changes until the maintainer picks from one multi-select question
-- [x] Left out of the retro: a reviewer agent and its standards file, since m4 has neither
+- [x] The retro counts lines such as "think carefully" as instructions that change nothing
 
 ## m4:full-send
 
@@ -154,7 +163,9 @@ Use when: the user says "full send". Touches code, tests, tracker, commits, a br
 - [x] Opens a ready pull request, problem first, after rebasing and checking for an existing one; fixes check failures and findings that hold up, proves each fix, and declines what the goal doesn't need
 - [x] Merge gate on the latest commit: proof covers the diff, required checks pass, bot findings answered, no review requesting changes, branch up to date, and no later default-branch commit touches the same files
 - [x] Merges the way the repo does, never around branch protection; replies on GitHub only where a thread must be resolved to merge
-- [x] Questions go through the structured question tool so the session shows as waiting; with no answer, the pull request stays open and unmerged
+- [x] Never stops to ask along the way: ambiguity, partial proof and an obsolete pull request are its own calls, listed in the report; with no proof or a gate that can't pass, the pull request stays open. Only a step that can't be taken back waits for the maintainer
+- [x] Leaves whatever judges the change as strict as it found it; a check whose expectation the goal changes is named in the report
+- [x] The reviewer says how to show each finding fails and labels bugs that predate the change pre-existing; the review must cover the final commit
 - [x] Left out: tstack's reviewer on another provider's model, its watcher script and its comment header, since m4 ships no scripts and stays inside Claude Code
 - [ ] Run a full send end to end on a real repo
 

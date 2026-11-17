@@ -23,7 +23,7 @@ With a GitHub tracker, a commit that finishes every behavior in an issue ends wi
 
 ## Checks
 
-A feature isn't finished until its check passes, however done the code looks. Treat the check as a sample of the inputs the feature will meet, not the whole set: make it pass by building the behavior, never by special-casing its inputs, weakening the command or editing the test to match the code. Before calling the feature done, try two or three inputs the check doesn't cover, such as empty input or the last item, and add any that fail to the test.
+A feature isn't finished until its check passes, however done the code looks. Treat the check as a sample of the inputs the feature will meet, not the whole set: make it pass by building the behavior, never by special-casing its inputs, weakening the command or editing the test to match the code. The same goes for whatever else judges the change, such as a lint rule, a type setting or a CI step: when the feature needs one of them changed, ask first and show the edit. Before calling the feature done, try two or three inputs the check doesn't cover, such as empty input or the last item, and add any that fail to the test.
 
 Output from before your last edit doesn't count as passing. When a feature the user called done fails its check, finishing it is the task, not a question. When a test's expectation looks wrong, ask the user rather than change it.
 
@@ -35,9 +35,16 @@ A good test fails when the behavior breaks and survives a restructuring of the i
 - Test the behavior a decision drives, not the decision: "a failing call is retried five times and the sixth never happens", not `MAX_RETRIES == 5`.
 - Assert on the real code, never on a mock. Mock only the slow or external layer, and give the mock the full shape of the real data, because code that reads a field the mock left out passes the test and breaks in production.
 - Code only tests call lives in test utilities.
-- When a reference implementation exists, such as the code being replaced, an official tool or the previous version, compare outputs against it over many inputs.
+- When a reference implementation exists, such as the code being replaced, an official tool or the previous version, compare outputs against it over many inputs, generated or sampled from real use. Ignore differences that don't matter, such as whitespace, and list the ones that are meant.
+- When something must hold for every input, test that property and let the repo's property-testing library generate the inputs, since they aren't picked with the bias of whoever wrote the code. Decoding what was encoded gives back the input, running a migration twice equals running it once, an optimized path matches the simple one, a balance never goes below zero.
 
 Then picture realistic mistakes in the new code: a wrong constant, the wrong branch, a missing state change, an empty return, missing validation. Some test should fail for each.
+
+## Climbing a number
+
+When the goal is a number rather than a pass, such as speed, size, cost or how often a prompt or heuristic gets it right, climb it one change at a time. Measure the starting point several times first, so you know how far the number moves by chance; a gain smaller than that isn't a gain. Each round, read what failed or ran slow, make the one change that addresses its cause, and measure again. Keep the change when the number improves by more than chance and revert it otherwise.
+
+When the number comes from a set of cases, set some aside at random before the first round and never read them. A change is kept only when the set-aside cases improve too, because a rule shaped around the cases you read scores well on them and nowhere else; for the same reason, never copy a failing case into the prompt or the code. When two or three rounds bring nothing, stop changing things and sort the remaining failures by cause, since some will be a wrong case or a wrong check. Report the start and the end with their spread, and say so when the gain is within chance.
 
 ## Shaping the code
 
@@ -65,12 +72,12 @@ When the setting or the request calls for a pull request per batch, branch off t
 <the failing check output before, the passing output after; before and after screenshots or a recording for visible changes; measured numbers for performance claims>
 
 ## Risk
-<easy or hard to undo, and what could break>
+<what could break, and how to undo the change: the revert, the flag to turn off, or the migration to run back>
 ```
 
 `gh` can't attach images, so put screenshots and recordings where the maintainer can open them and say in the report where they are. Don't commit them to the branch, since they'd ship with the code.
 
-After opening it, wait on `gh pr checks --watch`, then read what review bots posted. Fix each finding that holds up, meaning you can name a concrete case where the code fails, push, and wait again, with no status messages between rounds. Stop when the checks pass on the latest commit and no bot finding is left unanswered, after three rounds that don't converge, or when a finding needs a product decision. List the findings you rejected and any human comments in the report instead of replying on GitHub, because a reply is public.
+After opening it, wait on `gh pr checks --watch`, then read what review bots posted. Fix each finding that holds up, meaning you can name a concrete case where the code fails, along with every other place the change makes the same mistake, so the next round doesn't find them one at a time. A bug the change didn't introduce goes in the report instead. Push, and wait again, with no status messages between rounds. Stop when the checks pass on the latest commit and no bot finding is left unanswered, after three rounds that don't converge, or when a finding needs a product decision. List the findings you rejected and any human comments in the report instead of replying on GitHub, because a reply is public.
 
 ## Before you stop
 
@@ -78,4 +85,4 @@ Picture the maintainer's next message. If it would be "you forgot X" or "now pus
 
 ## Report
 
-Write the report once, after the last feature. Lead with anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits and pushes by repo, anything left uncommitted or unpushed, each place the change reached or why it needed nothing, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Close with a recommendation only for a decision that is theirs. Later turns follow whatever the user brings up.
+Write the report once, after the last feature. Open with anything that waits on the maintainer, such as a decision that is theirs, with your recommendation. Then anything that doesn't work where the repo says it should, then what was built but not verified, keeping the two apart. For each feature, show its check command and the last lines of its passing run. Then list the commits and pushes by repo, anything left uncommitted or unpushed, each place the change reached or why it needed nothing, the tracker changes, the calls you made yourself, any disagreement with a decision the user made, and any risk. Later turns follow whatever the user brings up.

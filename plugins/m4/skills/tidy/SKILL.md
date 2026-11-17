@@ -31,9 +31,10 @@ Findings include review comments from a person or a bot, `/code-review` output, 
 - Check each against the code: whether it holds for this codebase, whether fixing it breaks something, whether the current code has a reason. A finding needs a concrete case, this input leads to this wrong result; without one, say so and drop it.
 - When a comment asks to build something out properly, search for its callers first; when nothing uses it, propose removing it instead.
 - Fixing a finding changes behavior, so ask which to fix in one multi-select question through the structured question tool, each option naming the problem and its case, with your recommendation. Take disagreements about design to the user, with the evidence.
-- Fix the chosen items one at a time, most severe first, running the checks after each.
+- Fix the chosen items one at a time, most severe first, running the checks after each. Fix every place the diff makes the same mistake, not only the line the finding names, so the next review doesn't bring them back one at a time.
+- A bug the diff didn't introduce is pre-existing: say so and leave it for the report, since fixing it here would widen the diff.
 - Answer each review comment with what changed, or why not. Leave out thanks and praise; the fix shows the comment was heard.
 
-If the diff belongs to a tracker entry, check that it does what the entry says, and mention any gap.
+If the diff belongs to a tracker entry, check that it does what the entry says, and mention any gap. When the diff makes a line in CLAUDE.md or REVIEW.md false, update that line.
 
-Run the project's checks afterwards. Leave your changes uncommitted unless the maintainer already said to commit this work, and end by listing what you cleaned up, what you fixed, what the user chose not to fix, and what you couldn't check.
+Run the project's checks afterwards. Leave your changes uncommitted unless the maintainer already said to commit this work, and end by listing what you cleaned up, what you fixed, what the user chose not to fix, what was pre-existing, and what you couldn't check, opening with anything that waits on the maintainer.
