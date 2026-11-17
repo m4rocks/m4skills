@@ -10,7 +10,7 @@ Rules every skill follows, so nothing runs that the user didn't expect.
 - [x] Opens by naming itself and what it will touch; ends with what changed, what was skipped or unchecked, and any risk
 - [x] Model-invocable except `setup`, which writes CLAUDE.md and runs only when the user types it: each description opens with the plain words users type (fix, add, review), then when to skip, so common verbs still route. Descriptions name triggers, not steps, because an agent that reads a summary of the steps may follow it instead of the body (from superpowers' `writing-skills`)
 - [x] No tool names; "the harness's structured question tool when it has one", falling back to one question per message
-- [x] Subagents only when CLAUDE.md or the user allows them, except one cold-read reviewer in `shape`, `full-send` and `half-send`
+- [x] Subagents only when CLAUDE.md or the user allows them, except one cold-read reviewer in `shape`, `full-send` and `half-send`, which bug fixes skip
 - [x] Short verbs invoked as `/m4:<verb>`, none matching a Claude Code built-in (hence `setup` and `shape`, not `init` and `plan`). `full-send` and `half-send` are named for the phrase that triggers them
 - [x] Written to `prompt-audit` and `writing-for-agents`: reasons beside rules, positive phrasing, no caps or MUST, nothing the model does by default, nothing the environment already says
 
@@ -160,6 +160,7 @@ Use when: the user says "full send". Touches code, tests, tracker, commits, a br
 
 - [x] Runs only on the words themselves, which override the commits and pushes settings for the task and drop ask-first rules for testing, never rules about how to test
 - [x] Proof is output observed after the last edit; a change that can't be proved is a question, not a merge
+- [x] Bug fixes skip the reviewer: the reproduction going red to green is the proof
 - [x] One read-only cold-read reviewer regardless of the Subagents setting, since nobody else reads the diff before it merges; findings labeled blocker, should or nit, up to three rounds, and running out of rounds isn't approval
 - [x] Opens a ready pull request, problem first, after rebasing and checking for an existing one; fixes check failures and findings that hold up, proves each fix, and declines what the goal doesn't need
 - [x] Merge gate on the latest commit: proof covers the diff, required checks pass, bot findings answered, no review requesting changes, branch up to date, and no later default-branch commit touches the same files

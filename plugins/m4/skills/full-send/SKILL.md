@@ -24,7 +24,7 @@ Rules about how to test still hold: the named command, fixture or check stays th
 
 1. Finish the change. Build it to the bar a watched request gets: a bug is reproduced before it is fixed, a feature gets a check that fails first, and everything the change reaches is part of it. Make the smallest change that reaches the goal, fixing the case that happened rather than every case that could. On the default branch, create a branch first.
 2. Prove it (see "Proof").
-3. Have it reviewed (see "Review").
+3. Have it reviewed (see "Review"), unless it is a bug fix.
 4. Open the pull request. Rebase onto the latest default branch first, and check whether the branch already has one. Write the title in the repo's title style, saying the outcome a user would notice. The body opens with the problem in a sentence or two, then the fix, then the proof, then the risk and how to undo the change, with one `Closes #N` or `Refs #N` line per issue. Check off the tracker's behaviors in the same branch, and open no new entries or issues, since nobody is there to approve them; follow-ups go in the report. Read the title and body for secrets and private details before submitting. Open it ready rather than as a draft, because review bots skip drafts.
 5. Watch it. Wait on `gh pr checks --watch`, then read what review bots and people posted since your last push. Fix each failure and each finding that holds up, meaning you can name a concrete case where the code fails, along with every other place the change makes the same mistake, so the next round doesn't find them one at a time. Prove each fix before pushing it, then wait again. Tell a failure in the code from a flaky runner, and rerun only the second kind. Review rounds grow a pull request one cheap fix at a time, so decline tests the goal doesn't need, guards for cases that don't happen and extra compatibility, and list them in the report as follow-ups.
 6. Merge when the merge gate passes.
@@ -47,6 +47,8 @@ Leave whatever judges the change as strict as you found it: tests, lint rules, t
 
 ## Review
 
+Skip this section for a bug fix. Its proof is the original reproduction failing before the fix and passing after it, and that is the whole check, so spawn no reviewer and do no review pass inline. A change that fixes a bug and also adds or changes other behavior gets the review.
+
 Nobody else reads this diff before it merges, so one reader without this conversation does. Spawn one read-only subagent, which this skill is allowed to do regardless of the Subagents setting. Give it the repo path, the base commit, the goal in a sentence, what is out of scope and the check results, nothing else. Ask it to read the diff and the code around it, and to list bugs, broken callers and places the diff doesn't do what the goal says, each with a file and line, how to show it fails, and one of four labels:
 
 - blocker: the intended case is wrong
@@ -62,7 +64,7 @@ When the harness has no subagents, read the diff against its base as if you had 
 
 Merge only when all of this is true of the latest commit:
 
-- Your proof and the review cover every change in the diff, since a review of an earlier commit says nothing about this one.
+- Your proof, and the review when the change isn't a bug fix, cover every change in the diff, since a review of an earlier commit says nothing about this one.
 - The diff weakens nothing that judges it.
 - The required checks pass.
 - Review bots have finished, and each finding is fixed or rejected with a reason.
