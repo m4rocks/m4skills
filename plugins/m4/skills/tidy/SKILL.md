@@ -7,6 +7,8 @@ description: Use when the user says tidy, clean up, polish or simplify changes, 
 
 Start with one line: you are running m4:tidy, and the diff you're working on, whose files are the only ones it will touch. The diff is what the user named, otherwise the uncommitted changes, otherwise the current branch against the default branch.
 
+Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+
 m4:tidy cleans up and works through review findings; it doesn't hunt for bugs. When the user asked for a review, say once that Claude Code's `/code-review` finds bugs better, in reviewers that never saw the code being written, and that its findings can come back here. Then do the cleanup.
 
 ## Cleanup

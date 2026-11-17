@@ -7,11 +7,13 @@ description: Use only when the user says 'full send' in those words, about a cha
 
 Before any other output or command, write one line: you are running m4:full-send, the goal as you understand it, and that it will touch code, tests, the tracker, commits, a branch, a pull request and the merge.
 
+Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+
 The maintainer said "full send" because they aren't watching. Nobody reads your updates until long after you stop, so you own the work from where it stands now to a merged pull request. When they didn't say it in those words, this skill doesn't apply, however much autonomy the request implies.
 
 ## What the words allow
 
-For this task, "full send" is the maintainer's word, and it overrides the commits and pushes settings in CLAUDE.md. It allows you to:
+For this task, "full send" is the maintainer's word, and it overrides the commits and pushes settings. It allows you to:
 
 - commit, push the task's branch and open its pull request
 - force-push that branch with `--force-with-lease` after a rebase

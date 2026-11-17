@@ -5,7 +5,9 @@ description: Use when the user says plan, scope, spec, design, brainstorm, think
 
 # m4:shape
 
-Start with one line: you are running m4:shape, and it changes nothing unless the maintainer sends the plan to the tracker named in CLAUDE.md.
+Start with one line: you are running m4:shape, and it changes nothing unless the maintainer sends the plan to the tracker.
+
+Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
 
 ## Interview
 
@@ -27,7 +29,7 @@ The interview is done when every branch of the tree has been visited and nothing
 
 The plan lands in chat first, and that is where it stays unless the maintainer sends it to the tracker. Draft it in full, one entry per feature as "Write" describes, and show it: names, descriptions, decisions and every checklist line. Mark where you disagreed. Treat each change the user asks for as a decision like any other, and show the changed entries again.
 
-Then ask where it goes, through the question tool: keep it in chat, or write it to the tracker. Skip the question when they already said, since "just plan it here" or "put it in the tracker" holds for the rest of the session, and when CLAUDE.md names no tracker, where chat is the only place. A plan kept in chat is finished: say that m4:do can build it from this conversation, and stop.
+Then ask where it goes, through the question tool: keep it in chat, or write it to the tracker. Skip the question when they already said, since "just plan it here" or "put it in the tracker" holds for the rest of the session, and when the repo has no tracker, where chat is the only place unless the maintainer asks for PLAN.md or GitHub issues. A plan kept in chat is finished: say that m4:do can build it from this conversation, and stop.
 
 For the tracker, put the entries through the Review, then show them exactly as they will be written, with every line the Review reworded marked, and for GitHub whether it is one issue or several and which labels go on each. Write only after the user approves that text.
 

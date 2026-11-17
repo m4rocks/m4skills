@@ -7,6 +7,8 @@ description: Use when the user corrects the same agent behavior a second time ('
 
 Start with one line: you are running m4:harden, the mistakes you'll address or the session you'll review, and that it may touch code, types, lint config, REVIEW.md and CLAUDE.md.
 
+Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+
 ## Find the mistake classes
 
 Start from what the user describes, then look for more: reverts and fix-up commits in the git history, review comments, CLAUDE.md rules nothing enforces, comments that explain workarounds. Group them into classes. A class counts once it has happened twice.
@@ -46,6 +48,6 @@ Prove each new check fails on a real past instance of the mistake, then commit e
 
 ## Keep the rule table
 
-Record each rule and what enforces it in the enforced-rules table in CLAUDE.md, with REVIEW.md as the enforcer for the rules that live there. Remove rules whose mistake can no longer happen, and replace any prose rule that a check now covers. A CLAUDE.md rule whose prevented failure nobody can name costs context in every session; propose deleting it.
+Record each rule and what enforces it in the enforced-rules table in CLAUDE.md, adding the table when it has none, with REVIEW.md as the enforcer for the rules that live there. Remove rules whose mistake can no longer happen, and replace any prose rule that a check now covers. A CLAUDE.md rule whose prevented failure nobody can name costs context in every session; propose deleting it.
 
 End by listing each class with its evidence, the level you chose, and why a higher level didn't work, and after a retro, the candidates the maintainer didn't pick.

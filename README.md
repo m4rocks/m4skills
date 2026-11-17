@@ -1,6 +1,6 @@
 # m4skills
 
-Ten Claude Code skills for building with agents. Each does one thing, says what it will touch, and reports what it changed. No subagents unless you allow them (except one cold-read reviewer, of a plan in shape and of the diff in full send and half send), no ticket graphs, no refusals over ordering.
+Nine Claude Code skills for building with agents. Each does one thing, says what it will touch, and reports what it changed. No subagents unless you allow them (except one cold-read reviewer, of a plan in shape and of the diff in full send and half send), no ticket graphs, no refusals over ordering.
 
 ## Install
 
@@ -15,7 +15,6 @@ In Claude Code:
 
 | Skill | Use when | Changes | Won't |
 |---|---|---|---|
-| `/m4:setup` | Setting up a repo, changing preferences, or refreshing a CLAUDE.md from an older m4 | CLAUDE.md, PLAN.md | Create doc folders or labels, overwrite your sections |
 | `/m4:shape` | Shaping an idea into features | Nothing, or the tracker when you send the plan there | Write code, write the plan anywhere before you choose, split work into ticket graphs or spikes |
 | `/m4:do` | Building features whose behavior is known | Code, tests, tracker, commits | Spawn reviewers, refuse over ordering, push unless you or the settings said to |
 | `/m4:fix` | Something is broken and the cause is unknown | Code, tests, tracker, commits | Patch symptoms with guards, leave debug logs |
@@ -26,7 +25,7 @@ In Claude Code:
 | `/m4:half-send` | You say "half send": the same, stopping at ready to merge | Code, tests, tracker, commits, a pull request | Merge, or leave auto-merge on |
 | `/m4:unslop` | Before the agent writes docs, commit or PR text, or tracker entries, or when you hand it text to clean up | The draft text | Change meaning or tone |
 
-Start with `/m4:setup`, which runs only when you type it. It interviews you, then writes a CLAUDE.md with your settings, code rules, a golden-files table naming the file to copy for each kind of code the repo repeats, and a line routing requests to the m4 skills so casual phrasing like "fix X" still uses them.
+There is nothing to set up. Every skill reads `plugins/m4/principles.md` before it starts, which holds the rules they share: when to ask and when to decide, that what you say holds for the session, finishing everything a change reaches, the code rules, and how to find the file to copy for each kind of code the repo repeats. It also sets defaults: PLAN.md as the tracker when the repo has one, tests where a cheap seam exists, and commits, pushes and subagents only when you say. To change a default for good, put it in your repo's CLAUDE.md, such as `Commits: one per feature, without asking` or `Tracker: GitHub issues in owner/repo`, and the skills follow it. Casual phrasing like "fix X" reaches the right skill through each skill's description.
 
 ## Checks, not guesses
 
@@ -52,4 +51,4 @@ Property tests, REVIEW.md as the home for review-time rules, fixing every instan
 
 ## Tracker
 
-PLAN.md or GitHub issues, chosen in `m4:setup`: one entry per feature with a checklist of behaviors. It records intent; the code and you decide what is true. Agents check off what the code already does and treat order as a suggestion. They never add an entry or open an issue on their own: a request that isn't listed is built without one, and anything else is asked first with its text.
+PLAN.md when the repo has one, or GitHub issues when CLAUDE.md or you say so: one entry per feature with a checklist of behaviors. It records intent; the code and you decide what is true. Agents check off what the code already does and treat order as a suggestion. They never add an entry or open an issue on their own: a request that isn't listed is built without one, and anything else is asked first with its text.

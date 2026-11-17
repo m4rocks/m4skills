@@ -7,6 +7,8 @@ description: Use whenever the user says fix, debug, broken, bug, doesn't work, e
 
 Start with one line: you are running m4:fix, the symptom as you understand it, and that it will touch code, tests and commits, naming any repo besides this one.
 
+Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+
 ## Reproduce
 
 Build a command that goes red on the user's exact symptom before forming theories: a failing test, a script, a curl against a dev server, a CLI run diffed against expected output, or against a reference implementation such as the previous version or an official tool when one exists. Make it fast and deterministic. For a flaky bug, raise the reproduction rate with loops, stress or pinned timing until it fails often enough to work with. A test that passes alone and fails in the suite usually has a neighbor leaving state behind: bisect the suite to find it. A visual bug gets a before screenshot when the harness can drive the app or a browser, taken now because the fix will change it. For a slow bug, the reproduction is a measurement on realistic data, such as a dev server seeded like a real install, and the fix is confirmed by running the old and new code alternately, several runs each, and stating the numbers.
