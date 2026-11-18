@@ -49,9 +49,9 @@ Leave whatever judges the change as strict as you found it: tests, lint rules, t
 
 ## Review
 
-Skip this section for a bug fix. Its proof is the original reproduction failing before the fix and passing after it, and that is the whole check, so spawn no reviewer and do no review pass inline. A change that fixes a bug and also adds or changes other behavior gets the review.
+Skip this section for a bug fix. Its proof is the original reproduction failing before the fix and passing after it, and that is the whole check, so run no reviewer and do no review pass inline. A change that fixes a bug and also adds or changes other behavior gets the review.
 
-Nobody else reads this diff before it merges, so one reader without this conversation does. Spawn one read-only subagent, which this skill is allowed to do regardless of the Subagents setting. Give it the repo path, the base commit, the goal in a sentence, what is out of scope and the check results, nothing else. Ask it to read the diff and the code around it, and to list bugs, broken callers and places the diff doesn't do what the goal says, each with a file and line, how to show it fails, and one of four labels:
+Nobody else reads this diff before it merges, so one reader without this conversation does. Use one reviewer, GPT Sol or a read-only subagent as "Reviews" in the principles says, which this skill may do regardless of the Subagents setting. Give it the repo path, the base commit, the goal in a sentence, what is out of scope and the check results, nothing else. Ask it to read the diff and the code around it, and to list bugs, broken callers and places the diff doesn't do what the goal says, each with a file and line, how to show it fails, and one of four labels:
 
 - blocker: the intended case is wrong
 - should: a bug callers will hit within the goal
@@ -60,7 +60,7 @@ Nobody else reads this diff before it merges, so one reader without this convers
 
 Check each finding and its label against the code yourself. Fix blockers and shoulds you agree with by the smallest change, preferring one that deletes or narrows code, in every place the change makes that mistake. Pre-existing bugs go in the report, unfixed, so the diff stays the size of the goal. Answer the ones you disagree with using evidence, such as a file and line, a test or output, and decline nits in a line each. Don't agree in order to end the review. After fixes that change behavior, run another round on the changed code and the open findings only, up to three rounds. When a blocker or should is still disputed after that, leave the pull request open and unmerged and put both sides in the report, since running out of rounds isn't approval.
 
-When the harness has no subagents, read the diff against its base as if you had never seen the conversation, do the same pass inline, and say in the report that the review was weaker.
+When the harness can call neither GPT Sol nor a subagent, read the diff against its base as if you had never seen the conversation, do the same pass inline, and say in the report that the review was weaker.
 
 ## Merge gate
 

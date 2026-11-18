@@ -10,7 +10,7 @@ Rules every skill follows, so nothing runs that the user didn't expect.
 - [x] Opens by naming itself and what it will touch; ends with what changed, what was skipped or unchecked, and any risk
 - [x] Model-invocable: each description opens with the plain words users type (fix, add, review), then when to skip, so common verbs still route. Descriptions name triggers, not steps, because an agent that reads a summary of the steps may follow it instead of the body (from superpowers' `writing-skills`)
 - [x] No tool names; "the harness's structured question tool when it has one", falling back to one question per message
-- [x] Subagents only when CLAUDE.md or the user allows them, except one cold-read reviewer in `shape`, `full-send` and `half-send`, which bug fixes skip
+- [x] Subagents only when CLAUDE.md or the user allows them, except one cold-read reviewer in `shape`, `full-send` and `half-send`, which bug fixes skip. Every review runs on GPT Sol when a harness tool can call it (t3code, Claudiu), else on a native read-only subagent
 - [x] Short verbs invoked as `/m4:<verb>`, none matching a Claude Code built-in (hence `shape`, not `plan`). `full-send` and `half-send` are named for the phrase that triggers them
 - [x] Written to `prompt-audit` and `writing-for-agents`: reasons beside rules, positive phrasing, no caps or MUST, nothing the model does by default, nothing the environment already says
 
@@ -152,7 +152,7 @@ Use when: the user says "full send". Touches code, tests, tracker, commits, a br
 - [x] Never stops to ask along the way: ambiguity, partial proof and an obsolete pull request are its own calls, listed in the report; with no proof or a gate that can't pass, the pull request stays open. Only a step that can't be taken back waits for the maintainer
 - [x] Leaves whatever judges the change as strict as it found it; a check whose expectation the goal changes is named in the report
 - [x] The reviewer says how to show each finding fails and labels bugs that predate the change pre-existing; the review must cover the final commit
-- [x] Left out: tstack's reviewer on another provider's model, its watcher script and its comment header, since m4 ships no scripts and stays inside Claude Code
+- [x] Left out: tstack's watcher script and its comment header, since m4 ships no scripts and stays inside Claude Code
 - [ ] Run a full send end to end on a real repo
 
 ## m4:half-send

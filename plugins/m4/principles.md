@@ -35,7 +35,11 @@ In chat with the maintainer, be direct, honest and brief: lead with the answer o
 
 Before writing prose that lands somewhere, such as docs, a README, comments, commit or pull request text, tracker entries, or a message to another person, follow `../unslop/SKILL.md` from the skill's folder on the draft.
 
-Work inline; spawn subagents only as the settings allow, except the plan review in m4:shape and the diff review in m4:full-send and m4:half-send, because they spend tokens the maintainer wants to spend deliberately.
+Work inline; spawn subagents only as the settings allow, except the reviews (see "Reviews"), because they spend tokens the maintainer wants to spend deliberately.
+
+## Reviews
+
+Every review an m4 skill runs, such as the plan review in m4:shape and the diff review in m4:full-send and m4:half-send, is done by GPT Sol whenever the harness has a tool that can call that model, such as in t3code or Claudiu. Look for that tool before the review starts. Give GPT Sol the same brief a subagent would get, nothing more, and check its findings against the code as you would a subagent's. When no such tool exists, or the call fails, spawn one native read-only subagent instead, and say in the report which reviewer ran and why.
 
 ## Related repos
 

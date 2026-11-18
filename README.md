@@ -1,6 +1,6 @@
 # m4skills
 
-Nine Claude Code skills for building with agents. Each does one thing, says what it will touch, and reports what it changed. No subagents unless you allow them (except one cold-read reviewer, of a plan in shape and of the diff in full send and half send), no ticket graphs, no refusals over ordering.
+Nine Claude Code skills for building with agents. Each does one thing, says what it will touch, and reports what it changed. No subagents unless you allow them (except one cold-read reviewer, of a plan in shape and of the diff in full send and half send, which is GPT Sol when the harness can call it, as in t3code or Claudiu, and a native subagent otherwise), no ticket graphs, no refusals over ordering.
 
 ## Install
 
