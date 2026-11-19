@@ -7,11 +7,15 @@ description: Use whenever the user says fix, debug, broken, bug, doesn't work, e
 
 Start with one line: you are running m4:fix, the symptom as you understand it, and that it will touch code, tests and commits, naming any repo besides this one.
 
-Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+Read `../../principles.md` and `../../code.md` from this skill's folder and follow them: they hold the settings and rules every m4 skill shares, and this file wins where they differ.
+
+## Short path
+
+When the error points at its own cause, such as a typo, a missing import or a wrong path named in the trace, and the fix is local, take the short path: reproduce with the failing command, fix it, rerun it, and add a regression test when the tests setting calls for one. Skip the hypothesis list, the bisect and the search of other repos. When the first fix doesn't turn the reproduction green, the cause wasn't evident; take the full path.
 
 ## Reproduce
 
-Build a command that goes red on the user's exact symptom before forming theories: a failing test, a script, a curl against a dev server, a CLI run diffed against expected output, or against a reference implementation such as the previous version or an official tool when one exists. Make it fast and deterministic. For a flaky bug, raise the reproduction rate with loops, stress or pinned timing until it fails often enough to work with. A test that passes alone and fails in the suite usually has a neighbor leaving state behind: bisect the suite to find it. A visual bug gets a before screenshot when the harness can drive the app or a browser, taken now because the fix will change it. For a slow bug, the reproduction is a measurement on realistic data, such as a dev server seeded like a real install, and the fix is confirmed by running the old and new code alternately, several runs each, and stating the numbers.
+Build a command that goes red on the user's exact symptom before forming theories: a failing test, a script, a curl against a dev server, a CLI run diffed against expected output, or against a reference implementation such as the previous version or an official tool when one exists. Make it fast and deterministic. For a flaky bug, raise the reproduction rate with loops, stress or pinned timing until it fails often enough to work with. A test that passes alone and fails in the suite usually has a neighbor leaving state behind: bisect the suite to find it. A visual bug gets one before screenshot of the affected view when the harness can drive the app or a browser, taken now because the fix will change it. For a slow bug, the reproduction is a measurement on realistic data, such as a dev server seeded like a real install, and the fix is confirmed by running the old and new code alternately, several runs each, and stating the numbers.
 
 Then shrink it: remove inputs, steps and config one at a time, rerunning after each, until every remaining piece is needed for the failure.
 
@@ -33,10 +37,10 @@ The root cause is the first place the code made a wrong decision, not where the 
 
 ## Fix
 
-Fix the cause, then search for the same fault elsewhere and fix those too. Elsewhere means wherever the behavior lives or is described, including other repos the project mentions, clients, docs and version pins. In another repo, read its CLAUDE.md before editing, since only this repo's loads on its own, and fetch first, because a local checkout can be days behind. When its checkout is dirty or on another branch, use `git worktree add` rather than switching it, because another session may be working there. Turn the shrunk reproduction into a regression test at a level that exercises the real bug pattern; if no such level exists, say so, since that is a finding about the code's structure.
+Fix the cause, then search for the same fault elsewhere and fix those too: wherever the behavior lives or is described, including clients, docs, version pins and other repos as "Related repos" in `code.md` describes. Turn the shrunk reproduction into a regression test at a level that exercises the real bug pattern; if no such level exists, say so, since that is a finding about the code's structure.
 
 Verify the fix by rerunning the original reproduction and showing it now passes where it failed before, with an after screenshot for a visual bug and the old and new numbers for a slow one. That is the whole check: don't review the diff, run `/code-review` or m4:tidy, or spawn a reviewer, because the reproduction going from red to green is what proves the bug is fixed. When it still fails, the bug isn't fixed; go back to finding the cause.
 
-Remove every `[m4:fix]` log, run the project's checks, and commit and push per the settings and what the maintainer has said this session, with the cause stated in the message. Write the title in the repo's existing title style; when it has none, use a conventional prefix and the outcome a user would notice, like `fix(web): new threads no longer spike CPU`. An earlier "commit and push to next" covers this fix too, so they don't have to repeat it; a branch they didn't name is still a question.
+Remove every `[m4:fix]` log, run the project's checks, and commit and push per the settings and what the maintainer has said this session, with the cause stated in the message.
 
-If the bug matches a tracker entry, check it off. A bug with no entry is fixed without one: open an issue or add an entry only when the maintainer asked for it, and put other problems you found in the report rather than the tracker. Before you stop, picture the maintainer's next message. If it would be "you forgot X" or "now push that", do that first. Run `git status -sb` in every repo you touched and name anything still uncommitted or unpushed, counting a branch with no upstream as unpushed. End by stating the cause, the fix, where else it appeared, and anything unverified, opening with anything that waits on the maintainer.
+If the bug matches a tracker entry, check it off. End by stating the cause, the fix, where else it appeared, anything left uncommitted or unpushed, and anything unverified.

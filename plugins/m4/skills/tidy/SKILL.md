@@ -7,7 +7,7 @@ description: Use when the user says tidy, clean up, polish or simplify changes, 
 
 Start with one line: you are running m4:tidy, and the diff you're working on, whose files are the only ones it will touch. The diff is what the user named, otherwise the uncommitted changes, otherwise the current branch against the default branch.
 
-Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+Read `../../principles.md` and `../../code.md` from this skill's folder and follow them: they hold the settings and rules every m4 skill shares, and this file wins where they differ.
 
 m4:tidy cleans up and works through review findings; it doesn't hunt for bugs. When the user asked for a review, say once that Claude Code's `/code-review` finds bugs better, in reviewers that never saw the code being written, and that its findings can come back here. Then do the cleanup.
 
@@ -30,13 +30,12 @@ When a cleanup would change behavior, it is a finding instead.
 Findings include review comments from a person or a bot, `/code-review` output, and anything the cleanup turned up. Treat each as a claim to check, not an order.
 
 - Read them all first. When any item is unclear, ask about it before changing anything, since items are often related.
-- Check each against the code: whether it holds for this codebase, whether fixing it breaks something, whether the current code has a reason. A finding needs a concrete case, this input leads to this wrong result; without one, say so and drop it.
+- Check each against the code: whether it holds for this codebase, whether fixing it breaks something, whether the current code has a reason. A finding without a concrete case ("Findings" in `code.md`) is dropped, and you say so.
 - When a comment asks to build something out properly, search for its callers first; when nothing uses it, propose removing it instead.
 - Fixing a finding changes behavior, so ask which to fix in one multi-select question through the structured question tool, each option naming the problem and its case, with your recommendation. Take disagreements about design to the user, with the evidence.
-- Fix the chosen items one at a time, most severe first, running the checks after each. Fix every place the diff makes the same mistake, not only the line the finding names, so the next review doesn't bring them back one at a time.
-- A bug the diff didn't introduce is pre-existing: say so and leave it for the report, since fixing it here would widen the diff.
+- Fix the chosen items one at a time, most severe first, running the checks after each, in every place the diff makes the same mistake. Pre-existing bugs stay for the report.
 - Answer each review comment with what changed, or why not. Leave out thanks and praise; the fix shows the comment was heard.
 
-If the diff belongs to a tracker entry, check that it does what the entry says, and mention any gap. When the diff makes a line in CLAUDE.md or REVIEW.md false, update that line.
+If the diff belongs to a tracker entry, check that it does what the entry says, and mention any gap.
 
-Run the project's checks afterwards. Leave your changes uncommitted unless the maintainer already said to commit this work, and end by listing what you cleaned up, what you fixed, what the user chose not to fix, what was pre-existing, and what you couldn't check, opening with anything that waits on the maintainer.
+Run the project's checks afterwards. Leave your changes uncommitted unless the maintainer already said to commit this work, and end by listing what you cleaned up, what you fixed, what the user chose not to fix, what was pre-existing, and what you couldn't check.

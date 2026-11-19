@@ -7,7 +7,7 @@ description: Use when the user corrects the same agent behavior a second time ('
 
 Start with one line: you are running m4:harden, the mistakes you'll address or the session you'll review, and that it may touch code, types, lint config, REVIEW.md and CLAUDE.md.
 
-Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+Read `../../principles.md` and `../../code.md` from this skill's folder and follow them: they hold the settings and rules every m4 skill shares, and this file wins where they differ.
 
 ## Find the mistake classes
 

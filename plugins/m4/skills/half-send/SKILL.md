@@ -7,7 +7,7 @@ description: Use only when the user says 'half send' in those words, about a cha
 
 Before any other output or command, write one line: you are running m4:half-send, the goal as you understand it, and that it will touch code, tests, the tracker, commits, a branch and a pull request, and will not merge.
 
-Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+Read `../../principles.md` and `../../code.md` from this skill's folder and follow them: they hold the settings and rules every m4 skill shares, and this file wins where they differ.
 
 Half send is full send that stops with the pull request ready for the maintainer to merge. Read `../full-send/SKILL.md` from this skill's folder and follow its steps, proof, review and rules for deciding alone. Saying "half send" allows everything "full send" allows except the merge, including the ways of testing the proof needs. Where the two differ, this file wins.
 
@@ -29,4 +29,4 @@ End with one of three verdicts:
 
 ## Report
 
-Lead with the pull request link, its latest commit and the verdict, and say that it is open and unmerged. Then anything else that waits on the maintainer, and any check whose expectation you changed. Then the proof, the review rounds and what they changed, the findings you fixed and the ones you rejected with reasons, the follow-ups you declined, the pre-existing bugs the review found, each call you made for the maintainer, and anything not verified.
+Report as full send does, but lead with the pull request link, its latest commit and the verdict, and say that it is open and unmerged.

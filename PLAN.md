@@ -29,16 +29,21 @@ Rules every skill follows, so nothing runs that the user didn't expect.
 - [x] YAGNI on what gets built, open about how; reuse order: repo, stdlib and platform, installed dependencies
 - [x] Golden files found when needed: a CLAUDE.md table row when there is one, else the clearest example of a convention covering 95% or more of that kind, with closer splits asked with a path for each side (from ECC's `inherit-legacy-style`)
 - [x] Find every place a change must reach, parallel paths and other repos included (mock or sandbox mode, platforms, both sides of a flag, docs, version pins), and finish all of them; better structure that simplifies the task goes in, bigger redesigns go to the plan with a reason
-- [x] Values live in the principles, procedure in the skills, so each rule has one home; `do` and `fix` still repeat the next-message test and the maintainer's word because they matter most there
+- [x] Values live in the principles, procedure in the skills, so each rule has one home and skills point to it rather than repeat it
+- [x] Code rules, related repos, golden files, findings and review-time rules live in `code.md`, read only by the skills that change code, so `explore` and `shape` don't load them
+- [x] Effort matches the change: a small local change, one touching no public name, API, schema or documented behavior, takes the short path its skill names
+- [x] Tool output stays small: long output goes through `tail` or `grep`, and CI is waited on quietly so only the final state lands in context
+- [x] Reports name each check by command and result rather than pasting its output
+- [x] Commit and pull request titles follow the repo's style, else a conventional prefix and the user-visible outcome; stated once here for every skill
 - [x] The request names a goal and the job is what the goal needs: a change that leaves something it affects stale is unfinished, a retired thing has no users left, and improvements the change doesn't require stay separate entries
 - [x] What the maintainer says holds for the rest of the session unless limited, facts and ways of working alike, and gives no new permission. Named early stops and wanted stops follow Anthropic's prompting guide for Opus 5.5
 - [x] Before stopping, picture the maintainer's next message and do what it would ask for
-- [x] Related repos found from CLAUDE.md, the README, manifests and same-org folders beside this one
+- [x] Related repos found from CLAUDE.md, the README, manifests and same-org folders beside this one, searched only when the change touches something they could use or describe
 - [x] Never cut: validation of untrusted input, data-loss error handling, security, accessibility
 - [x] Comments say why, including known limits; restructure instead of what-comments; leave others' comments alone
 - [x] Risky logic (branches, parsers, money, security, data writes, bug fixes) ships with a test
 - [x] No debris; fix code rather than tests; README updated with user-visible changes
-- [x] Prose that lands somewhere follows `m4:unslop`; casual requests ("fix X") route through skill descriptions, since nothing is always loaded
+- [x] Prose that lands somewhere follows `m4:unslop`, except commit messages and single checklist lines, which get a short pass written in the principles; casual requests ("fix X") route through skill descriptions, since nothing is always loaded
 - [x] Enforced-rules table in CLAUDE.md, added and filled by `m4:harden`; rules a reviewer can check from a diff live in REVIEW.md, read at review time rather than in every session
 - [x] Reports open with anything that waits on the maintainer; a change that makes a line in CLAUDE.md or REVIEW.md false updates it in the same commit (from Anthropic's Opus 5.5 and code review posts)
 
@@ -51,7 +56,7 @@ Use when: shaping an idea into features. Touches nothing, or the tracker when th
 - [x] Every decision in the plan, details included, is the user's answer or approval; facts that drive a decision are shown in the question
 - [x] Done when every branch of the decision tree is visited and nothing is assumed; only the user ends it early
 - [x] The plan lands in chat, one entry per feature with a short description and checklist, then one question asks whether it stays there or goes to the tracker; an earlier word such as "just plan it here" holds for the session
-- [x] For the tracker: cold-read review, entries shown verbatim, written only after approval. A plan kept in chat skips the review, since its reader has the conversation
+- [x] For the tracker: cold-read review of at most two rounds, entries shown verbatim, written only after approval. A plan kept in chat skips the review, since its reader has the conversation
 - [x] Reconcile on re-runs: check off what the code already does
 - [x] The gap sweep asks what else depends on or describes the idea, so other repos and docs become checklist lines
 - [x] Won't create ticket-per-task, dependency graphs, spikes, or write code
@@ -71,12 +76,13 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Code is written to a bar of cost on hot paths, and inputs the check doesn't cover are tried before done; per feature, after the checks, it is used as its user would. No separate re-review step, since current models over-verify when told to
 - [x] Tests name the break they catch, use hand-written expected values, test behavior rather than decisions, never assert on mocks, keep test-only code in test utilities, compare against a reference implementation when one exists, and end with a mental mutation check (from superpowers' `writing-good-tests`)
 - [x] Checks, not guesses: each feature gets one command that passes only when it works. The check is a sample of the inputs, not the whole set: pass it by building the behavior, try inputs it doesn't cover before calling it done, and rerun it before every claim that it works. Steered by the skill's prose, not enforced by hooks, since a model can route around a hook
-- [x] Unlisted request: build without an entry; `do`, `fix` and `full-send` create entries or issues only on the maintainer's word, and repeat the rule because it matters most there
+- [x] Unlisted request: build without an entry; entries and issues are created only on the maintainer's word, a rule the principles state once for every skill
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
 - [x] PR summary opens with the problem in a sentence or two, then the fix
 - [x] Visible changes get before and after screenshots, motion or timing a short recording; performance claims get old and new measured alternately on realistic data
 - [x] Commit titles follow the repo's style, else a conventional prefix and the user-visible outcome
-- [x] After opening a PR, wait on checks and review bots, fix findings that hold up, stop when green, after three non-converging rounds, or at a product decision; never reply on GitHub
+- [x] Short path for small local changes: skips the walk-through, the reach search and use-as-user, and takes screenshots only of views that change
+- [x] After opening a PR, wait quietly on checks and review bots, fix findings that hold up, stop when green, after three non-converging rounds, or at a product decision; never reply on GitHub
 - [x] Before building, finds everything the change reaches, including repos and docs the request didn't name, and reads a sibling's CLAUDE.md before editing it, since Claude Code only loads CLAUDE.md files from the working directory, its parents and its subfolders
 - [x] Works in a sibling from its default or named branch, through a worktree when the checkout is dirty or elsewhere, since another session may be using it
 - [x] Before stopping, runs `git status -sb` in every repo it touched, counting a branch with no upstream as unpushed; the report covers pushes by repo, what's left and each place the change reached, and recommends only decisions that are the maintainer's
@@ -96,6 +102,7 @@ Use when: something is broken and the cause is unknown. Touches code, tests, tra
 - [x] Flaky tests: bisect the suite for a polluting neighbor, replace fixed sleeps with waits on the condition; reproduce against a reference implementation when one exists
 - [x] Fix the first wrong decision, then the same fault elsewhere; guards only for legitimate states
 - [x] Regression test; tagged debug logs removed; cause stated in the commit message
+- [x] Short path when the error names its own cause and the fix is local: reproduce, fix, rerun, no hypothesis list, bisect or repo search; a first fix that fails moves to the full path
 - [x] Verify by rerunning the original reproduction red to green; no code review, `/code-review`, m4:tidy or reviewer subagent on the fix
 - [x] Visual bugs get a before screenshot; slow bugs reproduce as a measurement and the fix states old and new numbers
 - [x] Commit titles follow the repo's style, else a conventional prefix and the user-visible outcome
@@ -145,7 +152,7 @@ Use when: the user says "full send". Touches code, tests, tracker, commits, a br
 - [x] Runs only on the words themselves, which override the commits and pushes settings for the task and drop ask-first rules for testing, never rules about how to test
 - [x] Proof is output observed after the last edit; a change that can't be proved is a question, not a merge
 - [x] Bug fixes skip the reviewer: the reproduction going red to green is the proof
-- [x] One read-only cold-read reviewer regardless of the Subagents setting, since nobody else reads the diff before it merges; findings labeled blocker, should or nit, up to three rounds, and running out of rounds isn't approval
+- [x] One read-only cold-read reviewer regardless of the Subagents setting, since nobody else reads the diff before it merges; findings labeled blocker, should or nit, up to two rounds with the second on changed code and open findings only, and running out of rounds isn't approval
 - [x] Opens a ready pull request, problem first, after rebasing and checking for an existing one; fixes check failures and findings that hold up, proves each fix, and declines what the goal doesn't need
 - [x] Merge gate on the latest commit: proof covers the diff, required checks pass, bot findings answered, no review requesting changes, branch up to date, and no later default-branch commit touches the same files
 - [x] Merges the way the repo does, never around branch protection; replies on GitHub only where a thread must be resolved to merge

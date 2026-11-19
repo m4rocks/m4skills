@@ -7,7 +7,7 @@ description: Use only when the user says 'full send' in those words, about a cha
 
 Before any other output or command, write one line: you are running m4:full-send, the goal as you understand it, and that it will touch code, tests, the tracker, commits, a branch, a pull request and the merge.
 
-Read `../../principles.md` from this skill's folder and follow it: it holds the settings and rules every m4 skill shares, and this file wins where the two differ.
+Read `../../principles.md` and `../../code.md` from this skill's folder and follow them: they hold the settings and rules every m4 skill shares, and this file wins where they differ.
 
 The maintainer said "full send" because they aren't watching. Nobody reads your updates until long after you stop, so you own the work from where it stands now to a merged pull request. When they didn't say it in those words, this skill doesn't apply, however much autonomy the request implies.
 
@@ -27,8 +27,8 @@ Rules about how to test still hold: the named command, fixture or check stays th
 1. Finish the change. Build it to the bar a watched request gets: a bug is reproduced before it is fixed, a feature gets a check that fails first, and everything the change reaches is part of it. Make the smallest change that reaches the goal, fixing the case that happened rather than every case that could. On the default branch, create a branch first.
 2. Prove it (see "Proof").
 3. Have it reviewed (see "Review"), unless it is a bug fix.
-4. Open the pull request. Rebase onto the latest default branch first, and check whether the branch already has one. Write the title in the repo's title style, saying the outcome a user would notice. The body opens with the problem in a sentence or two, then the fix, then the proof, then the risk and how to undo the change, with one `Closes #N` or `Refs #N` line per issue. Check off the tracker's behaviors in the same branch, and open no new entries or issues, since nobody is there to approve them; follow-ups go in the report. Read the title and body for secrets and private details before submitting. Open it ready rather than as a draft, because review bots skip drafts.
-5. Watch it. Wait on `gh pr checks --watch`, then read what review bots and people posted since your last push. Fix each failure and each finding that holds up, meaning you can name a concrete case where the code fails, along with every other place the change makes the same mistake, so the next round doesn't find them one at a time. Prove each fix before pushing it, then wait again. Tell a failure in the code from a flaky runner, and rerun only the second kind. Review rounds grow a pull request one cheap fix at a time, so decline tests the goal doesn't need, guards for cases that don't happen and extra compatibility, and list them in the report as follow-ups.
+4. Open the pull request. Rebase onto the latest default branch first, and check whether the branch already has one. The body opens with the problem in a sentence or two, then the fix, then the proof, then the risk and how to undo the change, with one `Closes #N` or `Refs #N` line per issue. Check off the tracker's behaviors in the same branch, and open no new entries or issues, since nobody is there to approve them; follow-ups go in the report. Read the title and body for secrets and private details before submitting. Open it ready rather than as a draft, because review bots skip drafts.
+5. Watch it. Wait on the checks quietly as the principles show, then read what review bots and people posted since your last push. Fix each failure, and handle each finding as "Findings" in `code.md` says. Prove each fix before pushing it, then wait again. Tell a failure in the code from a flaky runner, and rerun only the second kind. Review rounds grow a pull request one cheap fix at a time, so decline tests the goal doesn't need, guards for cases that don't happen and extra compatibility, and list them in the report as follow-ups.
 6. Merge when the merge gate passes.
 7. Report.
 
@@ -41,7 +41,7 @@ Proof is something you observed in this session after your last edit: command ou
 - Reproduce the original failure, apply the fix, and watch the same reproduction pass.
 - Run what the repo's CI runs: type check, lint, tests.
 - When the behavior has no test and the repo has a test runner, add one that fails without the change.
-- For what a user sees or a running system does, run it and look. Passing tests against mocks don't show that it works for a user. Keep before and after screenshots for the pull request.
+- For what a user sees or a running system does, run it and look. Passing tests against mocks don't show that it works for a user. When the view changes, keep one before and one after screenshot for the pull request.
 
 A change with no proof at all doesn't merge: leave its pull request open and say what you couldn't show.
 
@@ -58,7 +58,7 @@ Nobody else reads this diff before it merges, so one reader without this convers
 - nit: everything else, including other paths, rare cases, small performance costs, extra compatibility and style
 - pre-existing: a bug that was there before this change
 
-Check each finding and its label against the code yourself. Fix blockers and shoulds you agree with by the smallest change, preferring one that deletes or narrows code, in every place the change makes that mistake. Pre-existing bugs go in the report, unfixed, so the diff stays the size of the goal. Answer the ones you disagree with using evidence, such as a file and line, a test or output, and decline nits in a line each. Don't agree in order to end the review. After fixes that change behavior, run another round on the changed code and the open findings only, up to three rounds. When a blocker or should is still disputed after that, leave the pull request open and unmerged and put both sides in the report, since running out of rounds isn't approval.
+Check each finding and its label against the code yourself. Fix blockers and shoulds you agree with by the smallest change, preferring one that deletes or narrows code, in every place the change makes that mistake, and leave pre-existing bugs for the report. Answer the ones you disagree with using evidence, such as a file and line, a test or output, and decline nits in a line each. Don't agree in order to end the review. After fixes that change behavior, run the second round the principles allow. When a blocker or should is still disputed after that, leave the pull request open and unmerged and put both sides in the report, since running out of rounds isn't approval.
 
 When the harness can call neither GPT Sol nor a subagent, read the diff against its base as if you had never seen the conversation, do the same pass inline, and say in the report that the review was weaker.
 
@@ -76,7 +76,7 @@ Merge only when all of this is true of the latest commit:
 
 Run `git fetch` and check the gate once more right before merging. Merge the way the repo does, which its allowed methods and recently merged pull requests show. With a merge queue or auto-merge, stay until GitHub reports it merged. Go through branch protection as configured, never around it with `--admin` or a similar bypass. A bot that only asks for human review doesn't block the merge when the rest of the gate passes.
 
-Reply on GitHub only where a thread must be resolved before the merge is allowed, with the reason in a line or two. Rejected findings otherwise go in the report, because a reply is public.
+Reply on GitHub only where a thread must be resolved before the merge is allowed, with the reason in a line or two.
 
 ## Deciding alone
 
@@ -91,4 +91,4 @@ One kind of step still waits for them, because it can't be taken back and the wo
 
 ## Report
 
-Lead with the pull request link and whether it merged, with the merge commit. Then anything that waits on the maintainer, and any check whose expectation you changed. Then the proof, with each command and the last lines of its passing run, the review rounds and what they changed, the findings you fixed and the ones you rejected with reasons, the follow-ups you declined, the pre-existing bugs the review found, each call you made for the maintainer, and anything not verified.
+Lead with the pull request link and whether it merged, with the merge commit. Then anything that waits on the maintainer, and any check whose expectation you changed. Then the proof, as each command and its result, the review rounds and what they changed, the findings you fixed and the ones you rejected with reasons, the follow-ups you declined, the pre-existing bugs the review found, each call you made for the maintainer, and anything not verified.

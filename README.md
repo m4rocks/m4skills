@@ -25,7 +25,7 @@ In Claude Code:
 | `/m4:half-send` | You say "half send": the same, stopping at ready to merge | Code, tests, tracker, commits, a pull request | Merge, or leave auto-merge on |
 | `/m4:unslop` | Before the agent writes docs, commit or PR text, or tracker entries, or when you hand it text to clean up | The draft text | Change meaning or tone |
 
-There is nothing to set up. Every skill reads `plugins/m4/principles.md` before it starts, which holds the rules they share: when to ask and when to decide, that what you say holds for the session, finishing everything a change reaches, the code rules, and how to find the file to copy for each kind of code the repo repeats. It also sets defaults: PLAN.md as the tracker when the repo has one, tests where a cheap seam exists, and commits, pushes and subagents only when you say. To change a default for good, put it in your repo's CLAUDE.md, such as `Commits: one per feature, without asking` or `Tracker: GitHub issues in owner/repo`, and the skills follow it. Casual phrasing like "fix X" reaches the right skill through each skill's description.
+There is nothing to set up. Every skill reads `plugins/m4/principles.md` before it starts, which holds the rules they share: when to ask and when to decide, that what you say holds for the session, finishing everything a change reaches, and how to report. The skills that change code also read `plugins/m4/code.md`: the code rules, when other repos are part of the work, and how to find the file to copy for each kind of code the repo repeats. The principles also set defaults: PLAN.md as the tracker when the repo has one, tests where a cheap seam exists, and commits, pushes and subagents only when you say. To change a default for good, put it in your repo's CLAUDE.md, such as `Commits: one per feature, without asking` or `Tracker: GitHub issues in owner/repo`, and the skills follow it. Casual phrasing like "fix X" reaches the right skill through each skill's description.
 
 ## Checks, not guesses
 
@@ -33,7 +33,7 @@ There is nothing to set up. Every skill reads `plugins/m4/principles.md` before 
 
 ## Finishing the job
 
-`/m4:do` and `/m4:fix` look for everything a change reaches, including other repos and docs the request didn't name, and treat those as part of the work. When you say "commit and push to next", that holds for the rest of the session: later fixes and other repos follow without asking again, and a branch you never named is still a question. Before stopping, the agent pictures your next message and does the work it would ask for.
+`/m4:do` and `/m4:fix` look for everything a change reaches, including docs the request didn't name, and treat those as part of the work. Other repos join in when the change touches a public name, an API, a schema or documented behavior. A small local change takes a short path: a check that fails first and passes after, without the repo search, the walk-through or screenshots of views that didn't change. When you say "commit and push to next", that holds for the rest of the session: later fixes and other repos follow without asking again, and a branch you never named is still a question. Before stopping, the agent pictures your next message and does the work it would ask for.
 
 ## Sending it
 
