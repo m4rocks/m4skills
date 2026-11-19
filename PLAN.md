@@ -6,17 +6,17 @@ A small Claude Code skillset: predictable skills, a lean CLAUDE.md, agents that 
 
 Rules every skill follows, so nothing runs that the user didn't expect.
 
-- [x] No skill invokes another skill; `half-send` reads `full-send`'s file rather than repeat it
+- [x] No skill invokes another skill; `do` and `fix` read the shared `autonomous.md` rather than repeat it
 - [x] Opens by naming itself and what it will touch; ends with what changed, what was skipped or unchecked, and any risk
 - [x] Model-invocable: each description opens with the plain words users type (fix, add, review), then when to skip, so common verbs still route. Descriptions name triggers, not steps, because an agent that reads a summary of the steps may follow it instead of the body (from superpowers' `writing-skills`)
 - [x] No tool names; "the harness's structured question tool when it has one", falling back to one question per message
-- [x] Subagents only when CLAUDE.md or the user allows them, except one cold-read reviewer in `shape`, `full-send` and `half-send`, which bug fixes skip. Every review runs on GPT Sol when a harness tool can call it (t3code, Claudiu), else on a native read-only subagent
-- [x] Short verbs invoked as `/m4:<verb>`, none matching a Claude Code built-in (hence `shape`, not `plan`). `full-send` and `half-send` are named for the phrase that triggers them
-- [x] Written to `prompt-audit` and `writing-for-agents`: reasons beside rules, positive phrasing, no caps or MUST, nothing the model does by default, nothing the environment already says
+- [x] Subagents only when CLAUDE.md or the user allows them, except one cold-read reviewer in `shape` and in autonomous mode, which bug fixes skip. Every review runs on GPT Sol when a harness tool can call it (t3code, Claudiu), else on a native read-only subagent
+- [x] Short verbs invoked as `/m4:<verb>`, none matching a Claude Code built-in (hence `shape`, not `plan`)
+- [x] Intent over procedure: each skill states its goal and its hard rules and trusts the model with the rest. Written to `prompt-audit` and `writing-for-agents`: reasons only where a rule isn't obvious, positive phrasing, no caps or MUST, nothing the model does by default, nothing the environment already says
 
 ## Shared principles
 
-`plugins/m4/principles.md`, which every skill reads before it starts, so a repo needs no setup. Written as prose with reasons, not bullets. A repo's CLAUDE.md and the maintainer's word override it, and a skill's own file wins where the two differ.
+`plugins/m4/principles.md`, which every skill reads before it starts, so a repo needs no setup. Short: hard rules stated plainly, everything else as intent, since current models fill in the obvious. A repo's CLAUDE.md and the maintainer's word override it, and a skill's own file wins where the two differ.
 
 - [x] Replaces the `m4:setup` skill and its CLAUDE.md template, so the skills work in any repo without an interview first
 
@@ -27,10 +27,10 @@ Rules every skill follows, so nothing runs that the user didn't expect.
 - [x] Chat with the maintainer is direct, honest and brief, grammar dropped where meaning survives, never at the cost of a failure, risk, skipped step, gap or disagreement; explanations take the space they need. Unslop's rule against over-compression applies to prose that lands somewhere, not to chat
 - [x] Code: obviously correct to a newcomer; rank correctness, then readability and testability, then size
 - [x] YAGNI on what gets built, open about how; reuse order: repo, stdlib and platform, installed dependencies
-- [x] Golden files found when needed: a CLAUDE.md table row when there is one, else the clearest example of a convention covering 95% or more of that kind, with closer splits asked with a path for each side (from ECC's `inherit-legacy-style`)
+- [x] Golden files found when needed: a CLAUDE.md table row when there is one, else two or three of the clearest files of that kind when they agree, and when they disagree the convention covering 95% or more, with closer splits asked with a path for each side (from ECC's `inherit-legacy-style`)
 - [x] Find every place a change must reach, parallel paths and other repos included (mock or sandbox mode, platforms, both sides of a flag, docs, version pins), and finish all of them; better structure that simplifies the task goes in, bigger redesigns go to the plan with a reason
 - [x] Values live in the principles, procedure in the skills, so each rule has one home and skills point to it rather than repeat it
-- [x] Code rules, related repos, golden files, findings and review-time rules live in `code.md`, read only by the skills that change code, so `explore` and `shape` don't load them
+- [x] Code rules, related repos, golden files, findings and finishing (commit titles, `git status`) live in `code.md`, read only by the skills that change code, so `explore` and `shape` don't load them
 - [x] Effort matches the change: a small local change, one touching no public name, API, schema or documented behavior, takes the short path its skill names
 - [x] Tool output stays small: long output goes through `tail` or `grep`, and CI is waited on quietly so only the final state lands in context
 - [x] Reports name each check by command and result rather than pasting its output
@@ -56,14 +56,14 @@ Use when: shaping an idea into features. Touches nothing, or the tracker when th
 - [x] Every decision in the plan, details included, is the user's answer or approval; facts that drive a decision are shown in the question
 - [x] Done when every branch of the decision tree is visited and nothing is assumed; only the user ends it early
 - [x] The plan lands in chat, one entry per feature with a short description and checklist, then one question asks whether it stays there or goes to the tracker; an earlier word such as "just plan it here" holds for the session
-- [x] For the tracker: cold-read review of at most two rounds, entries shown verbatim, written only after approval. A plan kept in chat skips the review, since its reader has the conversation
+- [x] For the tracker: one cold-read review round, the lines it reworded shown marked in place, written only after approval. A plan kept in chat skips the review, since its reader has the conversation
 - [x] Reconcile on re-runs: check off what the code already does
 - [x] The gap sweep asks what else depends on or describes the idea, so other repos and docs become checklist lines
 - [x] Won't create ticket-per-task, dependency graphs, spikes, or write code
 
 ## m4:do
 
-Use when: the user knows what to build, one entry, several, or a sentence. Touches code, tests, tracker, commits.
+Use when: the user knows what to build or what task to carry out, one entry, several, or a sentence. Touches code, tests, tracker, commits; in autonomous mode a branch, a pull request and the merge.
 
 - [x] Per feature: test per the tests setting, confirm it fails for the predicted reason, implement, run project checks, check off, commit
 - [x] Vertical slices through public interfaces; a test must fail when behavior breaks and survive internal changes; no cheap seam means the closest real check, stated
@@ -90,11 +90,11 @@ Use when: the user knows what to build, one entry, several, or a sentence. Touch
 - [x] Whatever judges the change, tests, lint rules, type settings or CI steps, isn't altered without asking
 - [x] Climbing a number: baseline measured several times, one change a round, kept only above chance, cases set aside and never read, failing cases never copied in, remaining failures sorted by cause when rounds stall (from Anthropic's hillclimbing post)
 - [x] A finding that holds is fixed everywhere the change makes that mistake; bugs the change didn't introduce go in the report; the PR body says how to undo the change
-- [x] Won't call reviewers, refuse over ordering, or push unless the maintainer or the settings said to
+- [x] Won't call reviewers when watched, refuse over ordering, or push unless the maintainer, the settings or autonomous mode said to
 
 ## m4:fix
 
-Use when: something is broken and the cause is unknown. Touches code, tests, tracker, commits.
+Use when: something is broken or behaves in a way the user wants explained. Touches code, tests, tracker, commits; in autonomous mode a branch, a pull request and the merge.
 
 - [x] Reproduce with a command before theorising; minimise to the smallest failing case
 - [x] Check what changed first (log, diff, bisect), then diff against working code that does the same thing (from superpowers' `systematic-debugging`)
@@ -145,30 +145,34 @@ Use when: the user corrected the agent for the same thing twice, or asks for a r
 - [x] Every retro candidate traces to a moment in the record, a smooth session yields none, and nothing changes until the maintainer picks from one multi-select question
 - [x] The retro counts lines such as "think carefully" as instructions that change nothing
 
-## m4:full-send
+## Autonomous mode
 
-Use when: the user says "full send". Touches code, tests, tracker, commits, a branch, a pull request and the merge. Adapted from tstack's `full-send`, with what it took from `sol-loop`, `file-pr` and `babysit-pr` written inline.
+`plugins/m4/autonomous.md`, read by `do` and `fix` when the maintainer hands the work over. Replaces the `full-send` and `half-send` skills, so building and fixing each have one skill and autonomy is a mode of both. Adapted from tstack's `full-send` and `full-stop`, with what it took from `sol-loop`, `file-pr` and `babysit-pr` written inline.
 
-- [x] Runs only on the words themselves, which override the commits and pushes settings for the task and drop ask-first rules for testing, never rules about how to test
+- [x] Runs only when the maintainer hands over control in their own words ("full send", "half send", "I'm not watching"); implied autonomy doesn't count. No description names the words, so routing comes from `do` and `fix`'s own descriptions
+- [x] Stop point is the merge unless their words set an earlier one: pull request ready ("let me review", "half send"), local commits ("don't push") or a verified working tree; when two fit, the earlier one
+- [x] The words override the commits and pushes settings for the task and drop ask-first rules for testing, never rules about how to test
 - [x] Proof is output observed after the last edit; a change that can't be proved is a question, not a merge
 - [x] Bug fixes skip the reviewer: the reproduction going red to green is the proof
-- [x] One read-only cold-read reviewer regardless of the Subagents setting, since nobody else reads the diff before it merges; findings labeled blocker, should or nit, up to two rounds with the second on changed code and open findings only, and running out of rounds isn't approval
+- [x] One read-only cold-read reviewer regardless of the Subagents setting, since nobody else reads the diff before the stop point; findings labeled blocker, should, nit or pre-existing, up to two rounds with the second on changed code and open findings only, and running out of rounds isn't approval
 - [x] Opens a ready pull request, problem first, after rebasing and checking for an existing one; fixes check failures and findings that hold up, proves each fix, and declines what the goal doesn't need
-- [x] Merge gate on the latest commit: proof covers the diff, required checks pass, bot findings answered, no review requesting changes, branch up to date, and no later default-branch commit touches the same files
+- [x] Merge gate on the latest commit, read in one `gh pr view` call: proof covers the diff, required checks pass, bot findings answered, no review requesting changes, branch up to date, and no later default-branch commit touches the same files
 - [x] Merges the way the repo does, never around branch protection; replies on GitHub only where a thread must be resolved to merge
-- [x] Never stops to ask along the way: ambiguity, partial proof and an obsolete pull request are its own calls, listed in the report; with no proof or a gate that can't pass, the pull request stays open. Only a step that can't be taken back waits for the maintainer
-- [x] Leaves whatever judges the change as strict as it found it; a check whose expectation the goal changes is named in the report
-- [x] The reviewer says how to show each finding fails and labels bugs that predate the change pre-existing; the review must cover the final commit
+- [x] Before a merge stop point: never merges, turns off auto-merge and leaves a merge queue at the start and before the last push, and ends with one of three verdicts: ready to merge, waiting for approval, or blocked
+- [x] Never stops to ask along the way: ambiguity, partial proof and an obsolete pull request are its own calls, listed in the report. Only a step that can't be taken back waits for the maintainer
 - [x] Left out: tstack's watcher script and its comment header, since m4 ships no scripts and stays inside Claude Code
-- [ ] Run a full send end to end on a real repo
+- [ ] Run autonomous mode end to end on a real repo, at the merge and at the ready stop point
 
-## m4:half-send
+## Token budget
 
-Use when: the user says "half send". Touches what full send touches, except the merge. Adapted from tstack's `full-stop` and renamed.
+Each skill loads only what its task needs, since a skill body stays in context for the whole session and Claude Code re-attaches only the first 5,000 tokens of each after compaction, while files read with Read aren't re-attached at all.
 
-- [x] Follows `full-send`'s file for steps, proof, review and asking; its own file wins where they differ
-- [x] Never merges, turns off auto-merge and leaves a merge queue before working, and checks again before each push
-- [x] Ends with one of three verdicts: ready to merge, waiting for approval, or blocked
+- [x] Conditional material lives in files read when their trigger fires: `autonomous.md`, `pr.md` (body template and the bot-watching loop), `measure.md` (speed claims and climbing a number), `shape/tracker.md`, `harden/retro.md`. Each is linked from the skill that reads it, one level deep
+- [x] Shared files are read in one parallel call and skipped when already in context since the last compaction
+- [x] PR rounds read only comments since the last push, truncated, and open a full body only for a finding that looks real
+- [x] Retros never read a transcript file whole; they grep it for user turns, errors and retries
+- [x] `tidy` reads callers only for cleanups that change a contract and runs the full checks once; `fix` shrinks and bisects only when the reproduction or the history calls for it
+- [x] Screenshots are saved to files and only the ones needed to judge are viewed
 
 ## Packaging
 
