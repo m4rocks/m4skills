@@ -1,6 +1,6 @@
 ---
 name: do
-description: Use when the user asks to build, add, implement, change, refactor or wire up something, or to carry out a task or finish work in progress, including short asks like 'add X' or 'make it Y'. Skip for bugs and investigations (m4:fix) and one-line edits like a rename, typo or config value.
+description: Use when the user asks to build, add, implement, change or refactor something, says they want something to work differently ('I want X to...', 'make X do Y'), carries out a task or finishes work in progress, or hands the work over ('full send', 'half send'), including short asks. Skip for bugs and investigations (m4:fix) and one-line renames or typos.
 ---
 
 # m4:do

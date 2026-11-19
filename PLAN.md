@@ -149,7 +149,7 @@ Use when: the user corrected the agent for the same thing twice, or asks for a r
 
 `plugins/m4/autonomous.md`, read by `do` and `fix` when the maintainer hands the work over. Replaces the `full-send` and `half-send` skills, so building and fixing each have one skill and autonomy is a mode of both. Adapted from tstack's `full-send` and `full-stop`, with what it took from `sol-loop`, `file-pr` and `babysit-pr` written inline.
 
-- [x] Runs only when the maintainer hands over control in their own words ("full send", "half send", "I'm not watching"); implied autonomy doesn't count. No description names the words, so routing comes from `do` and `fix`'s own descriptions
+- [x] Runs only when the maintainer hands over control in their own words ("full send", "half send", "I'm not watching"); implied autonomy doesn't count. `do`'s description names "full send" and "half send", since without them a model skipped the skill on "half send it"; a bug with the words still routes to `fix`, which reads the same file
 - [x] Stop point is the merge unless their words set an earlier one: pull request ready ("let me review", "half send"), local commits ("don't push") or a verified working tree; when two fit, the earlier one
 - [x] The words override the commits and pushes settings for the task and drop ask-first rules for testing, never rules about how to test
 - [x] Proof is output observed after the last edit; a change that can't be proved is a question, not a merge
