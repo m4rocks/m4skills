@@ -15,13 +15,15 @@ Only on the maintainer's own words handing over control, such as "full send", "h
 
 When two fit, take the earlier one.
 
-Up to the stop point, the words allow committing, pushing the task's branch, opening its pull request, `--force-with-lease` after a rebase, merging once the gate passes, and any testing method the proof needs. Nobody is watching: make the calls yourself and list them, and stay in the turn until the stop point, without status messages.
+Up to the stop point, the words allow committing, pushing the task's branch, opening its pull request, `--force-with-lease` after a rebase, merging once the gate passes, and any testing method the proof needs, such as running the app, computer use and screenshots, even where CLAUDE.md says to ask first. Rules about how to test still hold, and a harness approval prompt is still answered by the maintainer. Nobody is watching: make the calls yourself and list them, and stay in the turn until the stop point, without status messages.
 
 ## Hard rules
 
 - Before a merge stop point, never merge, enable auto-merge, enter a merge queue or push to the default branch. Turn off auto-merge or a queue that is already on, and check again before your last push.
 - Never bypass branch protection with `--admin` or anything like it.
-- No proof, no merge. Proof is output observed after the last edit, as direct as possible: the reproduction going red to green, the commands CI runs, running the thing and looking at it. A change people see or use needs the app run and used, with an after screenshot; headless tests and CI only show state. When you can't run it, through computer-use or otherwise, the verdict is blocked.
+- No proof, no merge. Proof is evidence you observed yourself after the last edit, as direct as possible: the reproduction going red to green, the commands CI runs, running the thing and looking at it. Nobody will read the pull request or its screenshots, so you are the only one who judges the proof.
+- A change people see or use needs the app run and used; green headless or mocked tests don't show what a user sees. Open each screenshot you rely on with Read, say what it shows and what you expected, and treat a mismatch as a failure to fix. A screenshot you haven't looked at proves nothing.
+- Without computer-use tools, drive the app from the shell. On Windows, launch it with a throwaway data folder and use PowerShell with Win32 calls: `GetWindowRect`, `SetForegroundWindow` and `System.Drawing` for screenshots, `SetCursorPos`, `mouse_event` and `SendKeys` for input. Only when that fails too is the verdict blocked.
 - Still ask before anything irreversible: deleting data, touching production, changing something outside the repo, closing someone's pull request, force-pushing another branch. Finish the rest first, then ask with the pull request link and your recommendation.
 - Open no new tracker entries or issues; follow-ups go in the report.
 

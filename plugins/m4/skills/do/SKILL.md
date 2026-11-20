@@ -17,7 +17,7 @@ When the maintainer hands the work over in their own words ("full send", "half s
 2. Read the golden file.
 3. Give it a check: one command that passes only when the feature works. Use a test when the tests setting calls for one, else the closest real check. Watch it fail for the reason you predicted. For a visible change, save a before screenshot now.
 4. Implement until the check and the area's checks pass.
-5. Use it as its user would, including the empty and error paths, and take the after screenshot. Report what you couldn't exercise as unverified.
+5. Use it as its user would, including the empty and error paths, and take the after screenshot, driving the app from the shell when computer-use tools are missing. Open each screenshot with Read and compare it with what you expected; one you haven't looked at proves nothing, and a mismatch is a bug to fix. Report what you couldn't exercise as unverified.
 6. Check off the tracker, and commit and push per the settings, staging only this feature's files. With GitHub issues, use `Closes #N` when every behavior is done, `Refs #N` when partial or when closing is "ask first", and never close a root issue.
 
 A small local change skips the walkthrough, the reach search and step 5, but keeps the check that fails first.

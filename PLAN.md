@@ -79,7 +79,7 @@ Use when: the user knows what to build or what task to carry out, one entry, sev
 - [x] Unlisted request: build without an entry; entries and issues are created only on the maintainer's word, a rule the principles state once for every skill
 - [x] PR mode: work on a branch, open a PR after the batch with summary, before/after evidence, risk
 - [x] PR summary opens with the problem in a sentence or two, then the fix
-- [x] Visible changes get before and after screenshots, motion or timing a short recording; performance claims get old and new measured alternately on realistic data
+- [x] Visible changes get before and after screenshots, which the agent opens and compares with what it expected, driving the app from the shell when computer-use tools are missing; motion or timing a short recording; performance claims get old and new measured alternately on realistic data
 - [x] Commit titles follow the repo's style, else a conventional prefix and the user-visible outcome
 - [x] Short path for small local changes: skips the walk-through, the reach search and use-as-user, and takes screenshots only of views that change
 - [x] After opening a PR, wait quietly on checks and review bots, fix findings that hold up, stop when green, after three non-converging rounds, or at a product decision; never reply on GitHub
@@ -151,8 +151,8 @@ Use when: the user corrected the agent for the same thing twice, or asks for a r
 
 - [x] Runs only when the maintainer hands over control in their own words ("full send", "half send", "I'm not watching"); implied autonomy doesn't count. `do`'s description names "full send" and "half send", since without them a model skipped the skill on "half send it"; a bug with the words still routes to `fix`, which reads the same file
 - [x] Stop point is the merge unless their words set an earlier one: pull request ready ("let me review", "half send"), local commits ("don't push") or a verified working tree; when two fit, the earlier one
-- [x] The words override the commits and pushes settings for the task and drop ask-first rules for testing, never rules about how to test
-- [x] Proof is output observed after the last edit; a change that can't be proved is a question, not a merge. A change people see or use needs the app run and a screenshot, since a session once tried to merge a UI change on headless tests and CI alone
+- [x] The words override the commits and pushes settings for the task and drop ask-first rules for testing, computer use and screenshots included, never rules about how to test or a harness approval prompt
+- [x] Proof is output observed after the last edit; a change that can't be proved is a question, not a merge. A change people see or use needs the app run and a screenshot, since a session once tried to merge a UI change on headless tests and CI alone. Nobody reads the pull request after a full send, so the agent opens each screenshot it relies on and judges it against what it expected, as tstack's `full-send` asks for proof "you observed yourself". Without computer-use tools it drives the app from the shell (PowerShell and Win32 on Windows) before calling the change blocked, since a session once said it couldn't screenshot an app that another session had just driven that way
 - [x] Bug fixes skip the reviewer: the reproduction going red to green is the proof
 - [x] One read-only cold-read reviewer regardless of the Subagents setting, since nobody else reads the diff before the stop point; the handover counts as asking, so a CLAUDE.md limit on subagents doesn't skip it; findings labeled blocker, should, nit or pre-existing, up to two rounds with the second on changed code and open findings only, and running out of rounds isn't approval
 - [x] Opens a ready pull request, problem first, after rebasing and checking for an existing one; fixes check failures and findings that hold up, proves each fix, and declines what the goal doesn't need
