@@ -3,7 +3,7 @@ name: write
 description: Use before writing prose that lands somewhere, such as docs, a README, pull request text or a message to another person, and whenever the user says unslop, de-AI or humanize. Skip for code, code comments, commit messages and chat replies.
 ---
 
-Draft, scan for the patterns below, rewrite, then write it out; when the user hands you text, edit that. Keep the meaning and tone, and add nothing the source didn't say. Where a rule wants a mechanism or number you don't have, cut the sentence.
+Write it once, avoiding the patterns below; when the user hands you text, edit that. Keep the meaning and tone, and add nothing the source didn't say. Where a rule wants a mechanism or number you don't have, cut the sentence.
 
 - **Superficial -ing phrases** ("highlighting...", "ensuring..."). Delete them or back them with a source.
 - **Vague attributions** ("experts believe"). Name the source or delete.

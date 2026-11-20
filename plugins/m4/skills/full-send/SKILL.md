@@ -7,7 +7,7 @@ Nobody is watching. Take the work to a merged PR and stay in the turn until then
 
 1. Branch, then do the work with m4:fix, m4:change or m4:implement.
 2. Prove it with m4:verify.
-3. Review with m4:review, unless it's a pure bug fix whose repro went red to green. A should or blocker still disputed after round 2 means no merge.
+3. Review with m4:review, unless it's a pure bug fix whose repro went red to green. A blocker or should still disputed after your rebuttal means no merge.
 4. Open the PR with m4:pr, with one line on how you proved it.
 5. Babysit with m4:babysit, proving each fix before pushing it.
 6. Read the gate in its own call, then merge the repo's usual way in a call by itself.

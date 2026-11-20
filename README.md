@@ -18,7 +18,7 @@ Microskills for Claude Code. Each skill is a short template prompt for one step 
 | `m4:implement` | "add", "build" | Builds the smallest thing that meets the goal, starting from the data shape. |
 | `m4:verify` | "verify", "prove it" | Checks the real artifact after the last edit, including running the app and reading screenshots. |
 | `m4:test` | "add tests" | Adds tests only where breakage would be quiet, and asserts behavior. |
-| `m4:review` | "review", "sol loop" | Has GPT Sol review the diff in up to three rounds through any agent tool that can run it, or a cold subagent otherwise. |
+| `m4:review` | "review", "sol loop" | Has GPT Sol review the diff in one full round through any agent tool that can run it, or a cold subagent otherwise. |
 | `m4:pr` | "open a PR" | Opens a PR that leads with the problem, without model attribution. |
 | `m4:babysit` | "babysit" | Watches checks and review bots, fixes the real findings and answers the rest. |
 | `m4:full-send` | "full send" | Fixes or builds, verifies, reviews, opens the PR, babysits it and merges once the gate passes. |
