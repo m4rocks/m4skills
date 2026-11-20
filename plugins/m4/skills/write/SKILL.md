@@ -1,9 +1,9 @@
 ---
-name: unslop
+name: write
 description: Use before writing prose that lands somewhere, such as docs, a README, pull request text, tracker entries or a message to another person, and whenever the user says unslop, de-AI or humanize. Skip for code, code comments, commit messages and chat replies.
 ---
 
-# m4:unslop
+# m4:write
 
 Adapted from the unslop skill by poteto; the rule numbers are theirs.
 
