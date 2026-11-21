@@ -29,7 +29,7 @@ Microskills for Claude Code. Each skill is a short template prompt for one step 
 | `m4:autonomy` | loaded by the others | Decides reversible calls without asking and asks only before irreversible or outward-facing steps. |
 | `m4:repo` | loaded by the others | Commits only when told, never weakens a check, and isn't done until the leftovers are gone. |
 | `m4:code` | loaded by the others | Keeps code readable without what-comments, reuses what exists, and extracts the shared part before copies drift. |
-| `m4:report` | loaded by the others | Ends with short sections: done, what needs you, what's unverified, risks. |
+| `m4:report` | loaded by the others | Ends with a one-line outcome and, only when they have items, what needs you, what's unverified and risks, in under ten lines. |
 
 ## Credits
 
