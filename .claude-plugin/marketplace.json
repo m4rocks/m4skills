@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "m4",
-      "source": "./plugins/m4",
+      "source": "./",
       "description": "Microskills that steer the agent one step at a time: fix, change, implement, verify, test, review, pr, babysit, full send and half send."
     }
   ]
